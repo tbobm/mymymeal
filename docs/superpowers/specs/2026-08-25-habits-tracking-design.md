@@ -74,7 +74,9 @@ data class SupplementIntake(val supplementId: Long, val date: LocalDate)
 
 Room tables (new, migration version 34 → 35):
 
-- `Supplement(id, name, sortOrder)`
+- `Supplement(id, name, sortOrder)` — `sortOrder` is assigned as append-only insertion
+  order (`max(sortOrder) + 1`) when a supplement is added. No drag-to-reorder UI; not
+  requested, and the checklist is short enough that insertion order is fine.
 - `SupplementIntake(supplementId, date)` — composite primary key `(supplementId,
   date)`; toggling a checkbox inserts or deletes this row. Foreign key to `Supplement`
   with `onDelete = CASCADE` so removing a supplement drops its history.
@@ -101,9 +103,10 @@ mechanism introduced.
 
 ## UI
 
-One new `HomeCard.Habits` entry in the existing `HomeCard` enum, orderable and
-toggleable through the existing home-personalization settings exactly like
-`Calendar`/`Goals`/`Meals`.
+One new `HomeCard.Habits` entry in the existing `HomeCard` enum, appended to the end of
+`HomeCard.defaultOrder` (currently `[Calendar, Goals, Meals]` →
+`[Calendar, Goals, Meals, Habits]`), orderable and toggleable through the existing
+home-personalization settings exactly like the other cards.
 
 **Coffee row:** cup count and caffeine mg for today, with a "+" button.
 - If a default coffee is already configured: tapping "+" calls
@@ -112,6 +115,8 @@ toggleable through the existing home-personalization settings exactly like
   fixed value instead of a user-picked recent food).
 - If no default coffee is configured yet: tapping "+" opens food search once; the food
   and measurement picked there becomes the new default, saved to `HabitsPreferences`.
+- To change the default later, the same settings dialog described below (gear icon)
+  includes a "change default coffee" action that re-opens food search.
 
 **Supplement checklist:** one row per `Supplement`, each a checkbox (checked iff a
 `SupplementIntake` row exists for today) + name + a small trailing delete icon, always
@@ -121,11 +126,14 @@ confirmation `AlertDialog` `MealCard.kt` already uses for deleting a diary entry
 "+ Add supplement" row at the bottom opens a small text-input dialog to name a new one.
 
 **Reminder settings:** a small settings/gear icon on the card opens a dialog with: an
-on/off toggle, a morning time picker, an evening time picker. Turning the toggle on
-triggers the Android 13+ `POST_NOTIFICATIONS` runtime permission request right there
-(not at app launch, since reminders are opt-in). If the permission is denied, the
-toggle reverts to off and `remindersEnabled` stays `false` — no silently-broken "on"
-state where the preference says on but no notification can ever fire.
+on/off toggle, a morning time picker, an evening time picker, and a "change default
+coffee" action. Turning the reminders toggle on triggers the `POST_NOTIFICATIONS`
+runtime permission request right there (not at app launch, since reminders are
+opt-in) **on Android 13 (API 33) and above only** — below that, notification
+permission is granted at install time and no runtime request exists. If the
+permission is denied, the toggle reverts to off and `remindersEnabled` stays `false` —
+no silently-broken "on" state where the preference says on but no notification can
+ever fire.
 
 ## Reminder scheduling (WorkManager)
 
