@@ -7,8 +7,9 @@ import androidx.sqlite.execSQL
 /**
  * Habits tracking (coffee + supplements). Adds `Supplement` (the list of supplements the user
  * takes) and `SupplementIntake` (adherence -- presence of a row means taken that day). Purely
- * additive, no existing table or column is altered. Coffee tracking needs no new table -- it
- * reuses `MeasurementSuggestion` (cup count) and the existing per-day caffeine aggregate.
+ * additive, no existing table or column is altered. Coffee tracking needs no new table -- cup
+ * count is a live query joining `Measurement` to `DiaryProduct`/`DiaryRecipe` by snapshot name,
+ * and caffeine mg reuses the existing per-day caffeine aggregate.
  */
 internal val addHabitsTables =
     object : Migration(34, 35) {

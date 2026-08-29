@@ -68,6 +68,11 @@ internal class HabitsCardViewModel(
                                     if (food == null) {
                                         flowOf(0)
                                     } else {
+                                        // ponytail: matches by current catalog name against each
+                                        // entry's snapshot name -- renaming the default coffee
+                                        // mid-day drops already-logged cups from the count, and two
+                                        // catalog foods sharing a name would double-count. Acceptable
+                                        // for a single-user local tracker; revisit if that changes.
                                         foodDiaryEntryRepository.observeEntryCountByFoodName(
                                             name = food.headline,
                                             isRecipe = defaultCoffeeFoodId is FoodId.Recipe,
