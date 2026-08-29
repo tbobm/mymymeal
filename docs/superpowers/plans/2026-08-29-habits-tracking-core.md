@@ -1067,7 +1067,9 @@ import com.maksimowiczm.foodyou.common.domain.date.DateProvider
 import com.maksimowiczm.foodyou.common.domain.event.EventBus
 import com.maksimowiczm.foodyou.common.domain.food.sum
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
+import com.maksimowiczm.foodyou.common.domain.measurement.from
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
+import com.maksimowiczm.foodyou.common.result.onSuccess
 import com.maksimowiczm.foodyou.food.domain.entity.FoodId
 import com.maksimowiczm.foodyou.food.domain.repository.FoodMeasurementSuggestionRepository
 import com.maksimowiczm.foodyou.food.domain.usecase.ObserveFoodUseCase
@@ -1196,7 +1198,7 @@ internal class HabitsCardViewModel(
                     date = date,
                     food = food.toDiaryFood(),
                 )
-                .also {
+                .onSuccess {
                     eventBus.publish(
                         FoodDiaryEntryCreatedEvent(
                             foodId = food.id,
@@ -1255,7 +1257,7 @@ In `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/HomeModule.kt
     viewModel {
         HabitsCardViewModel(
             supplementRepository = get(),
-            habitsPreferencesRepository = get(),
+            habitsPreferencesRepository = userPreferencesRepository(),
             measurementSuggestionRepository = get(),
             observeDiaryMealsUseCase = get(),
             observeFoodUseCase = get(),
