@@ -443,7 +443,6 @@ package com.maksimowiczm.foodyou.habits.infrastructure.room
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import androidx.test.core.app.ApplicationProvider
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -466,12 +465,16 @@ internal abstract class SupplementTestDatabase : RoomDatabase(), HabitsDatabase
 
 @RunWith(RobolectricTestRunner::class)
 class RoomSupplementRepositoryTest {
+    // No .setDriver(BundledSQLiteDriver()) -- that artifact's resolved variant ships native .so
+    // libraries built for Android device ABIs, which fail to load under Robolectric's host-JVM
+    // sandbox (UnsatisfiedLinkError). Omitting it falls back to Room's framework
+    // SupportSQLiteOpenHelper path, which Robolectric backs with its own host-native SQLite shadow
+    // -- also what this project's production code actually uses on its Android-only target.
     private fun buildDatabase(): SupplementTestDatabase =
         Room.inMemoryDatabaseBuilder(
                 ApplicationProvider.getApplicationContext(),
                 SupplementTestDatabase::class.java,
             )
-            .setDriver(BundledSQLiteDriver())
             .build()
 
     @Test
@@ -733,7 +736,7 @@ git commit -m "feat: add HabitsPreferences for the default-coffee configuration"
 
 `MeasurementSuggestionEntity` declares `@ForeignKey`s to `ProductEntity`/`RecipeEntity`. Room requires every FK's referenced entity to be declared in the *same* `@Database`, and SQLite enforces the FK at insert time (a row can't reference a nonexistent `Product.id`) — so this test builds the real `FoodYouDatabase` in-memory (it already declares every entity) rather than a stripped-down parallel database, and inserts the minimal parent `Product` rows via raw SQL first, mirroring the exact `execSQL` pattern the migration fixture tests already use.
 
-This project's `:app` module targets Android only, so (per Task 3's Step 1a) `Room.inMemoryDatabaseBuilder<T>()` needs a `Context` — this test runs under Robolectric (`@RunWith(RobolectricTestRunner::class)`) for the same reason `RoomSupplementRepositoryTest` does. The Robolectric/coroutines-test dependencies were already added in Task 3 Step 1a; nothing new to add here.
+This project's `:app` module targets Android only, so (per Task 3's Step 1a) `Room.inMemoryDatabaseBuilder<T>()` needs a `Context` — this test runs under Robolectric (`@RunWith(RobolectricTestRunner::class)`) for the same reason `RoomSupplementRepositoryTest` does. The Robolectric/coroutines-test dependencies, and the `kspAndroidTest` KSP wiring needed to generate `_Impl` classes for `commonTest`-declared `@Database`s, were already added project-wide in Task 3 — nothing new to add here. **Do not add `.setDriver(BundledSQLiteDriver())`** — Task 3 found that driver's resolved artifact ships Android-device-ABI native libraries that fail to load under Robolectric's host JVM (`UnsatisfiedLinkError`); omitting it uses Room's framework `SupportSQLiteOpenHelper` path instead, which Robolectric backs correctly (and which is what this project's production code actually uses on its Android-only target).
 
 ```kotlin
 // app/src/commonTest/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomFoodMeasurementSuggestionRepositoryCountTest.kt
@@ -741,7 +744,6 @@ package com.maksimowiczm.foodyou.food.infrastructure.repository
 
 import androidx.room.Room
 import androidx.room.useWriterConnection
-import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import androidx.sqlite.execSQL
 import androidx.test.core.app.ApplicationProvider
 import com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase
@@ -763,7 +765,6 @@ class RoomFoodMeasurementSuggestionRepositoryCountTest {
                     ApplicationProvider.getApplicationContext(),
                     FoodYouDatabase::class.java,
                 )
-                .setDriver(BundledSQLiteDriver())
                 .build()
         db.useWriterConnection { connection ->
             connection.execSQL(
