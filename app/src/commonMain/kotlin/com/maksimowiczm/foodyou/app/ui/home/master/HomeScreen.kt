@@ -109,6 +109,9 @@ internal fun HomeScreen(
                             contentPadding = PaddingValues(horizontal = 8.dp),
                             modifier = Modifier.padding(bottom = 8.dp),
                         )
+
+                    // TODO: Habits card UI (later task)
+                    HomeCard.Habits -> {}
                 }
             }
         }

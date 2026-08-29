@@ -180,6 +180,8 @@ private fun HomePersonalizationScreen(
                                 HomeCard.Calendar -> CalendarCardContent()
                                 HomeCard.Goals -> GoalsCardContent(onMore = onGoals)
                                 HomeCard.Meals -> MealsCardContent(onMore = onMeals)
+                                // TODO: Habits card UI (later task)
+                                HomeCard.Habits -> {}
                             }
                         }
                     }
