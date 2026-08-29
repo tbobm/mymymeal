@@ -15,7 +15,7 @@
 - App ID `com.maksimowiczm.foodyou` unchanged; module count stays minimized — this feature lives entirely under `:app`, organized by package (per `docs/development/decision-log/0002-minimize-gradle-modules.md`).
 - Room `FoodYouDatabase.VERSION` bumps 34 → 35. `exportSchema = true` — the new `35.json` must be committed (Room's KSP processor generates it on build, do not hand-write it).
 - Every migration needs an `Abstract*Test` (common) + platform `actual` test (`androidInstrumentedTest`), per the existing pattern in `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/migration/` and `docs/schema.md`.
-- No new Gradle dependency in this plan (WorkManager is Plan B's concern).
+- One new test-only Gradle dependency, added during Task 3: `org.robolectric:robolectric` (`commonTest`/android-unit-test dependencies). This project's `:app` module targets Android only (no JVM/native Kotlin target), so `Room.inMemoryDatabaseBuilder<T>()` only has the `Context`-requiring Android overload — a plain `testDebugUnitTest` run has no `Context` without Robolectric supplying `ApplicationProvider.getApplicationContext()`. Also added: `kotlinx-coroutines-test` (was entirely absent from the project; no other test used `runTest` before this plan). Never ships in the release app (test-only dependency). No other new dependency in this plan (WorkManager is Plan B's concern).
 - Build JDK: `JAVA_HOME=/opt/homebrew/opt/openjdk@21`. Run `./gradlew --offline assembleDebug test` once online caches are warm. Instrumented migration tests need a connected device/emulator (`./gradlew connectedAndroidTest`), not covered by `--offline test`.
 - `docs/schema.md` must stay current (project's own "definition of done" gate) — the last task in this plan updates it.
 
@@ -395,7 +395,46 @@ interface SupplementRepository {
 }
 ```
 
+- [ ] **Step 1a: Add the Robolectric + coroutines-test test dependencies**
+
+This project's `commonTest.dependencies` has no `runTest`/coroutines-test support yet (nothing in
+the repo used it before this plan) and no Robolectric (nothing needed a `Context` in a plain JVM
+unit test before this plan, since Room-backed tests didn't exist here yet). Both are needed for
+Step 2's test to build and run.
+
+In `gradle/libs.versions.toml`, add version entries (pin to whatever resolves cleanly against this
+project's AGP/compileSdk 36 — check for the latest stable release of each rather than trusting a
+guessed version number here):
+
+```toml
+kotlinxCoroutinesTest = "1.10.2"
+robolectric = "4.14.1"
+```
+
+and library aliases:
+
+```toml
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+```
+
+In `app/build.gradle.kts`'s `commonTest.dependencies { ... }` block, add:
+
+```kotlin
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.robolectric)
+            implementation(libs.androidx.testCore) // already used by androidInstrumentedTest; ApplicationProvider comes from here
+```
+
+This requires one online Gradle sync to fetch the new dependencies before `--offline` works again.
+
 - [ ] **Step 2: Write the failing test**
+
+This project's `:app` module targets Android only (no JVM/native Kotlin target), so
+`Room.inMemoryDatabaseBuilder<T>()` only has the `Context`-requiring Android overload — a plain
+`testDebugUnitTest` run has no `Context` to pass. This test therefore runs under Robolectric
+(`@RunWith(RobolectricTestRunner::class)`), which supplies a real (fake) Android `Context` via
+`ApplicationProvider.getApplicationContext()`.
 
 ```kotlin
 // app/src/commonTest/kotlin/com/maksimowiczm/foodyou/habits/infrastructure/room/RoomSupplementRepositoryTest.kt
@@ -405,12 +444,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import androidx.test.core.app.ApplicationProvider
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDate
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
 // A concrete, test-only @Database is required -- Room can only build a class carrying this
 // annotation, not the bare HabitsDatabase interface (same reason MeasurementSuggestionTestDatabase
@@ -422,9 +464,15 @@ import kotlinx.datetime.LocalDate
 )
 internal abstract class SupplementTestDatabase : RoomDatabase(), HabitsDatabase
 
+@RunWith(RobolectricTestRunner::class)
 class RoomSupplementRepositoryTest {
     private fun buildDatabase(): SupplementTestDatabase =
-        Room.inMemoryDatabaseBuilder<SupplementTestDatabase>().setDriver(BundledSQLiteDriver()).build()
+        Room.inMemoryDatabaseBuilder(
+                ApplicationProvider.getApplicationContext(),
+                SupplementTestDatabase::class.java,
+            )
+            .setDriver(BundledSQLiteDriver())
+            .build()
 
     @Test
     fun `add, list, and delete supplements`() = runTest {
@@ -685,6 +733,8 @@ git commit -m "feat: add HabitsPreferences for the default-coffee configuration"
 
 `MeasurementSuggestionEntity` declares `@ForeignKey`s to `ProductEntity`/`RecipeEntity`. Room requires every FK's referenced entity to be declared in the *same* `@Database`, and SQLite enforces the FK at insert time (a row can't reference a nonexistent `Product.id`) — so this test builds the real `FoodYouDatabase` in-memory (it already declares every entity) rather than a stripped-down parallel database, and inserts the minimal parent `Product` rows via raw SQL first, mirroring the exact `execSQL` pattern the migration fixture tests already use.
 
+This project's `:app` module targets Android only, so (per Task 3's Step 1a) `Room.inMemoryDatabaseBuilder<T>()` needs a `Context` — this test runs under Robolectric (`@RunWith(RobolectricTestRunner::class)`) for the same reason `RoomSupplementRepositoryTest` does. The Robolectric/coroutines-test dependencies were already added in Task 3 Step 1a; nothing new to add here.
+
 ```kotlin
 // app/src/commonTest/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomFoodMeasurementSuggestionRepositoryCountTest.kt
 package com.maksimowiczm.foodyou.food.infrastructure.repository
@@ -693,6 +743,7 @@ import androidx.room.Room
 import androidx.room.useWriterConnection
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import androidx.sqlite.execSQL
+import androidx.test.core.app.ApplicationProvider
 import com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase
 import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementType
 import com.maksimowiczm.foodyou.food.domain.entity.FoodId
@@ -701,11 +752,19 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(RobolectricTestRunner::class)
 class RoomFoodMeasurementSuggestionRepositoryCountTest {
     private suspend fun buildDatabase(): FoodYouDatabase {
         val db =
-            Room.inMemoryDatabaseBuilder<FoodYouDatabase>().setDriver(BundledSQLiteDriver()).build()
+            Room.inMemoryDatabaseBuilder(
+                    ApplicationProvider.getApplicationContext(),
+                    FoodYouDatabase::class.java,
+                )
+                .setDriver(BundledSQLiteDriver())
+                .build()
         db.useWriterConnection { connection ->
             connection.execSQL(
                 "INSERT INTO Product (id, name, sourceType, isLiquid) VALUES (1, 'Coffee', 0, 0)"
