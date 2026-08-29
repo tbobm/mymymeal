@@ -29,6 +29,17 @@ abstract class ProductDao {
     )
     abstract fun observeProducts(limit: Int, offset: Int): Flow<List<ProductEntity>>
 
+    /** Backs the "Generics" management screen: all user-created (non-3P) products. */
+    @Query(
+        """
+        SELECT *
+        FROM Product
+        WHERE sourceType = :source
+        ORDER BY name COLLATE NOCASE
+        """
+    )
+    abstract fun observeProductsBySource(source: FoodSourceType): Flow<List<ProductEntity>>
+
     @Insert abstract suspend fun insertProduct(product: ProductEntity): Long
 
     @Update abstract suspend fun updateProduct(product: ProductEntity)

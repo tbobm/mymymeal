@@ -37,6 +37,7 @@ fun SettingsScreen(
     onPersonalization: () -> Unit,
     onDatabase: () -> Unit,
     onTags: () -> Unit,
+    onGenericFoods: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -122,6 +123,15 @@ fun SettingsScreen(
             item {
                 TagSettingsListItem(
                     onClick = onTags,
+                    shape = shape,
+                    color = color,
+                    contentColor = contentColor,
+                )
+            }
+
+            item {
+                GenericFoodsSettingsListItem(
+                    onClick = onGenericFoods,
                     shape = shape,
                     color = color,
                     contentColor = contentColor,

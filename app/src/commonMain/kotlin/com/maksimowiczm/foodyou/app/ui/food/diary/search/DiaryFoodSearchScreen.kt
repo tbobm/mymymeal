@@ -20,6 +20,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.List
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -63,6 +67,7 @@ fun DiaryFoodSearchScreen(
     onBack: () -> Unit,
     onCreateRecipe: () -> Unit,
     onCreateProduct: () -> Unit,
+    onManageGenerics: () -> Unit,
     onMeasure: (FoodId, Measurement) -> Unit,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
@@ -117,6 +122,15 @@ fun DiaryFoodSearchScreen(
                 subtitle = { Text(dateFormatter.formatDate(date)) },
                 titleHorizontalAlignment = Alignment.CenterHorizontally,
                 navigationIcon = { ArrowBackIconButton(onBack) },
+                actions = {
+                    IconButton(onClick = onManageGenerics) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Outlined.List,
+                            contentDescription =
+                                stringResource(Res.string.action_manage_generic_foods),
+                        )
+                    }
+                },
                 scrollBehavior = scrollBehavior,
             )
         }

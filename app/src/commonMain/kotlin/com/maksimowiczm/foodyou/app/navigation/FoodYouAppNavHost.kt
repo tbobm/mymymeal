@@ -21,6 +21,7 @@ import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.CreateQuickAddScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.UpdateQuickAddScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.search.DiaryFoodSearchScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.update.UpdateEntryScreen
+import com.maksimowiczm.foodyou.app.ui.food.generic.GenericFoodsScreen
 import com.maksimowiczm.foodyou.app.ui.food.product.CreateProductScreen
 import com.maksimowiczm.foodyou.app.ui.food.product.UpdateProductScreen
 import com.maksimowiczm.foodyou.app.ui.food.recipe.CreateRecipeScreen
@@ -109,10 +110,28 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onPersonalization = { navController.navigateSingleTop(Personalization) },
                 onDatabase = { navController.navigateSingleTop(DatabaseSettings) },
                 onTags = { navController.navigateSingleTop(TagSetup) },
+                onGenericFoods = { navController.navigateSingleTop(GenericFoods) },
             )
         }
         forwardBackwardComposable<TagSetup> {
             TagSettingsScreen(onBack = { navController.popBackStackInclusive<TagSetup>() })
+        }
+        forwardBackwardComposable<GenericFoods> {
+            GenericFoodsScreen(
+                onBack = { navController.popBackStackInclusive<GenericFoods>() },
+                onCreate = { navController.navigateSingleTop(GenericFoodsCreate) },
+                onEdit = { id -> navController.navigateSingleTop(UpdateProduct(id.id)) },
+            )
+        }
+        forwardBackwardComposable<GenericFoodsCreate> {
+            CreateProductScreen(
+                onBack = { navController.popBackStackInclusive<GenericFoodsCreate>() },
+                onCreate = { navController.popBackStackInclusive<GenericFoodsCreate>() },
+                onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                onUpdateOpenFoodFactsCredentials = {
+                    navController.navigateSingleTop(OpenFoodFactsLogin)
+                },
+            )
         }
         forwardBackwardComposable<Language> {
             LanguageScreen(onBack = { navController.popBackStackInclusive<Language>() })
@@ -224,6 +243,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onCreateProduct = {
                     navController.navigateSingleTop(FoodDiaryCreateProduct(date, mealId))
                 },
+                onManageGenerics = { navController.navigateSingleTop(GenericFoods) },
                 onMeasure = { foodId, measurement ->
                     navController.navigate(
                         FoodDiaryCreateEntry(
@@ -426,6 +446,10 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object MealSetup
 
 @Serializable private object TagSetup
+
+@Serializable private object GenericFoods
+
+@Serializable private object GenericFoodsCreate
 
 @Serializable private data class Goals(val epochDay: Long)
 

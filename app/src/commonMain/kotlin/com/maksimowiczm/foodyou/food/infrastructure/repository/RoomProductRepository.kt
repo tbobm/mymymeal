@@ -2,6 +2,7 @@ package com.maksimowiczm.foodyou.food.infrastructure.repository
 
 import com.maksimowiczm.foodyou.common.domain.food.FoodSource
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
+import com.maksimowiczm.foodyou.common.infrastructure.room.FoodSourceType
 import com.maksimowiczm.foodyou.common.infrastructure.room.toDomain
 import com.maksimowiczm.foodyou.common.infrastructure.room.toEntity
 import com.maksimowiczm.foodyou.common.infrastructure.room.toEntityNutrients
@@ -17,6 +18,11 @@ import kotlinx.coroutines.flow.map
 internal class RoomProductRepository(private val productDao: ProductDao) : ProductRepository {
     override fun observeProducts(limit: Int, offset: Int): Flow<List<Product>> =
         productDao.observeProducts(limit, offset).map { list -> list.map { it.toModel() } }
+
+    override fun observeProducts(source: FoodSource.Type): Flow<List<Product>> =
+        productDao.observeProductsBySource(source.toEntity()).map { list ->
+            list.map { it.toModel() }
+        }
 
     override fun observeProduct(id: FoodId.Product): Flow<Product?> =
         productDao.observeProduct(id.id).map { it?.toModel() }

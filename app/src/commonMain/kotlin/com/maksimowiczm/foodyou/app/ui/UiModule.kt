@@ -4,6 +4,7 @@ import com.maksimowiczm.foodyou.app.ui.changelog.changelog
 import com.maksimowiczm.foodyou.app.ui.database.database
 import com.maksimowiczm.foodyou.app.ui.food.diary.foodDiary
 import com.maksimowiczm.foodyou.app.ui.food.food
+import com.maksimowiczm.foodyou.app.ui.food.generic.genericFoods
 import com.maksimowiczm.foodyou.app.ui.goals.goals
 import com.maksimowiczm.foodyou.app.ui.home.home
 import com.maksimowiczm.foodyou.app.ui.language.language
@@ -24,6 +25,7 @@ val uiModule = module {
     database()
     food()
     foodDiary()
+    genericFoods()
     goals()
     home()
     language()
