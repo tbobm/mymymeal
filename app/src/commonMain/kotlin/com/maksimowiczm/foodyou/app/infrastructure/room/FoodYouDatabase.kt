@@ -43,6 +43,7 @@ import com.maksimowiczm.foodyou.food.search.infrastructure.room.RecipeAllIngredi
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.SearchEntry
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.USDAPagingKeyEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryProductEntity
+import com.maksimowiczm.foodyou.habits.infrastructure.room.HabitsDatabase
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeIngredientEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.FoodDiaryDatabase
@@ -145,7 +146,8 @@ abstract class FoodYouDatabase :
     FoodSearchDatabase,
     FoodDiaryDatabase,
     SponsorshipDatabase,
-    TagDatabase {
+    TagDatabase,
+    HabitsDatabase {
 
     override suspend fun <T> withTransaction(block: suspend DomainTransactionScope<T>.() -> T): T =
         useWriterConnection {
