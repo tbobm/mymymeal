@@ -11,6 +11,7 @@
     <string name="headline_general">General</string>
     <string name="headline_macronutrients">Macronutrients</string>
     <string name="headline_meals">Meals</string>
+    <string name="headline_habits">Habits</string>
     <string name="headline_delete_food">Delete food</string>
     <string name="headline_edit_product">Edit product</string>
     <string name="headline_permission_required">Permission required</string>
@@ -69,6 +70,7 @@
     <string name="unit_milliliter_short" translatable="false">ml</string>
     <string name="unit_milligram_short" translatable="false">mg</string>
     <string name="unit_microgram_short" translatable="false">µg</string>
+    <string name="unit_cups">cups</string>
     <plurals name="unit_gram">
         <item quantity="one">gram</item>
         <item quantity="other">grams</item>
