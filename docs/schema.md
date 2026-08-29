@@ -1,9 +1,9 @@
-# Database schema (as of this fork, schema version 34)
+# Database schema (as of this fork, schema version 35)
 
 Single Room database: `FoodYouDatabase`
 (`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt`).
 `exportSchema = true`; every version's JSON schema is checked in under
-`app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/{1..34}.json`.
+`app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/{1..35}.json`.
 
 ## The load-bearing finding: entries already snapshot at write time
 
@@ -87,6 +87,19 @@ than threading a tag filter through `FoodSearchDao`'s existing UNION/CTE queries
 `ponytail:` comment on `FoodSearchViewModel.filterByTag` for the tradeoff (per-source item counts
 can be briefly stale relative to the filtered list).
 
+### Habits (`habits/infrastructure/room/`) — coffee + supplement tracking, added v35
+
+| Entity | Table | Key columns | Notes |
+|---|---|---|---|
+| `SupplementEntity` | `Supplement` | `id` PK (autogenerate), `name`, `sortOrder` | User-managed list of supplements. `sortOrder` is append-only insertion order, no reorder UI. |
+| `SupplementIntakeEntity` | `SupplementIntake` | `(supplementId, date)` composite PK, FK cascade-delete | Adherence only -- presence of a row means taken that day. No dose, no timestamp. |
+
+Coffee tracking added no new table: cup count is derived from the existing `MeasurementSuggestion`
+table (already populated on every diary log, keyed by the *catalog* `productId`/`recipeId`), and
+caffeine mg reuses the existing per-day nutrition aggregate. The only new state is
+`HabitsPreferences` (DataStore, not Room) recording which food/measurement/meal counts as the
+one-tap "default coffee".
+
 ### Other
 
 - `SponsorshipEntity` (`sponsorship/infrastructure/room/`) — Ko-fi/crypto sponsor list, unrelated to nutrition data.
@@ -148,6 +161,7 @@ Defined across `FoodYouDatabase.kt` (autoMigrations list + `migrations` companio
 | 31→32 | Manual (`FoodSearchFtsCyrillicMigration`) | Add Cyrillic tokenizer support to the FTS tables. |
 | **32→33** | Manual (`addProvenanceAndCostColumns`) | **PRD 1.2 + 1.3.** Adds `sourceKind`/`confidence`/`originProductId`/`originRecipeId` to `Measurement` (all nullable, `sourceKind = 'recipe'` backfilled where `recipeId IS NOT NULL`); `sourceKind`/`confidence` (NOT NULL, defaulted) + `unitCost`/`currency` to `ManualDiaryEntry`; `pricePerUnit`/`currency` to `Product`; `unitCost`/`currency` to `DiaryProduct` and `DiaryRecipe`. Purely additive, no destructive change. |
 | **33→34** | Manual (`addTagTables`) | **PRD 3.5.** Adds `Tag`, `ProductTagCrossRef`, `RecipeTagCrossRef`, `ManualDiaryEntryTagCrossRef` — see the Tags section above. Purely additive, all new FKs `ON DELETE CASCADE`, no existing table or column altered. |
+| **34→35** | Manual (`addHabitsTables`) | Adds `Supplement`, `SupplementIntake` for the habits-tracking supplement checklist. Purely additive, FK `ON DELETE CASCADE`, no existing table or column altered. |
 
 **Migration fixture tests already exist** for the manual migrations, satisfying PRD §4's migration
 policy pattern (extend, don't parallel):
