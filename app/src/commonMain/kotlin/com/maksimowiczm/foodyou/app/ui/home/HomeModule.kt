@@ -43,7 +43,7 @@ fun Module.home() {
         HabitsCardViewModel(
             supplementRepository = get(),
             habitsPreferencesRepository = userPreferencesRepository(),
-            measurementSuggestionRepository = get(),
+            foodDiaryEntryRepository = get(),
             observeDiaryMealsUseCase = get(),
             observeFoodUseCase = get(),
             createFoodDiaryEntryUseCase = get(),

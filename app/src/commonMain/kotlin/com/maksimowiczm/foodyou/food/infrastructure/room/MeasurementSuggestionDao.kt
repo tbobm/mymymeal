@@ -52,21 +52,4 @@ interface MeasurementSuggestionDao {
         """
     )
     fun observeRecentFoods(limit: Int): Flow<List<RecentFoodSuggestion>>
-
-    @Query(
-        """
-        SELECT COUNT(*)
-        FROM MeasurementSuggestion
-        WHERE
-            (COALESCE(:productId, -1) = productId OR COALESCE(:recipeId, -1) = recipeId)
-            AND epochSeconds >= :sinceEpochSeconds
-            AND epochSeconds < :untilEpochSeconds
-        """
-    )
-    fun observeCount(
-        productId: Long?,
-        recipeId: Long?,
-        sinceEpochSeconds: Long,
-        untilEpochSeconds: Long,
-    ): Flow<Int>
 }

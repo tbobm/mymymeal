@@ -13,9 +13,9 @@ import com.maksimowiczm.foodyou.common.domain.measurement.type
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
 import com.maksimowiczm.foodyou.common.result.onSuccess
 import com.maksimowiczm.foodyou.food.domain.entity.FoodId
-import com.maksimowiczm.foodyou.food.domain.repository.FoodMeasurementSuggestionRepository
 import com.maksimowiczm.foodyou.food.domain.usecase.ObserveFoodUseCase
 import com.maksimowiczm.foodyou.fooddiary.domain.event.FoodDiaryEntryCreatedEvent
+import com.maksimowiczm.foodyou.fooddiary.domain.repository.FoodDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.usecase.CreateFoodDiaryEntryUseCase
 import com.maksimowiczm.foodyou.fooddiary.domain.usecase.ObserveDiaryMealsUseCase
 import com.maksimowiczm.foodyou.habits.domain.entity.HabitsPreferences
@@ -31,16 +31,12 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.atStartOfDayIn
-import kotlinx.datetime.plus
 
 internal class HabitsCardViewModel(
     private val supplementRepository: SupplementRepository,
     private val habitsPreferencesRepository: UserPreferencesRepository<HabitsPreferences>,
-    private val measurementSuggestionRepository: FoodMeasurementSuggestionRepository,
+    private val foodDiaryEntryRepository: FoodDiaryEntryRepository,
     private val observeDiaryMealsUseCase: ObserveDiaryMealsUseCase,
     private val observeFoodUseCase: ObserveFoodUseCase,
     private val createFoodDiaryEntryUseCase: CreateFoodDiaryEntryUseCase,
@@ -57,8 +53,6 @@ internal class HabitsCardViewModel(
         dateState
             .filterNotNull()
             .flatMapLatest { date ->
-                val (sinceEpochSeconds, untilEpochSeconds) = date.dayEpochSecondsRange()
-
                 // Cups-today depends on the configured default coffee, so the preferences flow is
                 // pre-flattened into a (prefs, cupsToday) pair before joining the rest of the
                 // sources in a single flat `combine`.
@@ -69,11 +63,18 @@ internal class HabitsCardViewModel(
                             if (defaultCoffeeFoodId == null) {
                                 flowOf(0)
                             } else {
-                                measurementSuggestionRepository.observeCountByFoodId(
-                                    foodId = defaultCoffeeFoodId,
-                                    sinceEpochSeconds = sinceEpochSeconds,
-                                    untilEpochSeconds = untilEpochSeconds,
-                                )
+                                observeFoodUseCase.observe(defaultCoffeeFoodId).flatMapLatest { food
+                                    ->
+                                    if (food == null) {
+                                        flowOf(0)
+                                    } else {
+                                        foodDiaryEntryRepository.observeEntryCountByFoodName(
+                                            name = food.headline,
+                                            isRecipe = defaultCoffeeFoodId is FoodId.Recipe,
+                                            date = date,
+                                        )
+                                    }
+                                }
                             }
                         cupsToday.map { cups -> prefs to cups }
                     }
@@ -172,11 +173,4 @@ internal class HabitsCardViewModel(
 private fun HabitsPreferences.toDefaultCoffeeFoodId(): FoodId? {
     val id = defaultCoffeeFoodId ?: return null
     return if (defaultCoffeeIsRecipe) FoodId.Recipe(id) else FoodId.Product(id)
-}
-
-private fun LocalDate.dayEpochSecondsRange(): Pair<Long, Long> {
-    val timeZone = TimeZone.currentSystemDefault()
-    val start = atStartOfDayIn(timeZone).epochSeconds
-    val end = this.plus(1, DateTimeUnit.DAY).atStartOfDayIn(timeZone).epochSeconds
-    return start to end
 }

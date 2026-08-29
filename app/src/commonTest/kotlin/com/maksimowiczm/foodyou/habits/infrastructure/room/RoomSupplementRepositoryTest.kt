@@ -65,4 +65,18 @@ class RoomSupplementRepositoryTest {
         repository.setTaken(id, today, taken = false)
         assertTrue(repository.observeTakenIdsForDate(today).first().isEmpty())
     }
+
+    @Test
+    fun `concurrent double-tap setTaken does not throw and does not duplicate the row`() = runTest {
+        val db = buildDatabase()
+        val repository = RoomSupplementRepository(db.supplementDao)
+        repository.addSupplement("Vitamin D")
+        val id = repository.observeSupplements().first().single().id
+        val today = LocalDate(2026, 8, 29)
+
+        repository.setTaken(id, today, taken = true)
+        repository.setTaken(id, today, taken = true)
+
+        assertEquals(setOf(id), repository.observeTakenIdsForDate(today).first())
+    }
 }

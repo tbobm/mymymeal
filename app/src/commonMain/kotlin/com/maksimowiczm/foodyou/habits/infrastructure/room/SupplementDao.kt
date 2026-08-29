@@ -1,8 +1,8 @@
 package com.maksimowiczm.foodyou.habits.infrastructure.room
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
@@ -26,7 +26,8 @@ abstract class SupplementDao {
     @Query("SELECT supplementId FROM SupplementIntake WHERE date = :date")
     abstract fun observeIntakeSupplementIdsForDate(date: Long): Flow<List<Long>>
 
-    @Insert protected abstract suspend fun insertIntake(intake: SupplementIntakeEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    protected abstract suspend fun insertIntake(intake: SupplementIntakeEntity)
 
     @Query("DELETE FROM SupplementIntake WHERE supplementId = :supplementId AND date = :date")
     protected abstract suspend fun deleteIntake(supplementId: Long, date: Long)

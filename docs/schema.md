@@ -94,11 +94,12 @@ can be briefly stale relative to the filtered list).
 | `SupplementEntity` | `Supplement` | `id` PK (autogenerate), `name`, `sortOrder` | User-managed list of supplements. `sortOrder` is append-only insertion order, no reorder UI. |
 | `SupplementIntakeEntity` | `SupplementIntake` | `(supplementId, date)` composite PK, FK cascade-delete | Adherence only -- presence of a row means taken that day. No dose, no timestamp. |
 
-Coffee tracking added no new table: cup count is derived from the existing `MeasurementSuggestion`
-table (already populated on every diary log, keyed by the *catalog* `productId`/`recipeId`), and
-caffeine mg reuses the existing per-day nutrition aggregate. The only new state is
-`HabitsPreferences` (DataStore, not Room) recording which food/measurement/meal counts as the
-one-tap "default coffee".
+Coffee tracking added no new table: cup count is a live query joining `Measurement` against its
+snapshot food (`DiaryProduct`/`DiaryRecipe`) by name, matched against the configured default
+coffee's current catalog name -- so it reflects diary deletes and edits immediately instead of
+drifting like an append-only log would. Caffeine mg reuses the existing per-day nutrition aggregate
+across all diary entries (unrelated to cup count). The only new state is `HabitsPreferences`
+(DataStore, not Room) recording which food/measurement/meal counts as the one-tap "default coffee".
 
 ### Other
 

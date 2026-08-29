@@ -12,11 +12,4 @@ interface FoodMeasurementSuggestionRepository {
 
     /** Most recently logged foods, each with the measurement it was last logged with. */
     fun observeRecentFoods(limit: Int): Flow<List<RecentFood>>
-
-    /** Count of suggestions recorded for [foodId] within `[sinceEpochSeconds, untilEpochSeconds)`. */
-    fun observeCountByFoodId(
-        foodId: FoodId,
-        sinceEpochSeconds: Long,
-        untilEpochSeconds: Long,
-    ): Flow<Int>
 }

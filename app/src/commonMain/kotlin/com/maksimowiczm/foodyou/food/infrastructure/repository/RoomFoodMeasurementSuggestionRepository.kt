@@ -31,18 +31,6 @@ internal class RoomFoodMeasurementSuggestionRepository(
         measurementSuggestionDao.observeRecentFoods(limit).map { list ->
             list.map(RecentFoodSuggestion::toRecentFood)
         }
-
-    override fun observeCountByFoodId(
-        foodId: FoodId,
-        sinceEpochSeconds: Long,
-        untilEpochSeconds: Long,
-    ): Flow<Int> =
-        measurementSuggestionDao.observeCount(
-            productId = (foodId as? FoodId.Product)?.id,
-            recipeId = (foodId as? FoodId.Recipe)?.id,
-            sinceEpochSeconds = sinceEpochSeconds,
-            untilEpochSeconds = untilEpochSeconds,
-        )
 }
 
 private fun MeasurementSuggestionDao.observeByFoodId(
