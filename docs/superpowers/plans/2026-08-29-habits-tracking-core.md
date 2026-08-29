@@ -744,7 +744,6 @@ package com.maksimowiczm.foodyou.food.infrastructure.repository
 
 import androidx.room.Room
 import androidx.room.useWriterConnection
-import androidx.sqlite.execSQL
 import androidx.test.core.app.ApplicationProvider
 import com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase
 import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementType
@@ -766,13 +765,21 @@ class RoomFoodMeasurementSuggestionRepositoryCountTest {
                     FoodYouDatabase::class.java,
                 )
                 .build()
+        // db.useWriterConnection gives a Transactor/PooledConnection, not a SQLiteConnection --
+        // androidx.sqlite.execSQL (used in the migration tests, which get a real SQLiteConnection
+        // from MigrationTestHelper) doesn't apply here. usePrepared + step() is the no-bind-arg
+        // raw-SQL path on this connection type.
         db.useWriterConnection { connection ->
-            connection.execSQL(
+            connection.usePrepared(
                 "INSERT INTO Product (id, name, sourceType, isLiquid) VALUES (1, 'Coffee', 0, 0)"
-            )
-            connection.execSQL(
+            ) {
+                it.step()
+            }
+            connection.usePrepared(
                 "INSERT INTO Product (id, name, sourceType, isLiquid) VALUES (2, 'Tea', 0, 0)"
-            )
+            ) {
+                it.step()
+            }
         }
         return db
     }
