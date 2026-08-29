@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Flag
+import androidx.compose.material.icons.outlined.LocalCafe
 import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -180,8 +181,7 @@ private fun HomePersonalizationScreen(
                                 HomeCard.Calendar -> CalendarCardContent()
                                 HomeCard.Goals -> GoalsCardContent(onMore = onGoals)
                                 HomeCard.Meals -> MealsCardContent(onMore = onMeals)
-                                // TODO: Habits card UI (later task)
-                                HomeCard.Habits -> {}
+                                HomeCard.Habits -> HabitsCardContent()
                             }
                         }
                     }
@@ -245,6 +245,18 @@ private fun RowScope.MealsCardContent(onMore: () -> Unit) {
             contentDescription = stringResource(Res.string.action_show_more),
         )
     }
+    DragHandle(modifier = Modifier.hapticDraggableHandle())
+}
+
+@Composable
+context(_: ReorderableCollectionItemScope)
+private fun RowScope.HabitsCardContent() {
+    Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+        Icon(imageVector = Icons.Outlined.LocalCafe, contentDescription = null)
+    }
+    Spacer(Modifier.width(16.dp))
+    Text(stringResource(Res.string.headline_habits))
+    Spacer(Modifier.weight(1f))
     DragHandle(modifier = Modifier.hapticDraggableHandle())
 }
 
