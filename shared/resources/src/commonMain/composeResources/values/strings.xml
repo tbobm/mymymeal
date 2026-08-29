@@ -58,6 +58,11 @@
     <string name="action_new_tag">New tag</string>
     <string name="action_rename_tag">Rename tag</string>
     <string name="action_delete_tag">Delete tag</string>
+    <string name="headline_generic_foods" description="Management screen for user-created quick-add foods with manually typed nutriments, no third-party source">Generics</string>
+    <string name="neutral_manage_generic_foods">Manage your own quick-add foods</string>
+    <string name="neutral_no_generic_foods">No generic foods yet</string>
+    <string name="action_manage_generic_foods" description="Opens the Generics management screen from food search">Manage my foods</string>
+    <string name="action_delete_food">Delete food</string>
     <string name="headline_rolling_budget" description="Rolling weekly energy budget section title">Rolling budget</string>
 
     <string name="x_times_y" translatable="false">%1$s x %2$s</string>

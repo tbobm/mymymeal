@@ -11,6 +11,9 @@ interface ProductRepository {
 
     fun observeProducts(limit: Int, offset: Int): Flow<List<Product>>
 
+    /** Backs the "Generics" management screen: all user-created (non-3P) products. */
+    fun observeProducts(source: FoodSource.Type): Flow<List<Product>>
+
     /**
      * @param name Name of the product.
      * @param brand Brand of the product, if available.
