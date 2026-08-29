@@ -342,6 +342,8 @@ interface HabitsDatabase {
 
 In `FoodYouDatabase.kt`, add import `com.maksimowiczm.foodyou.habits.infrastructure.room.HabitsDatabase` and add `HabitsDatabase` to the `abstract class FoodYouDatabase : RoomDatabase(), TransactionProvider, FoodDatabase, FoodSearchDatabase, FoodDiaryDatabase, SponsorshipDatabase, TagDatabase,` → append `HabitsDatabase`. Room generates the `supplementDao` property implementation automatically (same mechanism as `tagDao` on `TagDatabase`) — no manual override needed.
 
+**Also add `HabitsDatabase::class` to `RoomModule.kt`'s `.binds(arrayOf(...))` call** (`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/RoomModule.kt`), alongside `TagDatabase::class`/`FoodDatabase::class`/etc. — this is the Koin-side binding that lets `habitsModule`'s `Scope.database: HabitsDatabase` (Task 3) actually resolve at runtime. `FoodYouDatabase` implementing the interface is necessary but not sufficient; without this line, `HabitsCard` (Task 9) crashes on first composition with `NoDefinitionFoundException: No definition found for type ...HabitsDatabase` — this only surfaces once something actually resolves `HabitsDatabase` through Koin at runtime, which nothing does until Task 9, so it's easy to miss until then. (This gap was found the hard way, on-device, during Task 9 — recorded here so a plan re-run does the binding at the right time instead.)
+
 - [ ] **Step 4: Compile to verify Room codegen**
 
 Run: `JAVA_HOME=/opt/homebrew/opt/openjdk@21 ./gradlew :app:compileDebugKotlin --offline -q`
