@@ -6,6 +6,7 @@ import com.maksimowiczm.foodyou.common.infrastructure.room.tag.TagDatabase
 import com.maksimowiczm.foodyou.food.infrastructure.room.FoodDatabase
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.FoodSearchDatabase
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.FoodDiaryDatabase
+import com.maksimowiczm.foodyou.habits.infrastructure.room.HabitsDatabase
 import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipDatabase
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
@@ -29,6 +30,7 @@ fun Module.roomModule() {
                 FoodDiaryDatabase::class,
                 SponsorshipDatabase::class,
                 TagDatabase::class,
+                HabitsDatabase::class,
             )
         )
 }

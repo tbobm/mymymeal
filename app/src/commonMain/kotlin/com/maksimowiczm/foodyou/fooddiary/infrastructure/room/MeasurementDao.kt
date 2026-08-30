@@ -66,6 +66,26 @@ abstract class MeasurementDao {
 
     @Query(
         """
+        SELECT COUNT(*)
+        FROM Measurement
+        INNER JOIN DiaryProduct ON Measurement.productId = DiaryProduct.id
+        WHERE DiaryProduct.name = :name AND Measurement.epochDay = :epochDay
+        """
+    )
+    abstract fun observeProductEntryCountByName(name: String, epochDay: Long): Flow<Int>
+
+    @Query(
+        """
+        SELECT COUNT(*)
+        FROM Measurement
+        INNER JOIN DiaryRecipe ON Measurement.recipeId = DiaryRecipe.id
+        WHERE DiaryRecipe.name = :name AND Measurement.epochDay = :epochDay
+        """
+    )
+    abstract fun observeRecipeEntryCountByName(name: String, epochDay: Long): Flow<Int>
+
+    @Query(
+        """
         SELECT *
         FROM DiaryProduct
         WHERE id = :id

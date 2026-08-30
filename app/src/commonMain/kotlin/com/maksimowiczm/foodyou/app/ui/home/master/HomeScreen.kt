@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.app.ui.home.calendar.CalendarCard
 import com.maksimowiczm.foodyou.app.ui.home.goals.GoalsCard
+import com.maksimowiczm.foodyou.app.ui.home.habits.HabitsCard
 import com.maksimowiczm.foodyou.app.ui.home.meals.card.MealsCards
 import com.maksimowiczm.foodyou.app.ui.home.poll.PollsCard
 import com.maksimowiczm.foodyou.app.ui.home.shared.HomeState
@@ -41,6 +42,7 @@ internal fun HomeScreen(
     onGoalsCardClick: (epochDay: Long) -> Unit,
     onEditDiaryEntryClick: (foodEntryId: Long?, manualEntryId: Long?) -> Unit,
     onOpenCalendarMonth: () -> Unit,
+    onHabitsSetDefaultCoffeeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
@@ -108,6 +110,13 @@ internal fun HomeScreen(
                             onLongClick = onMealCardLongClick,
                             contentPadding = PaddingValues(horizontal = 8.dp),
                             modifier = Modifier.padding(bottom = 8.dp),
+                        )
+
+                    HomeCard.Habits ->
+                        HabitsCard(
+                            homeState = homeState,
+                            onSetDefaultCoffeeClick = onHabitsSetDefaultCoffeeClick,
+                            modifier = Modifier.padding(horizontal = 8.dp).padding(bottom = 8.dp),
                         )
                 }
             }

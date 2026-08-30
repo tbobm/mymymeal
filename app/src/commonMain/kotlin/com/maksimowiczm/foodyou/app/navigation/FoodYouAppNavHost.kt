@@ -88,6 +88,9 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                     }
                 },
                 onOpenCalendarMonth = { navController.navigateSingleTop(CalendarMonth) },
+                onHabitsSetDefaultCoffeeClick = {
+                    navController.navigateSingleTop(HabitsPickDefaultCoffee)
+                },
             )
         }
         forwardBackwardComposable<CalendarMonth> {
@@ -261,6 +264,15 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 date = LocalDate.fromEpochDays(date),
                 mealId = mealId,
                 animatedVisibilityScope = this,
+            )
+        }
+        forwardBackwardComposable<HabitsPickDefaultCoffee> {
+            com.maksimowiczm.foodyou.app.ui.home.habits.PickDefaultCoffeeScreen(
+                onDone = { navController.popBackStackInclusive<HabitsPickDefaultCoffee>() },
+                onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                onUpdateOpenFoodFactsCredentials = {
+                    navController.navigateSingleTop(OpenFoodFactsLogin)
+                },
             )
         }
         forwardBackwardComposable<UpdateRecipe> {
@@ -476,6 +488,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private data class UpdateQuickAdd(val quickAddId: Long)
 
 @Serializable private data class FoodDiarySearch(val date: Long, val mealId: Long)
+
+@Serializable private data object HabitsPickDefaultCoffee
 
 @Serializable private data class FoodDiaryCreateProduct(val date: Long, val mealId: Long)
 

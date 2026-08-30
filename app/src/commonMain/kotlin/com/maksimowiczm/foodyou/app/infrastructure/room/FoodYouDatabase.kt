@@ -10,6 +10,7 @@ import androidx.room.useWriterConnection
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsCyrillicMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.LegacyMigrations
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.addHabitsTables
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.addProvenanceAndCostColumns
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.addTagTables
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.deleteUsedFoodEvent
@@ -42,6 +43,7 @@ import com.maksimowiczm.foodyou.food.search.infrastructure.room.RecipeAllIngredi
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.SearchEntry
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.USDAPagingKeyEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryProductEntity
+import com.maksimowiczm.foodyou.habits.infrastructure.room.HabitsDatabase
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeIngredientEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.FoodDiaryDatabase
@@ -49,6 +51,8 @@ import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.InitializeMealsCal
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.ManualDiaryEntryEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MeasurementEntity
+import com.maksimowiczm.foodyou.habits.infrastructure.room.SupplementEntity
+import com.maksimowiczm.foodyou.habits.infrastructure.room.SupplementIntakeEntity
 import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipDatabase
 import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntity
 
@@ -76,6 +80,8 @@ import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntit
             ProductTagCrossRefEntity::class,
             RecipeTagCrossRefEntity::class,
             ManualDiaryEntryTagCrossRefEntity::class,
+            SupplementEntity::class,
+            SupplementIntakeEntity::class,
         ],
     views = [RecipeAllIngredientsView::class, LatestMeasurementSuggestion::class],
     version = FoodYouDatabase.VERSION,
@@ -140,7 +146,8 @@ abstract class FoodYouDatabase :
     FoodSearchDatabase,
     FoodDiaryDatabase,
     SponsorshipDatabase,
-    TagDatabase {
+    TagDatabase,
+    HabitsDatabase {
 
     override suspend fun <T> withTransaction(block: suspend DomainTransactionScope<T>.() -> T): T =
         useWriterConnection {
@@ -151,7 +158,7 @@ abstract class FoodYouDatabase :
         }
 
     companion object {
-        const val VERSION = 34
+        const val VERSION = 35
 
         private val migrations: List<Migration> =
             listOf(
@@ -171,6 +178,7 @@ abstract class FoodYouDatabase :
                 FoodSearchFtsCyrillicMigration,
                 addProvenanceAndCostColumns,
                 addTagTables,
+                addHabitsTables,
             )
 
         fun Builder<FoodYouDatabase>.buildDatabase(

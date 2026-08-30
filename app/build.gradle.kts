@@ -99,6 +99,9 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.androidx.room.testing)
             implementation(libs.androidx.sqlite.bundled)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.robolectric)
+            implementation(libs.androidx.testCore)
         }
 
         androidMain.dependencies {
@@ -174,9 +177,8 @@ android {
 dependencies {
     debugImplementation(libs.jetbrains.compose.ui.tooling)
 
-    listOf("kspCommonMainMetadata", "kspAndroid", "kspIosArm64", "kspIosSimulatorArm64").forEach {
-        add(it, libs.androidx.room.compiler)
-    }
+    listOf("kspCommonMainMetadata", "kspAndroid", "kspIosArm64", "kspIosSimulatorArm64", "kspAndroidTest")
+        .forEach { add(it, libs.androidx.room.compiler) }
 }
 
 compose.resources {

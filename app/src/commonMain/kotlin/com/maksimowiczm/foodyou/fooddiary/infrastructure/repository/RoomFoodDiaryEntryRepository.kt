@@ -226,6 +226,17 @@ internal class RoomFoodDiaryEntryRepository(
 
     override suspend fun delete(id: FoodDiaryEntryId) = dao.deleteMeasurement(id.value)
 
+    override fun observeEntryCountByFoodName(
+        name: String,
+        isRecipe: Boolean,
+        date: LocalDate,
+    ): Flow<Int> =
+        if (isRecipe) {
+            dao.observeRecipeEntryCountByName(name, date.toEpochDays())
+        } else {
+            dao.observeProductEntryCountByName(name, date.toEpochDays())
+        }
+
     private fun observeFood(measurementEntity: MeasurementEntity): Flow<DiaryFood> =
         measurementEntity.productId?.let { productId -> observeProduct(productId) }
             ?: measurementEntity.recipeId?.let { recipeId -> observeRecipe(recipeId) }
