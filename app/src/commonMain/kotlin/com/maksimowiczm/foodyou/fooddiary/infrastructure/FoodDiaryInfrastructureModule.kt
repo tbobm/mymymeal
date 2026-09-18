@@ -6,6 +6,7 @@ import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepo
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.MealRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.service.LocalizedMealsProvider
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.compose.ComposeLocalizedMealsProvider
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.healthexport.DataStoreHealthConnectPreferencesRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.DataStoreMealsPreferencesRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomFoodDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomManualDiaryEntryRepository
@@ -21,6 +22,7 @@ internal fun Module.foodDiaryInfrastructureModule() {
     factoryOf(::ComposeLocalizedMealsProvider).bind<LocalizedMealsProvider>()
 
     userPreferencesRepositoryOf(::DataStoreMealsPreferencesRepository)
+    userPreferencesRepositoryOf(::DataStoreHealthConnectPreferencesRepository)
     factoryOf(::RoomFoodDiaryEntryRepository).bind<FoodDiaryEntryRepository>()
     factoryOf(::RoomManualDiaryEntryRepository).bind<ManualDiaryEntryRepository>()
     factoryOf(::RoomMealRepository).bind<MealRepository>()

@@ -13,6 +13,7 @@ import com.maksimowiczm.foodyou.app.ui.database.exportfulldata.ExportFullDataScr
 import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.ExternalDatabasesScreen
 import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.OpenFoodFactsLoginDialog
 import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.UpdateUsdaApiKeyDialog
+import com.maksimowiczm.foodyou.app.ui.database.healthconnect.HealthConnectScreen
 import com.maksimowiczm.foodyou.app.ui.database.importcsvproducts.ImportCsvProductsScreen
 import com.maksimowiczm.foodyou.app.ui.database.master.DatabaseSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.SwissFoodCompositionDatabaseScreen
@@ -169,6 +170,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onImportCsvProducts = { navController.navigateSingleTop(ImportCsvProducts) },
                 onExportCsvProducts = { navController.navigateSingleTop(ExportCsvProducts) },
                 onExportFullData = { navController.navigateSingleTop(ExportFullData) },
+                onHealthConnect = { navController.navigateSingleTop(HealthConnect) },
                 onDatabaseBackup = onDatabaseBackup,
             )
         }
@@ -202,6 +204,9 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onBack = { navController.popBackStackInclusive<ExportFullData>() },
                 onFinish = { navController.popBackStackInclusive<ExportFullData>() },
             )
+        }
+        forwardBackwardComposable<HealthConnect> {
+            HealthConnectScreen(onBack = { navController.popBackStackInclusive<HealthConnect>() })
         }
         dialog<UsdaApiKey> {
             UpdateUsdaApiKeyDialog(
@@ -482,6 +487,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object ExportCsvProducts
 
 @Serializable private object ExportFullData
+
+@Serializable private object HealthConnect
 
 @Serializable private data class FoodDiaryCreateQuickAdd(val epochDay: Long, val mealId: Long)
 
