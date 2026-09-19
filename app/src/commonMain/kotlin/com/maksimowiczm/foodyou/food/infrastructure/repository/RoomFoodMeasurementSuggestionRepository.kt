@@ -5,11 +5,9 @@ import com.maksimowiczm.foodyou.common.domain.measurement.from
 import com.maksimowiczm.foodyou.common.domain.measurement.rawValue
 import com.maksimowiczm.foodyou.common.domain.measurement.type
 import com.maksimowiczm.foodyou.food.domain.entity.FoodId
-import com.maksimowiczm.foodyou.food.domain.entity.RecentFood
 import com.maksimowiczm.foodyou.food.domain.repository.FoodMeasurementSuggestionRepository
 import com.maksimowiczm.foodyou.food.infrastructure.room.MeasurementSuggestionDao
 import com.maksimowiczm.foodyou.food.infrastructure.room.MeasurementSuggestionEntity
-import com.maksimowiczm.foodyou.food.infrastructure.room.RecentFoodSuggestion
 import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlinx.coroutines.flow.Flow
@@ -25,11 +23,6 @@ internal class RoomFoodMeasurementSuggestionRepository(
     override fun observeByFoodId(foodId: FoodId, limit: Int): Flow<List<Measurement>> =
         measurementSuggestionDao.observeByFoodId(foodId, limit).map { list ->
             list.map(MeasurementSuggestionEntity::toMeasurement)
-        }
-
-    override fun observeRecentFoods(limit: Int): Flow<List<RecentFood>> =
-        measurementSuggestionDao.observeRecentFoods(limit).map { list ->
-            list.map(RecentFoodSuggestion::toRecentFood)
         }
 }
 
@@ -54,10 +47,3 @@ private fun Measurement.toEntity(foodId: FoodId, now: Instant = Clock.System.now
 
 private fun MeasurementSuggestionEntity.toMeasurement(): Measurement =
     Measurement.from(type = type, rawValue = value)
-
-private fun RecentFoodSuggestion.toRecentFood(): RecentFood =
-    RecentFood(
-        foodId = productId?.let(FoodId::Product) ?: FoodId.Recipe(recipeId!!),
-        headline = headline,
-        measurement = Measurement.from(type = type, rawValue = value),
-    )

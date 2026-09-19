@@ -21,7 +21,6 @@ internal fun MealsCards(
     val viewModel: MealsCardsViewModel = koinViewModel()
     val diaryMeals = viewModel.diaryMeals.collectAsStateWithLifecycle().value
     val layout by viewModel.layout.collectAsStateWithLifecycle()
-    val recentFoods by viewModel.recentFoods.collectAsStateWithLifecycle()
 
     LaunchedEffect(homeState.selectedDate, viewModel) { viewModel.setDate(homeState.selectedDate) }
 
@@ -29,12 +28,8 @@ internal fun MealsCards(
         MealsCardsLayout.Horizontal ->
             HorizontalMealsCards(
                 meals = diaryMeals,
-                recentFoods = recentFoods,
                 onAdd = { mealId -> onAdd(homeState.selectedDate.toEpochDays(), mealId) },
                 onQuickAdd = { mealId -> onQuickAdd(homeState.selectedDate.toEpochDays(), mealId) },
-                onRelog = { recent, mealId ->
-                    viewModel.onRelog(recent, mealId, homeState.selectedDate)
-                },
                 onEditEntry = { model ->
                     val foodEntry = model as? FoodMealEntryModel
                     val manualEntry = model as? ManualMealEntryModel
@@ -50,12 +45,8 @@ internal fun MealsCards(
         MealsCardsLayout.Vertical ->
             VerticalMealsCards(
                 meals = diaryMeals,
-                recentFoods = recentFoods,
                 onAdd = { mealId -> onAdd(homeState.selectedDate.toEpochDays(), mealId) },
                 onQuickAdd = { mealId -> onQuickAdd(homeState.selectedDate.toEpochDays(), mealId) },
-                onRelog = { recent, mealId ->
-                    viewModel.onRelog(recent, mealId, homeState.selectedDate)
-                },
                 onEditEntry = { model ->
                     val foodEntry = model as? FoodMealEntryModel
                     val manualEntry = model as? ManualMealEntryModel

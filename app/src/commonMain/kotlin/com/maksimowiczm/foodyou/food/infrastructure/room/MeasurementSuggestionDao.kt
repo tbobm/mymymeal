@@ -26,30 +26,4 @@ interface MeasurementSuggestionDao {
         recipeId: Long?,
         limit: Int,
     ): Flow<List<MeasurementSuggestionEntity>>
-
-    @Query(
-        """
-        SELECT productId, recipeId, headline, type, value, epochSeconds
-        FROM (
-            SELECT
-                s.productId, s.recipeId,
-                CASE
-                    WHEN p.brand IS NOT NULL THEN p.name || ' (' || p.brand || ')'
-                    ELSE p.name
-                END AS headline,
-                s.type, s.value, s.epochSeconds
-            FROM LatestMeasurementSuggestion s
-            JOIN Product p ON s.productId = p.id
-            WHERE s.productId IS NOT NULL
-            UNION ALL
-            SELECT s.productId, s.recipeId, r.name AS headline, s.type, s.value, s.epochSeconds
-            FROM LatestMeasurementSuggestion s
-            JOIN Recipe r ON s.recipeId = r.id
-            WHERE s.recipeId IS NOT NULL
-        )
-        ORDER BY epochSeconds DESC
-        LIMIT :limit
-        """
-    )
-    fun observeRecentFoods(limit: Int): Flow<List<RecentFoodSuggestion>>
 }

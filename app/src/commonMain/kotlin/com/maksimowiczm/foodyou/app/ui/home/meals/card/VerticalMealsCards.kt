@@ -7,16 +7,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.maksimowiczm.foodyou.food.domain.entity.RecentFood
 import com.valentinilk.shimmer.Shimmer
 
 @Composable
 internal fun VerticalMealsCards(
     meals: List<MealModel>?,
-    recentFoods: List<RecentFood>,
     onAdd: (mealId: Long) -> Unit,
     onQuickAdd: (mealId: Long) -> Unit,
-    onRelog: (recent: RecentFood, mealId: Long) -> Unit,
     onEditEntry: (MealEntryModel) -> Unit,
     onDeleteEntry: (MealEntryModel) -> Unit,
     onLongClick: (mealId: Long) -> Unit,
@@ -34,10 +31,8 @@ internal fun VerticalMealsCards(
             meals.forEach { meal ->
                 MealCard(
                     meal = meal,
-                    recentFoods = recentFoods,
                     onAddFood = { onAdd(meal.id) },
                     onQuickAdd = { onQuickAdd(meal.id) },
-                    onRelog = { recent -> onRelog(recent, meal.id) },
                     onEditEntry = onEditEntry,
                     onDeleteEntry = onDeleteEntry,
                     onLongClick = { onLongClick(meal.id) },

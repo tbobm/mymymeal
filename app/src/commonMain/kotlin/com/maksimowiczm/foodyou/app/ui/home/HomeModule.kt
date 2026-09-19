@@ -18,11 +18,6 @@ fun Module.home() {
             observeDiaryMealsUseCase = get(),
             foodEntryRepository = get(),
             manualEntryRepository = get(),
-            foodMeasurementSuggestionRepository = get(),
-            observeFoodUseCase = get(),
-            createFoodDiaryEntryUseCase = get(),
-            eventBus = get(),
-            dateProvider = get(),
             mealsPreferencesRepository = userPreferencesRepository(),
         )
     }

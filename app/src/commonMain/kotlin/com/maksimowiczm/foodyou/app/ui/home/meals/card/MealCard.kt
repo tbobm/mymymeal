@@ -8,7 +8,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,7 +32,6 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -53,7 +51,6 @@ import com.maksimowiczm.foodyou.app.ui.common.utility.LocalNutrientsOrder
 import com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard
 import com.maksimowiczm.foodyou.common.compose.utility.LocalDateFormatter
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
-import com.maksimowiczm.foodyou.food.domain.entity.RecentFood
 import com.maksimowiczm.foodyou.settings.domain.entity.NutrientsOrder
 import foodyou.app.generated.resources.*
 import kotlinx.coroutines.launch
@@ -62,10 +59,8 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun MealCard(
     meal: MealModel,
-    recentFoods: List<RecentFood>,
     onAddFood: () -> Unit,
     onQuickAdd: () -> Unit,
-    onRelog: (RecentFood) -> Unit,
     onEditEntry: (MealEntryModel) -> Unit,
     onDeleteEntry: (MealEntryModel) -> Unit,
     onLongClick: () -> Unit,
@@ -128,23 +123,6 @@ internal fun MealCard(
                     ),
             ) {
                 Spacer(Modifier.height(16.dp))
-            }
-
-            AnimatedVisibility(
-                visible = recentFoods.isNotEmpty(),
-                enter =
-                    expandVertically(
-                        animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec()
-                    ),
-                exit =
-                    shrinkVertically(
-                        animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec()
-                    ),
-            ) {
-                Column {
-                    RecentFoodsRow(recentFoods = recentFoods, onRelog = onRelog)
-                    Spacer(Modifier.height(8.dp))
-                }
             }
 
             Row(
@@ -328,19 +306,6 @@ private fun FoodContainerItem(
         shape = shape,
         modifier = modifier.clickable { showBottomSheet = true },
     )
-}
-
-@Composable
-private fun RecentFoodsRow(
-    recentFoods: List<RecentFood>,
-    onRelog: (RecentFood) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    FlowRow(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        recentFoods.forEach { recent ->
-            SuggestionChip(onClick = { onRelog(recent) }, label = { Text(recent.headline) })
-        }
-    }
 }
 
 @Composable
