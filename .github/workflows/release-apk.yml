@@ -23,6 +23,10 @@ jobs:
         with:
           accept-android-sdk-licenses: true
           log-accepted-android-sdk-licenses: false
+          # The action's default `packages` input is "tools platform-tools", but the standalone
+          # `tools` package no longer exists in Google's SDK repository — installing it fails the
+          # whole step before Gradle ever runs. Only platform-tools is actually needed here.
+          packages: platform-tools
 
       - name: Setup Android SDK build tools
         run: |
