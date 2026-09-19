@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.health.WRITE_NUTRITION" />
 
     <queries>
         <intent>
@@ -12,6 +13,8 @@
         <intent>
             <action android:name="android.support.customtabs.action.CustomTabsService" />
         </intent>
+
+        <package android:name="com.google.android.apps.healthdata" />
     </queries>
 
     <application
@@ -37,7 +40,25 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- Required by Health Connect: shown when the user asks "why does this app want
+                 access to my health data" from the Health Connect app itself. -->
+            <intent-filter>
+                <action android:name="androidx.health.connect.action.SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
         </activity>
+
+        <!-- Required by Health Connect on API 34+: routes the system permission-usage entry
+             point to the same rationale screen as the intent-filter above. -->
+        <activity-alias
+            android:name=".app.infrastructure.android.HealthConnectPermissionsRationaleActivity"
+            android:exported="true"
+            android:targetActivity=".app.infrastructure.android.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
 
         <activity
             android:name=".app.infrastructure.android.ShareProductActivity"

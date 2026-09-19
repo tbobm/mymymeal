@@ -419,6 +419,20 @@
 
     <string name="action_export_full_data">Export full backup</string>
     <string name="description_export_full_data">Export all diary entries, foods, and recipes as a zip of CSV files</string>
+
+    <string name="headline_health_connect">Health Connect</string>
+    <string name="description_health_connect">Share your nutrition totals with Health Connect</string>
+    <string name="description_health_connect_unavailable">Health Connect isn\'t available on this device</string>
+    <string name="description_health_connect_needs_install">Health Connect needs to be installed to sync nutrition data</string>
+    <string name="action_install_health_connect">Install Health Connect</string>
+    <string name="description_health_connect_needs_permission">mymymeal needs permission to write nutrition data to Health Connect</string>
+    <string name="action_grant_health_connect_permission">Grant permission</string>
+    <string name="action_sync_nutrition_to_health_connect">Sync nutrition to Health Connect</string>
+    <string name="description_health_connect_toggle_off_keeps_data">Turning this off leaves records already written in Health Connect; remove them there if you want them gone</string>
+    <string name="action_sync_last_30_days">Sync last 30 days</string>
+    <string name="description_health_connect_last_synced">Last synced %1$s</string>
+    <string name="description_health_connect_never_synced">Never synced</string>
+    <string name="description_health_connect_syncing">Syncing…</string>
     <string name="notification_exporting_full_data">Exporting full backup</string>
     <string name="description_please_wait_while_exporting_full_data">Please wait while exporting your full backup</string>
     <string name="headline_export_complete">Export complete</string>

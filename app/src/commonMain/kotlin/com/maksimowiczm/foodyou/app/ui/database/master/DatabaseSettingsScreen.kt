@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Archive
 import androidx.compose.material.icons.outlined.CloudDownload
 import androidx.compose.material.icons.outlined.FileOpen
+import androidx.compose.material.icons.outlined.MonitorHeart
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFlexibleTopAppBar
@@ -28,6 +29,7 @@ fun DatabaseSettingsScreen(
     onImportCsvProducts: () -> Unit,
     onExportCsvProducts: () -> Unit,
     onExportFullData: () -> Unit,
+    onHealthConnect: () -> Unit,
     onDatabaseBackup: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -51,6 +53,7 @@ fun DatabaseSettingsScreen(
             item { ImportCsvProductsSettingsListItem(onImportCsvProducts) }
             item { ExportCsvProductsSettingsListItem(onExportCsvProducts) }
             item { ExportFullDataSettingsListItem(onExportFullData) }
+            item { HealthConnectSettingsListItem(onHealthConnect) }
             item { DatabaseBackup(onDatabaseBackup) }
         }
     }
@@ -99,6 +102,17 @@ private fun ExportFullDataSettingsListItem(onClick: () -> Unit, modifier: Modifi
         icon = { Icon(Icons.Outlined.Save, null) },
         label = { Text(stringResource(Res.string.action_export_full_data)) },
         supportingContent = { Text(stringResource(Res.string.description_export_full_data)) },
+        onClick = onClick,
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun HealthConnectSettingsListItem(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    SettingsListItem(
+        icon = { Icon(Icons.Outlined.MonitorHeart, null) },
+        label = { Text(stringResource(Res.string.headline_health_connect)) },
+        supportingContent = { Text(stringResource(Res.string.description_health_connect)) },
         onClick = onClick,
         modifier = modifier,
     )

@@ -112,6 +112,7 @@ kotlin {
             implementation(libs.sqlite.android)
             implementation(libs.androidx.glance.appwidget)
             implementation(libs.androidx.glance.material3)
+            implementation(libs.androidx.health.connect.client)
         }
 
         androidInstrumentedTest.dependencies {
