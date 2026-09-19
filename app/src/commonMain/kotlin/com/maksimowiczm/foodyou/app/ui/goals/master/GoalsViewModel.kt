@@ -8,6 +8,7 @@ import com.maksimowiczm.foodyou.fooddiary.domain.usecase.ObserveDiaryMealsUseCas
 import com.maksimowiczm.foodyou.goals.domain.entity.RollingBudgetPreferences
 import com.maksimowiczm.foodyou.goals.domain.repository.GoalsRepository
 import com.maksimowiczm.foodyou.goals.domain.usecase.ObserveRollingEnergyBalanceUseCase
+import com.maksimowiczm.foodyou.habits.domain.repository.CoffeeRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -20,6 +21,7 @@ internal class GoalsViewModel(
     private val observeDiaryMealsUseCase: ObserveDiaryMealsUseCase,
     private val observeRollingEnergyBalanceUseCase: ObserveRollingEnergyBalanceUseCase,
     private val rollingBudgetPreferencesRepository: UserPreferencesRepository<RollingBudgetPreferences>,
+    private val coffeeRepository: CoffeeRepository,
 ) : ViewModel() {
     private val mealsFlows = mutableMapOf<LocalDate, StateFlow<GoalsScreenUiState?>>()
 
@@ -46,9 +48,17 @@ internal class GoalsViewModel(
         val goal = goalsRepository.observeDailyGoals(date)
         val rollingBalance = observeRollingEnergyBalanceUseCase.observe(date)
         val rollingBudgetPreferences = rollingBudgetPreferencesRepository.observe()
+        val habitsCaffeineMg = coffeeRepository.observeCaffeineMgForDate(date)
 
         val flow =
-            combine(meals, goal, rollingBalance, rollingBudgetPreferences, ::GoalsScreenUiState)
+            combine(
+                    meals,
+                    goal,
+                    rollingBalance,
+                    rollingBudgetPreferences,
+                    habitsCaffeineMg,
+                    ::GoalsScreenUiState,
+                )
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(30_000),

@@ -27,10 +27,4 @@ interface FoodDiaryEntryRepository {
     suspend fun update(entry: FoodDiaryEntry)
 
     suspend fun delete(id: FoodDiaryEntryId)
-
-    /**
-     * Live count of today's diary entries whose snapshot food name matches [name] -- [isRecipe]
-     * selects whether to match against `DiaryRecipe` or `DiaryProduct`.
-     */
-    fun observeEntryCountByFoodName(name: String, isRecipe: Boolean, date: LocalDate): Flow<Int>
 }

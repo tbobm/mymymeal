@@ -42,6 +42,7 @@ import com.maksimowiczm.foodyou.app.ui.common.theme.LocalNutrientsPalette
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalNutrientsOrder
 import com.maksimowiczm.foodyou.common.compose.utility.LocalDateFormatter
+import com.maksimowiczm.foodyou.common.domain.food.NutrientValue
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFactsField
 import com.maksimowiczm.foodyou.common.domain.food.get
@@ -130,7 +131,15 @@ private fun GoalsPage(uiState: GoalsScreenUiState, modifier: Modifier = Modifier
 
     val filteredMeals =
         remember(meals, selectedMealsIds) { meals.filter { it.id in selectedMealsIds } }
-    val nutritionFacts = remember(filteredMeals) { filteredMeals.map { it.nutritionFacts }.sum() }
+    val nutritionFacts =
+        remember(filteredMeals, uiState.habitsCaffeineMg) {
+            val diaryFacts = filteredMeals.map { it.nutritionFacts }.sum()
+            // Habits coffee is logged outside the food diary, so it has no meal to belong to and
+            // is added on top of the diary sum instead (unaffected by the meal filter above).
+            diaryFacts.copy(
+                caffeine = diaryFacts.caffeine + NutrientValue.from(uiState.habitsCaffeineMg / 1000.0)
+            )
+        }
 
     Column(modifier) {
         MealsFilter(

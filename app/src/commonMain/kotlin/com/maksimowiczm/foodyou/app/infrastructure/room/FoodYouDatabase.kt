@@ -10,8 +10,10 @@ import androidx.room.useWriterConnection
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsCyrillicMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.LegacyMigrations
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.addCoffeeIntakeTable
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.addHabitsTables
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.addProvenanceAndCostColumns
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.addSupplementDose
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.addTagTables
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.deleteUsedFoodEvent
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.fixMeasurementSuggestions
@@ -43,6 +45,7 @@ import com.maksimowiczm.foodyou.food.search.infrastructure.room.RecipeAllIngredi
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.SearchEntry
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.USDAPagingKeyEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryProductEntity
+import com.maksimowiczm.foodyou.habits.infrastructure.room.CoffeeIntakeEntity
 import com.maksimowiczm.foodyou.habits.infrastructure.room.HabitsDatabase
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeIngredientEntity
@@ -82,6 +85,7 @@ import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntit
             ManualDiaryEntryTagCrossRefEntity::class,
             SupplementEntity::class,
             SupplementIntakeEntity::class,
+            CoffeeIntakeEntity::class,
         ],
     views = [RecipeAllIngredientsView::class, LatestMeasurementSuggestion::class],
     version = FoodYouDatabase.VERSION,
@@ -158,7 +162,7 @@ abstract class FoodYouDatabase :
         }
 
     companion object {
-        const val VERSION = 35
+        const val VERSION = 37
 
         private val migrations: List<Migration> =
             listOf(
@@ -179,6 +183,8 @@ abstract class FoodYouDatabase :
                 addProvenanceAndCostColumns,
                 addTagTables,
                 addHabitsTables,
+                addSupplementDose,
+                addCoffeeIntakeTable,
             )
 
         fun Builder<FoodYouDatabase>.buildDatabase(

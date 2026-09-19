@@ -14,6 +14,7 @@ fun Module.goals() {
             observeDiaryMealsUseCase = get(),
             observeRollingEnergyBalanceUseCase = get(),
             rollingBudgetPreferencesRepository = userPreferencesRepository(),
+            coffeeRepository = get(),
         )
     }
     viewModelOf(::DailyGoalsViewModel)

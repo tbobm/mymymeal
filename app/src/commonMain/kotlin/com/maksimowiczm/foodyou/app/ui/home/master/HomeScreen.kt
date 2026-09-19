@@ -42,7 +42,6 @@ internal fun HomeScreen(
     onGoalsCardClick: (epochDay: Long) -> Unit,
     onEditDiaryEntryClick: (foodEntryId: Long?, manualEntryId: Long?) -> Unit,
     onOpenCalendarMonth: () -> Unit,
-    onHabitsSetDefaultCoffeeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
@@ -115,7 +114,6 @@ internal fun HomeScreen(
                     HomeCard.Habits ->
                         HabitsCard(
                             homeState = homeState,
-                            onSetDefaultCoffeeClick = onHabitsSetDefaultCoffeeClick,
                             modifier = Modifier.padding(horizontal = 8.dp).padding(bottom = 8.dp),
                         )
                 }
