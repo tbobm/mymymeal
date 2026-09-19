@@ -2,24 +2,15 @@ package com.maksimowiczm.foodyou.app.ui.home.meals.card
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.maksimowiczm.foodyou.app.ui.food.diary.add.toDiaryFood
-import com.maksimowiczm.foodyou.common.domain.date.DateProvider
-import com.maksimowiczm.foodyou.common.domain.event.EventBus
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
-import com.maksimowiczm.foodyou.common.result.onSuccess
-import com.maksimowiczm.foodyou.food.domain.entity.RecentFood
-import com.maksimowiczm.foodyou.food.domain.repository.FoodMeasurementSuggestionRepository
-import com.maksimowiczm.foodyou.food.domain.usecase.ObserveFoodUseCase
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryEntry
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFoodRecipe
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryMeal
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.FoodDiaryEntry
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntry
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealsPreferences
-import com.maksimowiczm.foodyou.fooddiary.domain.event.FoodDiaryEntryCreatedEvent
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.FoodDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
-import com.maksimowiczm.foodyou.fooddiary.domain.usecase.CreateFoodDiaryEntryUseCase
 import com.maksimowiczm.foodyou.fooddiary.domain.usecase.ObserveDiaryMealsUseCase
 import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +18,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -39,11 +29,6 @@ internal class MealsCardsViewModel(
     private val observeDiaryMealsUseCase: ObserveDiaryMealsUseCase,
     private val foodEntryRepository: FoodDiaryEntryRepository,
     private val manualEntryRepository: ManualDiaryEntryRepository,
-    private val foodMeasurementSuggestionRepository: FoodMeasurementSuggestionRepository,
-    private val observeFoodUseCase: ObserveFoodUseCase,
-    private val createFoodDiaryEntryUseCase: CreateFoodDiaryEntryUseCase,
-    private val eventBus: EventBus,
-    private val dateProvider: DateProvider,
     mealsPreferencesRepository: UserPreferencesRepository<MealsPreferences>,
 ) : ViewModel() {
     private val dateState = MutableStateFlow<LocalDate?>(null)
@@ -67,15 +52,6 @@ internal class MealsCardsViewModel(
             initialValue = runBlocking { _layout.first() },
         )
 
-    val recentFoods: StateFlow<List<RecentFood>> =
-        foodMeasurementSuggestionRepository
-            .observeRecentFoods(RECENT_FOODS_LIMIT)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(60_000),
-                initialValue = emptyList(),
-            )
-
     fun setDate(date: LocalDate) {
         viewModelScope.launch { dateState.value = date }
     }
@@ -87,35 +63,6 @@ internal class MealsCardsViewModel(
                 is ManualMealEntryModel -> manualEntryRepository.delete(model.id)
             }
         }
-    }
-
-    /** Re-log a recently used food into [mealId] on [date] — one tap, no navigation. */
-    fun onRelog(recent: RecentFood, mealId: Long, date: LocalDate) {
-        viewModelScope.launch {
-            // Origin catalog food may have been deleted since it was last logged; skip silently.
-            val food = observeFoodUseCase.observe(recent.foodId).firstOrNull() ?: return@launch
-
-            createFoodDiaryEntryUseCase
-                .createDiaryEntry(
-                    measurement = recent.measurement,
-                    mealId = mealId,
-                    date = date,
-                    food = food.toDiaryFood(),
-                )
-                .onSuccess {
-                    eventBus.publish(
-                        FoodDiaryEntryCreatedEvent(
-                            foodId = food.id,
-                            timestamp = dateProvider.nowInstant(),
-                            measurement = recent.measurement,
-                        )
-                    )
-                }
-        }
-    }
-
-    private companion object {
-        const val RECENT_FOODS_LIMIT = 5
     }
 }
 

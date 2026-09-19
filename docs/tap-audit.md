@@ -1,6 +1,6 @@
 # Tap audit
 
-Measured on-device (emulator `mymymeal_api34`, API 34, debug build, schema v33) on a fresh install
+Measured on-device (emulator `mymymeal_api34`, API 34, debug build, schema v32) on a fresh install
 with no seeded Open Food Facts / USDA data (opted out at first-run onboarding). Tap counts start
 from the diary home screen (`HomeScreen`, the app's launch destination after onboarding), per PRD
 §3. Screenshots for each flow are in `docs/tap-audit-screenshots/`.
@@ -14,36 +14,16 @@ confirmed state change (screenshot evidence).
 
 | Flow | Taps (from home) | PRD §1.6 target | Meets target? |
 |---|---|---|---|
-| Log a previously logged food, via recent-food chip (PRD 3.3) | **1** | ≤2 | **Yes** |
-| Log a previously logged food, via search (no chip / older item) | **3** | ≤2 | No, but chip now covers the common case |
+| Log a previously logged food (product) | **3** | ≤2 | **No** |
 | Log a saved recipe | **3** (inferred, same UI path) | ≤2 | **No** |
 | Manual entry with estimated calories | **2** | not covered by §1.6 | n/a |
 | Log a barcode-scanned product | **2 to reach scanner**, then physical scan + **1** to confirm = **3+scan** | not covered by §1.6 (§1.6 only names "previously logged") | n/a, but same 3-tap confirm pattern |
 
 The PRD's two-tap acceptance criterion (§1.6, re-measured for §3.3) applies specifically to
-**"log a previously eaten meal."** Before PRD 3.3 slice 1 (one-tap re-log chips), that flow took
-**3 taps**, not 2. Slice 1 closes this gap for the common case — a food logged at least once now
-gets a one-tap chip on every meal card — bringing it to **1 tap**, below the ≤2 target. The
-search-based 3-tap path (flow 1 below) still exists and remains the only way to re-log a food that
-has fallen out of the top-N recent list.
+**"log a previously eaten meal."** That flow currently takes **3 taps**, not 2. This is the
+concrete gap PRD 3.3 (meal templates / fast re-log surfaced on the diary screen) exists to close.
 
-## 0. Log a previously logged food, via recent-food chip (PRD 3.3 slice 1)
-
-Precondition: a product ("TestSnack") had already been logged once (any meal, any day — the chip
-source is global recency, not meal-scoped; see the deliberate-simplification note in the
-implementation plan).
-
-1. **Tap** the `SuggestionChip` bearing the food's name, shown on every meal card (as long as the
-   food is among the 5 most-recently-logged) → entry is written immediately into that meal, for the
-   selected day, using the food's last-used measurement. No screen navigation, no confirmation step.
-
-**1 tap.** Verified end-to-end on-device: logging "TestSnack" once via search-and-create, then
-tapping its chip under a second meal (Lunch) on the same day, moved the day's total from
-165 kcal / 10 g P / 5 g F / 20 g C to exactly double (330 / 20 / 10 / 40) — confirming a full new,
-independently-editable diary entry was created (not a shared reference to the first). No logcat
-errors during the run.
-
-## 1. Log a previously logged food (product), via search
+## 1. Log a previously logged food (product)
 
 Precondition: a product ("TestApple") had already been logged once via search-and-create.
 
@@ -55,11 +35,11 @@ Precondition: a product ("TestApple") had already been logged once via search-an
 best case for this flow today. Screenshots: `05-relog-search-recent.png` (state after tap 1),
 `06-relog-confirm-screen.png` (state after tap 2), `07-relog-done.png` (state after tap 3).
 
-As of PRD 3.3 slice 1, this search path is no longer the fastest way to re-log a recent food — see
-flow 0 above, which reuses the same `MeasurementSuggestionEntity`/`LatestMeasurementSuggestion`
-schema (previously only consumed to pre-fill the quantity field on `AddEntryScreen`) to power a
-one-tap chip instead. This 3-tap search path remains relevant for foods that have aged out of the
-top-N recent list, or the first time a food is ever logged.
+There is no shortcut that logs a previously-eaten food in fewer taps. The meal card's lightning-bolt
+icon — the only other affordance on `HomeScreen` — opens **Quick Add** (a manual-estimate form, see
+below), not a "repeat last entry" action. `MeasurementSuggestionEntity`/`LatestMeasurementSuggestion`
+exist in the schema (recording the last-used quantity per food) but are only consumed to pre-fill
+the quantity field on `AddEntryScreen`, not to power a one-tap re-log button.
 
 ## 2. Log a saved recipe
 
