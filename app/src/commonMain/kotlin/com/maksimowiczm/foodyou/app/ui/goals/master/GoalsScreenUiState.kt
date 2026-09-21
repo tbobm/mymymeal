@@ -11,4 +11,6 @@ internal data class GoalsScreenUiState(
     val goal: DailyGoal,
     val rollingBalance: RollingEnergyBalance,
     val rollingBudgetPreferences: RollingBudgetPreferences,
+    /** Caffeine mg logged via the Habits coffee tracker (not food) -- added to the diary total. */
+    val habitsCaffeineMg: Int,
 )

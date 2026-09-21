@@ -1,9 +1,9 @@
-# Database schema (as of this fork, schema version 35)
+# Database schema (as of this fork, schema version 37)
 
 Single Room database: `FoodYouDatabase`
 (`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt`).
 `exportSchema = true`; every version's JSON schema is checked in under
-`app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/{1..35}.json`.
+`app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/{1..37}.json`.
 
 ## The load-bearing finding: entries already snapshot at write time
 
@@ -87,19 +87,22 @@ than threading a tag filter through `FoodSearchDao`'s existing UNION/CTE queries
 `ponytail:` comment on `FoodSearchViewModel.filterByTag` for the tradeoff (per-source item counts
 can be briefly stale relative to the filtered list).
 
-### Habits (`habits/infrastructure/room/`) — coffee + supplement tracking, added v35
+### Habits (`habits/infrastructure/room/`) — coffee + supplement tracking, added v35, revised v36-37
 
 | Entity | Table | Key columns | Notes |
 |---|---|---|---|
-| `SupplementEntity` | `Supplement` | `id` PK (autogenerate), `name`, `sortOrder` | User-managed list of supplements. `sortOrder` is append-only insertion order, no reorder UI. |
-| `SupplementIntakeEntity` | `SupplementIntake` | `(supplementId, date)` composite PK, FK cascade-delete | Adherence only -- presence of a row means taken that day. No dose, no timestamp. |
+| `SupplementEntity` | `Supplement` | `id` PK (autogenerate), `name`, `sortOrder`, `tracksDose` (v36) | User-managed list of supplements. `sortOrder` is append-only insertion order, no reorder UI. `tracksDose` selects whether intake carries a daily amount (e.g. Creatine, grams) or is presence-only (e.g. Ashwagandha, Multivitamin). |
+| `SupplementIntakeEntity` | `SupplementIntake` | `(supplementId, date)` composite PK, FK cascade-delete, `doseGrams` (v36) | Presence of a row means taken that day. `doseGrams` is only ever populated when the parent supplement's `tracksDose` is true. |
+| `CoffeeIntakeEntity` | `CoffeeIntake` (v37) | `id` PK (autogenerate), `dateEpochDay`, `createdEpochSeconds`, `type`, `caffeineMg` | One discrete coffee tap (`CoffeeType`: `Cup`/`Espresso`/`Latte`). `caffeineMg` is snapshotted at log time from a hardcoded per-type constant -- not derived from a food record, and never a diary `Measurement`. |
 
-Coffee tracking added no new table: cup count is a live query joining `Measurement` against its
-snapshot food (`DiaryProduct`/`DiaryRecipe`) by name, matched against the configured default
-coffee's current catalog name -- so it reflects diary deletes and edits immediately instead of
-drifting like an append-only log would. Caffeine mg reuses the existing per-day nutrition aggregate
-across all diary entries (unrelated to cup count). The only new state is `HabitsPreferences`
-(DataStore, not Room) recording which food/measurement/meal counts as the one-tap "default coffee".
+As of v37, coffee is entirely independent of the food diary: no food/recipe is logged, no
+`Measurement` row is created. The v35 "default coffee" mechanism (a one-time-configured real food
+re-logged on tap, with cup count and caffeine derived from the diary) was replaced outright --
+`HabitsPreferences` (DataStore) and its "pick default coffee" flow are gone. The Habits card's
+displayed caffeine (`CoffeeIntake` sum for the day) still feeds the same Caffeine goal shown on the
+Goals screen: `GoalsScreenUiState`/`HabitsCardViewModel` each add the day's `CoffeeIntake` total on
+top of the diary-derived caffeine sum, rather than the two being tracked as one number at the
+source.
 
 ### Other
 
@@ -163,10 +166,12 @@ Defined across `FoodYouDatabase.kt` (autoMigrations list + `migrations` companio
 | **32→33** | Manual (`addProvenanceAndCostColumns`) | **PRD 1.2 + 1.3.** Adds `sourceKind`/`confidence`/`originProductId`/`originRecipeId` to `Measurement` (all nullable, `sourceKind = 'recipe'` backfilled where `recipeId IS NOT NULL`); `sourceKind`/`confidence` (NOT NULL, defaulted) + `unitCost`/`currency` to `ManualDiaryEntry`; `pricePerUnit`/`currency` to `Product`; `unitCost`/`currency` to `DiaryProduct` and `DiaryRecipe`. Purely additive, no destructive change. |
 | **33→34** | Manual (`addTagTables`) | **PRD 3.5.** Adds `Tag`, `ProductTagCrossRef`, `RecipeTagCrossRef`, `ManualDiaryEntryTagCrossRef` — see the Tags section above. Purely additive, all new FKs `ON DELETE CASCADE`, no existing table or column altered. |
 | **34→35** | Manual (`addHabitsTables`) | Adds `Supplement`, `SupplementIntake` for the habits-tracking supplement checklist. Purely additive, FK `ON DELETE CASCADE`, no existing table or column altered. |
+| **35→36** | Manual (`addSupplementDose`) | Adds `Supplement.tracksDose` (NOT NULL, default 0) and `SupplementIntake.doseGrams` (nullable). Purely additive. |
+| **36→37** | Manual (`addCoffeeIntakeTable`) | Adds `CoffeeIntake` for the coffee quick-log, replacing the v35 "default coffee" mechanism. Purely additive, no existing table or column altered. |
 
 **Migration fixture tests already exist** for the manual migrations, satisfying PRD §4's migration
 policy pattern (extend, don't parallel):
-`app/src/commonTest/.../migration/Abstract{FoodYou3,UnlinkDiary,DeleteUsedFoodEvent,FoodSearchFts,AddProvenanceAndCostColumns,AddTagTables}Test.kt`
+`app/src/commonTest/.../migration/Abstract{FoodYou3,UnlinkDiary,DeleteUsedFoodEvent,FoodSearchFts,AddProvenanceAndCostColumns,AddTagTables,AddHabitsTables,AddSupplementDose,AddCoffeeIntakeTable}Test.kt`
 with Android instrumented implementations under `app/src/androidInstrumentedTest/.../migration/`.
 Any new migration this project adds should follow the same `Abstract*Test` + platform-`actual`-test
 pattern rather than introducing a new harness.

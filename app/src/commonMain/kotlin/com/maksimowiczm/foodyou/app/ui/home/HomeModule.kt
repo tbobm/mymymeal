@@ -34,18 +34,7 @@ fun Module.home() {
     }
     viewModel { HomePersonalizationViewModel(settingsRepository = userPreferencesRepository()) }
 
-    viewModel {
-        HabitsCardViewModel(
-            supplementRepository = get(),
-            habitsPreferencesRepository = userPreferencesRepository(),
-            foodDiaryEntryRepository = get(),
-            observeDiaryMealsUseCase = get(),
-            observeFoodUseCase = get(),
-            createFoodDiaryEntryUseCase = get(),
-            eventBus = get(),
-            dateProvider = get(),
-        )
-    }
+    viewModel { HabitsCardViewModel(supplementRepository = get(), coffeeRepository = get()) }
 
     viewModel {
         PollsViewModel(
