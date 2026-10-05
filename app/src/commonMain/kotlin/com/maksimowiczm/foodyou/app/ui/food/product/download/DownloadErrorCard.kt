@@ -43,6 +43,12 @@ internal fun DownloadErrorCard(
                 modifier = modifier,
             )
 
+        DownloadProductError.InvalidAiResponse ->
+            DownloadErrorCard(
+                message = stringResource(Res.string.error_invalid_ai_response),
+                modifier = modifier,
+            )
+
         is DownloadProductError.RemoteFoodError ->
             DownloadErrorCard(
                 error = error.exception,
