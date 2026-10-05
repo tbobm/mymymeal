@@ -44,7 +44,10 @@ internal class DownloadProductViewModel(
                     val product =
                         it.copy(
                             source =
-                                FoodSource(type = FoodSource.Type.User, url = it.source.url ?: text)
+                                FoodSource(
+                                    type = FoodSource.Type.User,
+                                    url = it.source.url ?: text.takeIf { '{' !in it },
+                                )
                         )
 
                     downloadProductHolder.setProduct(product)

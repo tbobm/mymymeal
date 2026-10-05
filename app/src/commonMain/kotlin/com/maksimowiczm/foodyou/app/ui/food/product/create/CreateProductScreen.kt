@@ -1,12 +1,15 @@
 package com.maksimowiczm.foodyou.app.ui.food.product.create
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material3.AssistChip
@@ -29,6 +32,8 @@ import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
 import com.maksimowiczm.foodyou.app.ui.common.component.DiscardDialog
 import com.maksimowiczm.foodyou.app.ui.food.product.ProductForm
 import com.maksimowiczm.foodyou.app.ui.food.product.ProductFormState
+import com.maksimowiczm.foodyou.common.compose.utility.LocalClipboardManager
+import com.maksimowiczm.foodyou.food.domain.usecase.aiProductPrompt
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
@@ -90,18 +95,39 @@ internal fun CreateProductScreen(
             contentPadding = paddingValues,
         ) {
             item {
-                AssistChip(
-                    onClick = onDownload,
-                    label = { Text(stringResource(Res.string.action_download_product)) },
+                val clipboardManager = LocalClipboardManager.current
+                val aiLabel = stringResource(Res.string.action_ask_ai)
+
+                Row(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Download,
-                            contentDescription = null,
-                            modifier = Modifier.size(AssistChipDefaults.IconSize),
-                        )
-                    },
-                )
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    AssistChip(
+                        onClick = onDownload,
+                        label = { Text(stringResource(Res.string.action_download_product)) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Download,
+                                contentDescription = null,
+                                modifier = Modifier.size(AssistChipDefaults.IconSize),
+                            )
+                        },
+                    )
+                    AssistChip(
+                        onClick = {
+                            clipboardManager.copy(aiLabel, aiProductPrompt(state.name.value))
+                            onDownload()
+                        },
+                        label = { Text(aiLabel) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.AutoAwesome,
+                                contentDescription = null,
+                                modifier = Modifier.size(AssistChipDefaults.IconSize),
+                            )
+                        },
+                    )
+                }
             }
 
             item { ProductForm(state = state, contentPadding = PaddingValues(horizontal = 16.dp)) }

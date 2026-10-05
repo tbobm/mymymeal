@@ -15,6 +15,8 @@ sealed interface DownloadProductError {
 
     data object UrlNotSupported : DownloadProductError
 
+    data object InvalidAiResponse : DownloadProductError
+
     data class RemoteFoodError(val exception: RemoteFoodException) : DownloadProductError
 }
 
@@ -23,6 +25,19 @@ class DownloadProductUseCase(
     private val logger: Logger,
 ) {
     suspend fun download(url: String): Result<RemoteProduct, DownloadProductError> {
+        if ('{' in url) {
+            val product = parseAiProduct(url)
+            return if (product != null) {
+                Ok(product)
+            } else {
+                logger.logAndReturnFailure(
+                    tag = TAG,
+                    error = DownloadProductError.InvalidAiResponse,
+                    message = { "Could not parse AI response" },
+                )
+            }
+        }
+
         val link = linkRegex.find(url)?.value
 
         if (link == null) {
