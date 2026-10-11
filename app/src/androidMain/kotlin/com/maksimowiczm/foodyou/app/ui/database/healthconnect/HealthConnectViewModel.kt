@@ -18,6 +18,7 @@ internal enum class BackfillState {
     Idle,
     Running,
     Done,
+    Failed,
 }
 
 internal class HealthConnectViewModel(
@@ -56,8 +57,8 @@ internal class HealthConnectViewModel(
     fun backfill(days: Int = 30) {
         viewModelScope.launch {
             _backfillState.value = BackfillState.Running
-            syncService.backfill(days)
-            _backfillState.value = BackfillState.Done
+            _backfillState.value =
+                if (syncService.backfill(days)) BackfillState.Done else BackfillState.Failed
         }
     }
 }

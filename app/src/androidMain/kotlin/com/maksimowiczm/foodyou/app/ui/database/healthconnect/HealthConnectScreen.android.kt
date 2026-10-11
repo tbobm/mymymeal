@@ -124,6 +124,9 @@ actual fun HealthConnectScreen(onBack: () -> Unit, modifier: Modifier) {
                                 backfillState == BackfillState.Running ->
                                     stringResource(Res.string.description_health_connect_syncing)
 
+                                backfillState == BackfillState.Failed ->
+                                    stringResource(Res.string.description_health_connect_rate_limited)
+
                                 preferences.lastSyncedEpochSeconds != null ->
                                     stringResource(
                                         Res.string.description_health_connect_last_synced,
