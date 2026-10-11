@@ -246,13 +246,9 @@
     <string name="description_external_databases">Preverite podprte zbirke podatkov</string>
     <string name="feature_manual_database_import">Ročni uvoz podatkovne zbirke</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Odpakiraj</string>
-    <string name="headline_sponsor">Postani sponzor</string>
-    <string name="description_sponsor_short_2">Podpri rast aplikacije</string>
     <string name="headline_source_code">Izvorna koda</string>
     <string name="action_write_an_email">Napišite e-poštno sporočilo</string>
     <string name="headline_contact">Kontakt</string>
-    <string name="description_sponsor_contact">Če imate kakršne koli zahteve v zvezi s sponzorstvom, me lahko kontaktirate prek e-pošte ali GitHuba.</string>
-    <string name="sponsor_bank_or_card">Bančni račun ali kreditna kartica</string>
     <string name="action_treat_as_liquid">Obravnavaj kot tekočino</string>
     <string name="description_treat_as_liquid">Pri merjenju raje uporabljajte mililitre</string>
     <string name="headline_personalization">Prilagoditve po meri</string>
@@ -350,19 +346,8 @@
     <string name="headline_pick_a_color">Izberite barvo</string>
     <string name="headline_nutrients_colors">Barve makrohranil</string>
     <string name="description_nutrients_colors_reset">Nastavitve barv hranil bodo ponastavljene na privzete vrednosti</string>
-    <string name="headline_sponsorship_goals">Cilji</string>
-    <string name="description_sponsorship_goals">S sponzoriranjem pomagate ohraniti neodvisnost in trajnost tega projekta, ki se ne zanaša na izkoriščevalske poslovne modele. Številne komercialne aplikacije služijo denar z zbiranjem in prodajo podatkov o uporabnikih, usmerjenimi oglasi ali s spodbujanjem uporabnikov k zasvojenim vzorcem uporabe. Sponzorstvo zagotavlja, da bo ta aplikacija ostala prijazna do zasebnosti, pregledna in osredotočena na zagotavljanje resnične vrednosti, ne da bi ogrožala vaše zaupanje ali dobro počutje.</string>
-    <string name="description_x_away_from_next_goal">%1$s še do naslednjega cilja</string>
-    <string name="headline_sponsors">Sponzorji</string>
-    <string name="description_no_sponsors_this_month">Ta mesec ni sponzorjev</string>
-    <string name="headline_latest" description="Latest, most recent">Najnovejše</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Po znesku</string>
-    <string name="headline_this_month_we_raised">Ta mesec smo zbrali %1$s</string>
-    <string name="description_sponsors_privacy">Food You resno jemlje vašo zasebnost. Zato se ne bo povezala z nobeno zunanjo storitvijo, če tega ne dovolite. Če si želite ogledati najnovejše sponzorje, morate podatke prenesti s strežnikov Food You.</string>
-    <string name="action_allow" description="Allow something">Omogočite</string>
     <string name="action_next_month">Naslednji mesec</string>
     <string name="action_previous_month">Prejšnji mesec</string>
-    <string name="headline_sponsor_methods">Možnosti podpore</string>
     <string name="headline_save_database">Shranjevanje podatkovne zbirke</string>
     <string name="description_save_database">Shranite kopijo svoje zbirke podatkov</string>
     <string name="headline_replace_database">Zamenjava podatkovne baze</string>

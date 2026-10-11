@@ -240,13 +240,9 @@
     <string name="description_external_databases">Consultez les bases de données prises en charge</string>
     <string name="feature_manual_database_import">Importation manuelle de la base de donnée</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Décompression</string>
-    <string name="headline_sponsor">Soutenir le projet</string>
-    <string name="description_sponsor_short_2">Soutenez le développement de l'application</string>
     <string name="headline_source_code">Code source</string>
     <string name="action_write_an_email">Écrire un e-mail</string>
     <string name="headline_contact">Contact</string>
-    <string name="description_sponsor_contact">Si vous avez des demandes concernant le parrainage, n'hésitez pas à me contacter par e-mail ou via GitHub.</string>
-    <string name="sponsor_bank_or_card">Compte bancaire ou carte de crédit</string>
     <string name="action_treat_as_liquid">Traiter comme un liquide</string>
     <string name="description_treat_as_liquid">Préférez les millilitres pour mesurer</string>
     <string name="headline_personalization">Personnalisation</string>
@@ -341,19 +337,8 @@
     <string name="headline_pick_a_color">Choisissez une couleur</string>
     <string name="headline_nutrients_colors">Couleurs des nutriments</string>
     <string name="description_nutrients_colors_reset">Les paramètres de couleurs des nutriments seront réinitialisés aux valeurs par défaut</string>
-    <string name="headline_sponsorship_goals">Objectifs</string>
-    <string name="description_sponsorship_goals">En participant financièrement à ce projet, vous contribuez à le maintenir indépendant et durable sans avoir recours à des modèles commerciaux abusifs. De nombreuses applications commerciales génèrent des revenus en collectant et en vendant les données des utilisateurs, en ciblant les publicités ou en incitant les utilisateurs à adopter des comportements addictifs. Les dons garantissent que cette application reste respectueuse de la vie privée, transparente et axée sur la fourniture d'une réelle valeur ajoutée, sans compromettre votre confiance ou votre bien-être.</string>
-    <string name="description_x_away_from_next_goal">À %1$s du prochain objectif</string>
-    <string name="headline_sponsors">Contributeurs</string>
-    <string name="description_no_sponsors_this_month">Pas de contribution ce mois-ci</string>
-    <string name="headline_latest" description="Latest, most recent">Dernière</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Top</string>
-    <string name="headline_this_month_we_raised">Ce mois-ci, nous avons récolté %1$s</string>
-    <string name="description_sponsors_privacy">Food You prend votre vie privée très au sérieux. C'est pourquoi l'application ne se connectera à aucun service externe sans votre autorisation. Pour voir les dernières contributions, les données doivent être téléchargées depuis les serveurs de Food You.</string>
-    <string name="action_allow" description="Allow something">Autoriser</string>
     <string name="action_next_month">Mois suivant</string>
     <string name="action_previous_month">Mois précédent</string>
-    <string name="headline_sponsor_methods">Possibilités de contribution</string>
     <string name="headline_save_database">Enregistrer la base de données</string>
     <string name="description_save_database">Enregistrez une copie de votre base de données</string>
     <string name="headline_replace_database">Remplacer la base de données</string>

@@ -225,13 +225,9 @@
     <string name="description_external_databases">查看受支持的数据库</string>
     <string name="feature_manual_database_import">手动数据库导入</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">解包</string>
-    <string name="headline_sponsor">支持</string>
-    <string name="description_sponsor_short_2">助力应用发展</string>
     <string name="headline_source_code">源代码</string>
     <string name="action_write_an_email">写邮件联系</string>
     <string name="headline_contact">联系</string>
-    <string name="description_sponsor_contact">如有赞助相关事宜，欢迎通过电子邮件或 GitHub 与我联系。</string>
-    <string name="sponsor_bank_or_card">银行账户或信用卡</string>
     <string name="action_treat_as_liquid">当作液体</string>
     <string name="description_treat_as_liquid">使用毫升作为测量单位</string>
     <string name="headline_personalization">个性化</string>
@@ -323,19 +319,8 @@
     <string name="headline_pick_a_color">选一个颜色</string>
     <string name="headline_nutrients_colors">营养成分颜色</string>
     <string name="description_nutrients_colors_reset">营养成分颜色设置将重置为默认值</string>
-    <string name="headline_sponsorship_goals">目标</string>
-    <string name="description_sponsorship_goals">通过赞助，您将助力本项目保持独立性与可持续性，无需依赖剥削性的商业模式。许多商业应用通过收集并出售用户数据、投放定向广告或诱导用户形成成瘾性使用模式来牟利。赞助机制确保本应用始终尊重隐私、保持透明，专注于提供真实价值，绝不损害您的信任与福祉。</string>
-    <string name="description_x_away_from_next_goal">距下个目标还有 %1$s</string>
-    <string name="headline_sponsors">赞助者</string>
-    <string name="description_no_sponsors_this_month">本月无赞助</string>
-    <string name="headline_latest" description="Latest, most recent">最近</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">最多</string>
-    <string name="headline_this_month_we_raised">本月我们筹集到 %1$s</string>
-    <string name="description_sponsors_privacy">Food You 高度重视您的隐私。因此除非您允许，否则它不连接任何外部服务。要查看最新的赞助信息，需要连接 Food You 服务器获取数据。</string>
-    <string name="action_allow" description="Allow something">允许</string>
     <string name="action_next_month">下一月</string>
     <string name="action_previous_month">前一月</string>
-    <string name="headline_sponsor_methods">方式</string>
     <string name="headline_save_database">保存数据库</string>
     <string name="description_save_database">保存一份数据库副本</string>
     <string name="headline_replace_database">替换数据库</string>
