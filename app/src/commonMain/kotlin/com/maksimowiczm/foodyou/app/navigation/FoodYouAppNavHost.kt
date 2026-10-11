@@ -6,7 +6,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.maksimowiczm.foodyou.app.ui.about.AboutScreen
 import com.maksimowiczm.foodyou.app.ui.calendar.CalendarMonthScreen
 import com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts.ExportCsvProductsScreen
 import com.maksimowiczm.foodyou.app.ui.database.exportfulldata.ExportFullDataScreen
@@ -38,6 +37,7 @@ import com.maksimowiczm.foodyou.app.ui.language.LanguageScreen
 import com.maksimowiczm.foodyou.app.ui.meal.MealSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.personalization.PersonalizationScreen
 import com.maksimowiczm.foodyou.app.ui.personalization.PersonalizeNutritionFactsScreen
+import com.maksimowiczm.foodyou.app.ui.stats.StatsScreen
 import com.maksimowiczm.foodyou.app.ui.settings.SettingsScreen
 import com.maksimowiczm.foodyou.app.ui.tag.TagSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.theme.ThemeScreen
@@ -60,7 +60,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
             HomeScreen(
                 homeState = homeState,
                 onSettings = { navController.navigateSingleTop(Settings) },
-                onTitle = { navController.navigateSingleTop(About) },
+                onTitle = { navController.navigateSingleTop(Stats) },
                 onMealCardLongClick = { navController.navigateSingleTop(MealsPersonalization) },
                 onMealCardAddClick = { epochDay, mealId ->
                     navController.navigateSingleTop(FoodDiarySearch(epochDay, mealId))
@@ -102,7 +102,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         forwardBackwardComposable<Settings> {
             SettingsScreen(
                 onBack = { navController.popBackStackInclusive<Settings>() },
-                onAbout = { navController.navigateSingleTop(About) },
+                onAbout = { navController.navigateSingleTop(Stats) },
                 onMeals = { navController.navigateSingleTop(MealSetup) },
                 onLanguage = { navController.navigateSingleTop(Language) },
                 onGoals = { navController.navigateSingleTop(GoalsSetup) },
@@ -135,8 +135,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         forwardBackwardComposable<Language> {
             LanguageScreen(onBack = { navController.popBackStackInclusive<Language>() })
         }
-        forwardBackwardComposable<About> {
-            AboutScreen(onBack = { navController.popBackStackInclusive<About>() })
+        forwardBackwardComposable<Stats> {
+            StatsScreen(onBack = { navController.popBackStackInclusive<Stats>() })
         }
         forwardBackwardComposable<MealSetup> {
             MealSettingsScreen(onBack = { navController.popBackStackInclusive<MealSetup>() })
@@ -435,7 +435,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 
 @Serializable private object Settings
 
-@Serializable private object About
+@Serializable private object Stats
 
 @Serializable private object Language
 
