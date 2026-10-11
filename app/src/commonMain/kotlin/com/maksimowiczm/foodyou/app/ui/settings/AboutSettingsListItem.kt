@@ -22,8 +22,8 @@ internal fun AboutSettingsListItem(
 ) {
     SettingsListItem(
         icon = { Icon(Icons.Outlined.Info, null) },
-        label = { Text(stringResource(Res.string.headline_about)) },
-        supportingContent = { Text(stringResource(Res.string.description_about_setting)) },
+        label = { Text(stringResource(Res.string.headline_your_stats)) },
+        supportingContent = { Text(stringResource(Res.string.description_stats_setting)) },
         onClick = onClick,
         modifier = modifier,
         shape = shape,
