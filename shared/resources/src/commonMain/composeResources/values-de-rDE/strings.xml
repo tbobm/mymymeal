@@ -240,13 +240,9 @@
     <string name="description_external_databases">Probiere unterstützte Datenbanken aus</string>
     <string name="feature_manual_database_import">Manueller Import der Datenbank</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Entpacken</string>
-    <string name="headline_sponsor">Spenden</string>
-    <string name="description_sponsor_short_2">Unterstütze die Entwicklung der App</string>
     <string name="headline_source_code">Quellcode</string>
     <string name="action_write_an_email">Schreibe eine E-Mail</string>
     <string name="headline_contact">Kontakt</string>
-    <string name="description_sponsor_contact">Falls Du Fragen zum Unterstützen hast, dann zögere nicht, mich per E-Mail oder auf GitHub zu kontaktieren.</string>
-    <string name="sponsor_bank_or_card">Bankkonto oder Kreditkarte</string>
     <string name="action_treat_as_liquid">Als Flüssigkeit behandeln</string>
     <string name="description_treat_as_liquid">Milliliter bei Messungen bevorzugen</string>
     <string name="headline_personalization">Personalisierung</string>
@@ -340,19 +336,8 @@
     <string name="headline_pick_a_color">Wähle eine Farbe</string>
     <string name="headline_nutrients_colors">Nährstoff-Farben</string>
     <string name="description_nutrients_colors_reset">Nährstoff-Farben werden auf ihre ursprünglichen Werte zurückgesetzt</string>
-    <string name="headline_sponsorship_goals">Ziele</string>
-    <string name="description_sponsorship_goals">Durch Deinen Beitrag hilfst Du dabei, dieses Projekt unabhängig und nachhaltig zu halten, ohne auf ausbeuterische Geschäftsmodelle zu basieren. Viele kommerzielle Apps verdienen Geld, indem sie Nutzerdaten sammeln und verkaufen, personalisierte Werbung betreiben oder Suchtverhalten hervorrufen. Sponsoring stellt sicher, dass diese App datenschutzfreundlich sowie transparent bleibt und darauf ausgerichtet ist, echten Mehrwert zu liefern, ohne dein Vertrauen oder Wohlergehen zu beeinträchtigen.</string>
-    <string name="description_x_away_from_next_goal">%1$s vom nächsten Ziel entfernt</string>
-    <string name="headline_sponsors">Sponsoren</string>
-    <string name="description_no_sponsors_this_month">Keine Sponsoren diesen Monat</string>
-    <string name="headline_latest" description="Latest, most recent">Zuletzt</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Top</string>
-    <string name="headline_this_month_we_raised">Diesen Monat haben wir %1$s gesammelt</string>
-    <string name="description_sponsors_privacy">Food You nimmt deine Privatsphäre ernst. Aus diesem Grund wird keine Verbindung zu externen Diensten hergestellt, wenn du dies nicht explizit zulässt. Um die neuesten Sponsoren zu sehen, müssen die Daten von GitHubs Servern heruntergeladen werden.</string>
-    <string name="action_allow" description="Allow something">Zulassen</string>
     <string name="action_next_month">Nächster Monat</string>
     <string name="action_previous_month">Vorheriger Monat</string>
-    <string name="headline_sponsor_methods">Zahlungsarten</string>
     <string name="headline_save_database">Datenbank sichern</string>
     <string name="description_save_database">Sichere eine Kopie deiner Datenbank in eine Datei</string>
     <string name="headline_replace_database">Datenbank wiederherstellen</string>

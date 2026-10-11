@@ -240,13 +240,9 @@
     <string name="description_external_databases">Verifique as bases de dados suportadas</string>
     <string name="feature_manual_database_import">Importação manual de base de dados</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Extrair</string>
-    <string name="headline_sponsor">Patrocinador</string>
-    <string name="description_sponsor_short_2">Ajuda a app a crescer</string>
     <string name="headline_source_code">Código-fonte</string>
     <string name="action_write_an_email">Escreva um e-mail</string>
     <string name="headline_contact">Contacto</string>
-    <string name="description_sponsor_contact">Se tiver algum pedido relacionado com patrocínio, não hesite em contactar-me através de e-mail ou pelo GitHub.</string>
-    <string name="sponsor_bank_or_card">Conta bancária ou cartão de crédito</string>
     <string name="action_treat_as_liquid">Tratar como líquido</string>
     <string name="description_treat_as_liquid">Preferir mililitros ao medir</string>
     <string name="headline_personalization">Personalização</string>
@@ -341,19 +337,8 @@
     <string name="headline_pick_a_color">Escolha uma cor</string>
     <string name="headline_nutrients_colors">Cores dos nutrientes</string>
     <string name="description_nutrients_colors_reset">As configurações das cores dos nutrientes vão ser repostas para os valores padrão</string>
-    <string name="headline_sponsorship_goals">Objetivos</string>
-    <string name="description_sponsorship_goals">Ao patrocinar, ajuda a manter este projeto independente e sustentável, sem depender de modelos de negócio que exploram os utilizadores. Muitas aplicações comerciais ganham dinheiro com a recolha e comercialização dos dados dos utilizadores, apresentando anúncios ou incentivando os seus utilizadores a padrões de envolvimento viciante. O patrocínio garante que esta aplicação permanece privada, transparente e focada na entrega de valor real, sem comprometer a sua confiança ou bem-estar.</string>
-    <string name="description_x_away_from_next_goal">a %1$s do seu próximo objetivo</string>
-    <string name="headline_sponsors">Patrocinadores</string>
-    <string name="description_no_sponsors_this_month">Sem patrocinadores este mês</string>
-    <string name="headline_latest" description="Latest, most recent">Recentes</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Destaque</string>
-    <string name="headline_this_month_we_raised">Angariámos %1$s este mês</string>
-    <string name="description_sponsors_privacy">Food You leva a sua privacidade a sério. É por isso que não conectamos a nenhum serviço externo sem a sua permissão explícita. Para ver os últimos patrocinadores, os dados devem ser transferidos dos servidores do GitHub.</string>
-    <string name="action_allow" description="Allow something">Permitir</string>
     <string name="action_next_month">Mês seguinte</string>
     <string name="action_previous_month">Mês anterior</string>
-    <string name="headline_sponsor_methods">Métodos</string>
     <string name="headline_save_database">Guardar base de dados</string>
     <string name="description_save_database">Guardar uma cópia da sua base de dados</string>
     <string name="headline_replace_database">Substituir base de dados</string>

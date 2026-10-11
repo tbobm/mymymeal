@@ -232,13 +232,9 @@
     <string name="description_external_databases">Tutustu tuettuihin tietokantoihin</string>
     <string name="feature_manual_database_import">Manuaalinen tietokannan tuonti</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Pura</string>
-    <string name="headline_sponsor">Tue</string>
-    <string name="description_sponsor_short_2">Tue sovelluksen kasvua</string>
     <string name="headline_source_code">Lähdekoodi</string>
     <string name="action_write_an_email">Kirjoita sähköpostia</string>
     <string name="headline_contact">Ota yhteyttä</string>
-    <string name="description_sponsor_contact">Jos sinulla on tukemista koskevia pyyntöjä, ota rohkeasti yhteyttä minuun sähköpostitse tai GitHubissa.</string>
-    <string name="sponsor_bank_or_card">Pankkitili tai luottokortti</string>
     <string name="action_treat_as_liquid">Käsittele nesteenä</string>
     <string name="description_treat_as_liquid">Suosi millilitroja mittauksessa</string>
     <string name="headline_personalization">Mukauttaminen</string>
@@ -332,19 +328,8 @@
     <string name="headline_pick_a_color">Valitse väri</string>
     <string name="headline_nutrients_colors">Ravintoaineiden värit</string>
     <string name="description_nutrients_colors_reset">Ravintoaineiden värien asetukset palautetaan oletusarvoihin</string>
-    <string name="headline_sponsorship_goals">Tavoitteet</string>
-    <string name="description_sponsorship_goals">Tukemalla autat pitämään tämän projektin itsenäisenä ja kestävänä, joka ei perustu hyväksikäyttöön perustuviin liiketoimintamalleihin. Monet kaupalliset sovellukset tekevät rahaa keräämällä ja myymällä käyttäjätietoja, kohdistamalla mainoksia tai ohjaamalla käyttäjiä riippuvuutta aiheuttaviin vuorovaikutusmalleihin. Tukeminen varmistaa, että tämä sovellus suojaa yksityisyyttäsi, pysyy läpinäkyvänä ja keskittyy todellisen arvon tuottamiseen vaarantamatta luottamustasi tai hyvinvointiasi.</string>
-    <string name="description_x_away_from_next_goal">%1$s seuraavaan tavoitteeseen</string>
-    <string name="headline_sponsors">Tukijat</string>
-    <string name="description_no_sponsors_this_month">Ei tukijoita tässä kuussa</string>
-    <string name="headline_latest" description="Latest, most recent">Viimeisimmät</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Parhaat</string>
-    <string name="headline_this_month_we_raised">Tässä kuussa keräsimme %1$s</string>
-    <string name="description_sponsors_privacy">Food You ottaa yksityisyytesi tosissaan. Sen takia emme yhdistä sinua mihinkään ulkopuoliseen palveluun ilman sinun hyväksyntääsi. Nähdäksesi viimeisimmät tukijat, tiedot täytyy ladata GitHubin palvelimilta.</string>
-    <string name="action_allow" description="Allow something">Salli</string>
     <string name="action_next_month">Seuraava kuukausi</string>
     <string name="action_previous_month">Edellinen kuukausi</string>
-    <string name="headline_sponsor_methods">Menetelmät</string>
     <string name="headline_save_database">Tallenna tietokanta</string>
     <string name="description_save_database">Tallenna kopio tietokannastasi</string>
     <string name="headline_replace_database">Korvaa tietokanta</string>
