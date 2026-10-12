@@ -1,0 +1,21 @@
+package dev.tbobm.mymymeal.app.app.ui.goals
+
+import dev.tbobm.mymymeal.app.app.ui.goals.master.GoalsViewModel
+import dev.tbobm.mymymeal.app.app.ui.goals.setup.DailyGoalsViewModel
+import dev.tbobm.mymymeal.app.common.infrastructure.koin.userPreferencesRepository
+import org.koin.core.module.Module
+import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.viewModelOf
+
+fun Module.goals() {
+    viewModel {
+        GoalsViewModel(
+            goalsRepository = get(),
+            observeDiaryMealsUseCase = get(),
+            observeRollingEnergyBalanceUseCase = get(),
+            rollingBudgetPreferencesRepository = userPreferencesRepository(),
+            coffeeRepository = get(),
+        )
+    }
+    viewModelOf(::DailyGoalsViewModel)
+}

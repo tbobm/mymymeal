@@ -14,7 +14,7 @@ needed for the snapshot mechanism itself.
 
 **1.2 Provenance (`source_kind`, `confidence`) — ABSENT, with a coincidental partial.**
 No `source_kind` or `confidence` column exists on `MeasurementEntity` or `ManualDiaryEntryEntity`
-(`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/`). Quick Add
+(`app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/fooddiary/infrastructure/room/`). Quick Add
 entries (`ManualDiaryEntryEntity`) do get a lightning-bolt badge in the diary UI
 (`app/ui/home/meals/card/`, confirmed on-device, `docs/tap-audit-screenshots/04-quickadd-logged.png`)
 — visually this satisfies PRD 1.2's "subtle visual marker" ask, but it marks "was this a Quick Add"
@@ -27,7 +27,7 @@ or `ManualDiaryEntryEntity`. Confirmed by full read of both entity files (`docs/
 
 **1.4 Export — PARTIAL.**
 `ExportCsvProductsUseCase`
-(`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/domain/usecase/ExportCsvProductsUseCase.kt`)
+(`app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/importexport/domain/usecase/ExportCsvProductsUseCase.kt`)
 exports the food catalog (`Product` table) to CSV with a configurable field list. There is:
 - no export of diary entry history (`Measurement`, `ManualDiaryEntry`)
 - no export of recipes
@@ -57,7 +57,7 @@ owner before Phase 2 design.
 ## Phase 3: the reason this fork exists
 
 **3.1 Rolling weekly budget — ABSENT.**
-`WeeklyGoals` exists (`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/goals/domain/entity/WeeklyGoals.kt`)
+`WeeklyGoals` exists (`app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/goals/domain/entity/WeeklyGoals.kt`)
 but is a **different concept**: a fixed daily calorie/macro target *per weekday* (e.g. a different
 Monday target than Saturday), with no rolling 7-day balance, no carryover, no cumulative
 surplus/deficit tracking. This is a false-friend name match — worth flagging explicitly so a future
@@ -80,7 +80,7 @@ multiple entries logged in one action), and the on-device tap audit
 one more than the PRD's 2-tap acceptance target. Closing this gap is 3.3's actual job.
 
 **3.4 Calendar view — mostly ABSENT.**
-`CalendarCard` (`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/calendar/CalendarCard.kt`)
+`CalendarCard` (`app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/app/ui/home/calendar/CalendarCard.kt`)
 on the home screen is a horizontal day-strip plus a standard Material `DatePickerDialog` for
 jumping to an arbitrary date — a day-navigation control, not PRD 3.4's month grid colored by
 position against target, and it has no long-press-for-summary interaction.
@@ -112,8 +112,8 @@ configured separately in Settings — not verified in this session). No MFP impo
 onboarding (matches 2.1's absence).
 
 **5.4 Local crash log capture — mostly EXISTS.**
-`CrashReportScreen` (`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/crash/CrashReportScreen.kt`)
-and `CrashReportActivity` (`app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/android/CrashReportActivity.kt`)
+`CrashReportScreen` (`app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/app/ui/crash/CrashReportScreen.kt`)
+and `CrashReportActivity` (`app/src/androidMain/kotlin/dev/tbobm/mymymeal/app/app/infrastructure/android/CrashReportActivity.kt`)
 already implement exactly PRD 5.4's shape: shows the crash message locally, one explicit
 user-initiated action ("Copy and open bug report" — copies the report to clipboard and opens an
 issue-tracker URL), **no automatic upload**. Two small fork-specific gaps: it targets the upstream

@@ -1,13 +1,13 @@
 [project]
 
-site_name = "Food You"
-site_description = "Food You documentation"
+site_name = "mymymeal"
+site_description = "mymymeal documentation"
 site_author = "Mateusz Maksimowicz"
-site_url = "https://foodyou.maksimowiczm.com/"
+site_url = "https://tbobm.github.io/mymymeal/"
 copyright = """
   Copyright &copy; Mateusz Maksimowicz &nbsp–&nbsp Logo by <a href="https://icons8.com/">Icons8</a>
 """
-repo_url = "https://github.com/maksimowiczm/FoodYou"
+repo_url = "https://github.com/tbobm/mymymeal"
 extra.generator = false
 nav = [
     "index.md",

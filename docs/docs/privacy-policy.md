@@ -1,7 +1,8 @@
 *Effective date: 26.03.2026*
 
-This Privacy Policy applies to the Food You app (the "Application") developed by Mateusz
-Maksimowicz (the "Service Provider"). The Application is provided on an "AS IS" basis.
+This Privacy Policy applies to the mymymeal app (the "Application"), a personal fork of
+[Food You](https://github.com/maksimowiczm/FoodYou) maintained by tbobm (the "Service Provider").
+The Application is provided on an "AS IS" basis.
 
 ## Information Collection and Use
 
@@ -61,7 +62,7 @@ on this page. You are advised to review this Privacy Policy periodically for any
 If you have any questions about this Privacy Policy or the Application's practices, please contact
 the Service Provider at:
 
-- [maksimowicz.dev@gmail.com](mailto:maksimowicz.dev@gmail.com?subject=Food%20You%20App%20Privacy%20Policy%20Inquiry)
+- [tbobm@protonmail.com](mailto:tbobm@protonmail.com?subject=mymymeal%20App%20Privacy%20Policy%20Inquiry)
 
 ## Privacy Policy Changelog
 

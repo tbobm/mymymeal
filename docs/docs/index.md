@@ -2,32 +2,24 @@
 title: Welcome
 ---
 
-# Food You
+# mymymeal
 
 A free, open-source, and privacy-focused food diary and nutrition tracker built using Material
-Design principles.
+Design principles. A personal fork of [Food You](https://github.com/maksimowiczm/FoodYou).
 
 ![Feature Graphics](images/featureGraphic.png)
 
-[![Get it on F-Droid](https://fdroid.gitlab.io/artwork/badge/get-it-on.png){ width="250" }](https://f-droid.org/packages/com.maksimowiczm.foodyou)
-[![Get it on GitHub](https://s1.ax1x.com/2023/01/12/pSu1a36.png){ width="250" }](https://github.com/maksimowiczm/FoodYou/releases)
-
-SHA-256 hash of signing certificate:
-`cd74b0aedd8ead8184063a65909d639a8c885cf6465829690a9be83a8904bdea`
-
-The above signature is also valid for the F-Droid, thanks
-to [reproducible builds](https://f-droid.org/docs/Reproducible_Builds/)
+[![Get it on GitHub](https://s1.ax1x.com/2023/01/12/pSu1a36.png){ width="250" }](https://github.com/tbobm/mymymeal/releases)
 
 ## Get Started
 
-1. Download Food You from [F-Droid](https://f-droid.org/en/packages/com.maksimowiczm.foodyou/)
-   or [GitHub](https://github.com/maksimowiczm/FoodYou/releases/)
+1. Download mymymeal from [GitHub](https://github.com/tbobm/mymymeal/releases/)
 2. Open the app, no sign-up required
 3. Start logging meals and tracking nutrition
 
-## Why Food You?
+## Why mymymeal?
 
-Food You is designed for people who want full control over their nutrition data without sacrificing
+mymymeal is designed for people who want full control over their nutrition data without sacrificing
 usability or design.
 
 - **Privacy first**  
@@ -59,6 +51,6 @@ usability or design.
   Build custom recipes from individual foods and get instant nutrition values.
 
 !!! tip "Spread the Word"
-    If you enjoy using Food You, consider starring the project on 
-    [GitHub](https://github.com/maksimowiczm/FoodYou) or sharing it with others. Your support helps 
+    If you enjoy using mymymeal, consider starring the project on 
+    [GitHub](https://github.com/tbobm/mymymeal) or sharing it with others. Your support helps 
     the project grow and reach more users.

@@ -6,7 +6,7 @@ To release a new version of the app, follow these steps:
 2. Update the `versionCode` and `versionName` in `libs.versions.toml` to the new version.
 3. Verify that the build is reproducible.
 4. Create a changelog for the new version in `metadata/en-US/changelog/<versionCode>.txt` and
-   `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/changelog/infrastructure/StaticChangelog.kt`,
+   `app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/changelog/infrastructure/StaticChangelog.kt`,
    patch notes can be generated using the Github `Draft a new release` feature.
 5. Ensure that all metadata in the `metadata` folder is up to date.
 6. Merge the branch into `main`.

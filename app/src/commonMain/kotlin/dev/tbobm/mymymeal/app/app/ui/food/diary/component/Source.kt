@@ -1,0 +1,53 @@
+package dev.tbobm.mymymeal.app.app.ui.food.diary.component
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import dev.tbobm.mymymeal.app.app.ui.food.component.Icon
+import dev.tbobm.mymymeal.app.app.ui.food.component.stringResource
+import dev.tbobm.mymymeal.app.common.compose.utility.LocalClipboardManager
+import dev.tbobm.mymymeal.app.common.domain.food.FoodSource
+import foodyou.app.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun Source(source: FoodSource, modifier: Modifier = Modifier) {
+    val url = source.url
+    val clipboardManger = LocalClipboardManager.current
+    val sourceStr = stringResource(Res.string.headline_source)
+
+    Row(
+        modifier =
+            modifier.clickable(
+                interactionSource = null,
+                indication = null,
+                onClick = {
+                    if (url != null) {
+                        clipboardManger.copy(label = sourceStr, text = url)
+                    }
+                },
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        source.type.Icon()
+
+        Column {
+            Text(text = source.type.stringResource(), style = MaterialTheme.typography.bodyMedium)
+            if (url != null) {
+                Text(
+                    text = url,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+    }
+}

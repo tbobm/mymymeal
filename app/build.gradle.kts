@@ -16,7 +16,7 @@ plugins {
 room { schemaDirectory("$projectDir/schemas") }
 
 buildConfig {
-    packageName("com.maksimowiczm.foodyou.app")
+    packageName("dev.tbobm.mymymeal.app.app")
     className("BuildConfig")
 
     val versionName = libs.versions.version.name.get()
@@ -127,11 +127,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.maksimowiczm.foodyou"
+    namespace = "dev.tbobm.mymymeal.app"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "mymymeal.tbobm.dev"
+        applicationId = "dev.tbobm.mymymeal.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = libs.versions.android.versionCode.get().toInt()
@@ -184,6 +184,6 @@ dependencies {
 
 compose.resources {
     publicResClass = true
-    packageOfResClass = "com.maksimowiczm.foodyou.app.generated.resources"
+    packageOfResClass = "dev.tbobm.mymymeal.app.app.generated.resources"
     generateResClass = always
 }

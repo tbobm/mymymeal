@@ -33,10 +33,10 @@ jobs:
 
       - name: Check Room schema export matches DB version
         run: |
-          version=$(grep -oP 'const val VERSION = \K\d+' app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt)
-          schema_dir="app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase"
+          version=$(grep -oP 'const val VERSION = \K\d+' app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/app/infrastructure/room/MymymealDatabase.kt)
+          schema_dir="app/schemas/dev.tbobm.mymymeal.app.app.infrastructure.room.MymymealDatabase"
           if [ ! -f "$schema_dir/$version.json" ]; then
-            echo "::error::FoodYouDatabase.VERSION=$version has no exported schema at $schema_dir/$version.json. Bump the version and run a build to export the schema, or check in the missing file."
+            echo "::error::MymymealDatabase.VERSION=$version has no exported schema at $schema_dir/$version.json. Bump the version and run a build to export the schema, or check in the missing file."
             exit 1
           fi
 

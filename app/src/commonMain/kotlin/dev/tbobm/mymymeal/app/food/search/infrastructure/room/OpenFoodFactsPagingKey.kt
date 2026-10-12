@@ -1,0 +1,11 @@
+package dev.tbobm.mymymeal.app.food.search.infrastructure.room
+
+import androidx.room.Entity
+
+@Entity(tableName = "OpenFoodFactsPagingKey", primaryKeys = ["queryString", "country"])
+data class OpenFoodFactsPagingKeyEntity(
+    val queryString: String,
+    val country: String,
+    val fetchedCount: Int,
+    val totalCount: Int,
+)
