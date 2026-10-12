@@ -224,13 +224,9 @@
     <string name="description_external_databases">Periksa basis data yang tersedia</string>
     <string name="feature_manual_database_import">Impor basis data secara manual</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Bongkar</string>
-    <string name="headline_sponsor">Sponsor</string>
-    <string name="description_sponsor_short_2">Dukung perkembangan aplikasi</string>
     <string name="headline_source_code">Sumber kode</string>
     <string name="action_write_an_email">Tuliskan email</string>
     <string name="headline_contact">Kontak</string>
-    <string name="description_sponsor_contact">Jika Anda memiliki permintaan terkait sponsor, jangan ragu untuk menghubungi saya melalui email atau GitHub.</string>
-    <string name="sponsor_bank_or_card">Rekening bank atau kartu kredit</string>
     <string name="action_treat_as_liquid">Hitung sebagai cairan</string>
     <string name="description_treat_as_liquid">Gunakan mililiter saat mengukur</string>
     <string name="headline_personalization">Personalisasi</string>
@@ -323,19 +319,8 @@
     <string name="headline_pick_a_color">Pilih warna</string>
     <string name="headline_nutrients_colors">Warna gizi</string>
     <string name="description_nutrients_colors_reset">Pengaturan warna gizi akan dikembalikan ke nilai bawaan</string>
-    <string name="headline_sponsorship_goals">Target</string>
-    <string name="description_sponsorship_goals">Dengan menjadi sponsor, Anda membantu menjaga proyek ini tetap independen dan berkelanjutan tanpa bergantung pada model bisnis yang eksploitatif. Banyak aplikasi komersial menghasilkan uang dengan mengumpulkan dan menjual data pengguna, menargetkan iklan, atau mendorong pengguna ke pola keterlibatan yang adiktif. Sponsorship memastikan aplikasi ini tetap ramah privasi, transparan, dan berfokus pada memberikan nilai nyata tanpa mengorbankan kepercayaan maupun kesejahteraan Anda.</string>
-    <string name="description_x_away_from_next_goal">Tinggal %1$s untuk mencapai target berikutnya</string>
-    <string name="headline_sponsors">Sponsor</string>
-    <string name="description_no_sponsors_this_month">Tidak ada sponsor bulan ini</string>
-    <string name="headline_latest" description="Latest, most recent">Terbaru</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Teratas</string>
-    <string name="headline_this_month_we_raised">Bulan ini kami mengumpulkan %1$s</string>
-    <string name="description_sponsors_privacy">Food You sangat menjaga privasi Anda. Karena itu, aplikasi ini tidak akan terhubung ke layanan eksternal kecuali Anda mengizinkannya. Untuk melihat sponsor terbaru, data harus diunduh dari server Food You.</string>
-    <string name="action_allow" description="Allow something">Izinkan</string>
     <string name="action_next_month">Bulan depan</string>
     <string name="action_previous_month">Bulan lalu</string>
-    <string name="headline_sponsor_methods">Metode</string>
     <string name="headline_save_database">Simpan database</string>
     <string name="description_save_database">Simpan salinan database Anda</string>
     <string name="headline_replace_database">Timpa database</string>

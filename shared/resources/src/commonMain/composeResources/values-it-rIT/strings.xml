@@ -241,13 +241,9 @@
     <string name="description_external_databases">Vedi i database supportati</string>
     <string name="feature_manual_database_import">Importazione manuale del database</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Estrai</string>
-    <string name="headline_sponsor">Sostieni</string>
-    <string name="description_sponsor_short_2">Supporta la crescita dell'app</string>
     <string name="headline_source_code">Codice sorgente</string>
     <string name="action_write_an_email">Scrivi una email</string>
     <string name="headline_contact">Contatti</string>
-    <string name="description_sponsor_contact">Se hai richieste sulle donazioni, non esitare a contattarmi via e-mail o GitHub.</string>
-    <string name="sponsor_bank_or_card">Conto bancario o carta di credito</string>
     <string name="action_treat_as_liquid">Considera come liquido</string>
     <string name="description_treat_as_liquid">Preferisci i millilitri per le misurazioni</string>
     <string name="headline_personalization">Personalizzazione</string>
@@ -342,19 +338,8 @@
     <string name="headline_pick_a_color">Scegli un colore</string>
     <string name="headline_nutrients_colors">Colori dei nutrienti</string>
     <string name="description_nutrients_colors_reset">Le impostazioni dei colori dei nutrienti verranno ripristinate ai valori predefiniti</string>
-    <string name="headline_sponsorship_goals">Obiettivi</string>
-    <string name="description_sponsorship_goals">Sponsorizzando, aiuti a mantenere questo progetto indipendente e sostenibile senza fare affidamento su modelli di business che sfruttano gli utenti. Molte app commerciali guadagnano raccogliendo e vendendo i dati degli utenti, mostrando annunci pubblicitari mirati o spingendo gli utenti verso schemi di coinvolgimento che creano dipendenza. La sponsorizzazione assicura che questa app rimanga rispettosa della privacy, trasparente e focalizzata sulla fornitura di valore reale senza compromettere la tua fiducia o il tuo benessere.</string>
-    <string name="description_x_away_from_next_goal">%1$s al prossimo obiettivo</string>
-    <string name="headline_sponsors">Sostenitori</string>
-    <string name="description_no_sponsors_this_month">Nessuno sponsor questo mese</string>
-    <string name="headline_latest" description="Latest, most recent">Ultimo</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Migliore</string>
-    <string name="headline_this_month_we_raised">Questo mese abbiamo raccolto %1$s</string>
-    <string name="description_sponsors_privacy">Food You tratta la tua privacy molto seriamente. È per questo che non si connette a nessuno servizio esterno almeno che non lo consenta tu. Per vedere gli ultimi sostenitori, i dati devono essere scaricati dai server di Food You.</string>
-    <string name="action_allow" description="Allow something">Consenti</string>
     <string name="action_next_month">Mese prossimo</string>
     <string name="action_previous_month">Mese precedente</string>
-    <string name="headline_sponsor_methods">Metodi</string>
     <string name="headline_save_database">Salva database</string>
     <string name="description_save_database">Salva una copia del tuo database</string>
     <string name="headline_replace_database">Sostituisci il database</string>

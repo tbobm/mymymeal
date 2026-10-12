@@ -252,13 +252,9 @@
     <string name="description_external_databases">Sprawdź obsługiwane bazy danych</string>
     <string name="feature_manual_database_import">Ręczny import bazy danych</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Rozpakuj</string>
-    <string name="headline_sponsor">Sponsoruj</string>
-    <string name="description_sponsor_short_2">Wspieraj rozwój aplikacji</string>
     <string name="headline_source_code">Kod źródłowy</string>
     <string name="action_write_an_email">Napisz e-mail</string>
     <string name="headline_contact">Kontakt</string>
-    <string name="description_sponsor_contact">Jeśli masz jakieś pytania dotyczące sponsorowania, możesz się ze mną skontaktować przez e-mail lub GitHub.</string>
-    <string name="sponsor_bank_or_card">Przelew lub karta kredytowa</string>
     <string name="action_treat_as_liquid">Traktuj jako ciecz</string>
     <string name="description_treat_as_liquid">Preferuj mililitry przy pomiarach</string>
     <string name="headline_personalization">Personalizacja</string>
@@ -357,19 +353,8 @@
     <string name="headline_pick_a_color">Wybierz kolor</string>
     <string name="headline_nutrients_colors">Kolory składników odżywczych</string>
     <string name="description_nutrients_colors_reset">Ustawienia kolorów składników odżywczych zostaną zresetowane do wartości domyślnych</string>
-    <string name="headline_sponsorship_goals">Cele</string>
-    <string name="description_sponsorship_goals">Dzięki sponsorowaniu pomagasz utrzymać ten projekt niezależnym, bez polegania na wyzyskujących modelach biznesowych. Wiele komercyjnych aplikacji zarabia poprzez zbieranie i sprzedaż danych użytkowników, wyświetlanie ukierunkowanych reklam lub nakłanianie do uzależniających schematów zaangażowania. Sponsoring zapewnia, że ta aplikacja pozostaje przyjazna prywatności, przejrzysta i skoncentrowana na dostarczaniu realnej wartości bez kompromisów w zakresie Twojego zaufania czy dobrostanu.</string>
-    <string name="description_x_away_from_next_goal">Do następnego celu brakuje %1$s</string>
-    <string name="headline_sponsors">Sponsorzy</string>
-    <string name="description_no_sponsors_this_month">Brak sponsorów w tym miesiącu</string>
-    <string name="headline_latest" description="Latest, most recent">Najnowsze</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Największe</string>
-    <string name="headline_this_month_we_raised">W tym miesiącu zebraliśmy %1$s</string>
-    <string name="description_sponsors_privacy">Food You traktuje Twoją prywatność poważnie. Dlatego nie łączy się z żadnymi zewnętrznymi usługami bez Twojej zgody. Aby zobaczyć najnowszych sponsorów, dane muszą zostać pobrane z serwerów Food You.</string>
-    <string name="action_allow" description="Allow something">Zezwól</string>
     <string name="action_next_month">Następny miesiąc</string>
     <string name="action_previous_month">Poprzedni miesiąc</string>
-    <string name="headline_sponsor_methods">Metody</string>
     <string name="headline_save_database">Zapisz bazę danych</string>
     <string name="description_save_database">Zapisz kopię swojej bazy danych</string>
     <string name="headline_replace_database">Zastąp bazę danych</string>

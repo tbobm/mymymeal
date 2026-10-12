@@ -191,11 +191,8 @@
     <string name="headline_external_databases">Bases de dades externes</string>
     <string name="feature_manual_database_import">Importació manual de la base de dades</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Desempaqueta</string>
-    <string name="headline_sponsor">Patrocinador</string>
     <string name="action_write_an_email">Escriure un correu electrònic</string>
     <string name="headline_contact">Contacte</string>
-    <string name="description_sponsor_contact">Si teniu alguna sol·licitud de patrocini, no dubteu a posar-vos en contacte amb mi a través del correu electrònic o GitHub.</string>
-    <string name="sponsor_bank_or_card">Compte bancari o targeta de crèdit</string>
     <string name="action_treat_as_liquid">Tractar com un líquid</string>
     <string name="description_treat_as_liquid">Preferir mil·lilitres quan es mesuri</string>
     <string name="headline_personalization">Personalització</string>

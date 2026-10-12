@@ -39,7 +39,6 @@ import com.maksimowiczm.foodyou.app.ui.meal.MealSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.personalization.PersonalizationScreen
 import com.maksimowiczm.foodyou.app.ui.personalization.PersonalizeNutritionFactsScreen
 import com.maksimowiczm.foodyou.app.ui.settings.SettingsScreen
-import com.maksimowiczm.foodyou.app.ui.sponsor.SponsorScreen
 import com.maksimowiczm.foodyou.app.ui.tag.TagSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.theme.ThemeScreen
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
@@ -103,7 +102,6 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         forwardBackwardComposable<Settings> {
             SettingsScreen(
                 onBack = { navController.popBackStackInclusive<Settings>() },
-                onSponsor = { navController.navigateSingleTop(Sponsor) },
                 onAbout = { navController.navigateSingleTop(About) },
                 onMeals = { navController.navigateSingleTop(MealSetup) },
                 onLanguage = { navController.navigateSingleTop(Language) },
@@ -139,9 +137,6 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         }
         forwardBackwardComposable<About> {
             AboutScreen(onBack = { navController.popBackStackInclusive<About>() })
-        }
-        forwardBackwardComposable<Sponsor> {
-            SponsorScreen(onBack = { navController.popBackStackInclusive<Sponsor>() })
         }
         forwardBackwardComposable<MealSetup> {
             MealSettingsScreen(onBack = { navController.popBackStackInclusive<MealSetup>() })
@@ -445,8 +440,6 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object Language
 
 @Serializable private object ThemeSettings
-
-@Serializable private object Sponsor
 
 @Serializable private object MealSetup
 

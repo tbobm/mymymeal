@@ -240,13 +240,9 @@
     <string name="description_external_databases">Desteklenen veritabanlarına göz atın</string>
     <string name="feature_manual_database_import">Manuel veritabanı içe aktarımı</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Ayrıştır</string>
-    <string name="headline_sponsor">Sponsor</string>
-    <string name="description_sponsor_short_2">Uygulamanın gelişimini destekleyin</string>
     <string name="headline_source_code">Kaynak kodu</string>
     <string name="action_write_an_email">E-posta yaz</string>
     <string name="headline_contact">İletişim</string>
-    <string name="description_sponsor_contact">Sponsorlukla ilgili herhangi bir talebiniz varsa, benimle e-posta veya GitHub üzerinden iletişime geçmekten çekinmeyin.</string>
-    <string name="sponsor_bank_or_card">Banka hesabı veya kredi kartı</string>
     <string name="action_treat_as_liquid">Sıvı olarak değerlendir</string>
     <string name="description_treat_as_liquid">Ölçüm yaparken mililitreyi tercih et</string>
     <string name="headline_personalization">Kişiselleştirme</string>
@@ -341,19 +337,8 @@
     <string name="headline_pick_a_color">Bir renk seçin</string>
     <string name="headline_nutrients_colors">Besin renkleri</string>
     <string name="description_nutrients_colors_reset">Besin renkleri ayarları varsayılan değerlere sıfırlanacak</string>
-    <string name="headline_sponsorship_goals">Hedefler</string>
-    <string name="description_sponsorship_goals">Sponsor olarak, sömürücü iş modellerine bel bağlamadan bu projenin bağımsız ve sürdürülebilir kalmasına yardımcı olursunuz. Birçok ticari uygulama, kullanıcı verilerini toplayıp satarak, hedefli reklamlar sunarak veya kullanıcıları bağımlılık yapan etkileşim kalıplarına yönlendirerek para kazanır. Sponsorluk, bu uygulamanın gizlilik dostu, şeffaf kalmasını ve güveninizden veya refahınızdan ödün vermeden gerçek değer sunmaya odaklanmasını sağlar.</string>
-    <string name="description_x_away_from_next_goal">Sonraki hedefe %1$s kaldı</string>
-    <string name="headline_sponsors">Sponsorlar</string>
-    <string name="description_no_sponsors_this_month">Bu ay sponsor yok</string>
-    <string name="headline_latest" description="Latest, most recent">En son</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">En yüksek</string>
-    <string name="headline_this_month_we_raised">Bu ay %1$s topladık</string>
-    <string name="description_sponsors_privacy">Food You, gizliliğinizi ciddiye alır. Bu nedenle, siz izin vermedikçe hiçbir harici hizmete bağlanmaz. En son sponsorları görmek için verilerin GitHub sunucularından indirilmesi gerekir.</string>
-    <string name="action_allow" description="Allow something">İzin ver</string>
     <string name="action_next_month">Gelecek ay</string>
     <string name="action_previous_month">Önceki ay</string>
-    <string name="headline_sponsor_methods">Yöntemler</string>
     <string name="headline_save_database">Veritabanını kaydet</string>
     <string name="description_save_database">Veritabanınızın bir kopyasını kaydedin</string>
     <string name="headline_replace_database">Veritabanını değiştir</string>

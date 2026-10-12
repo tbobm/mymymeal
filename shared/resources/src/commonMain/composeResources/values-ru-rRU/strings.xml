@@ -252,13 +252,9 @@
     <string name="description_external_databases">Проверьте поддерживаемые базы данных</string>
     <string name="feature_manual_database_import">Ручной импорт базы данных</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Распаковать</string>
-    <string name="headline_sponsor">Спонсор</string>
-    <string name="description_sponsor_short_2">Поддержите приложение в развитии</string>
     <string name="headline_source_code">Исходный код</string>
     <string name="action_write_an_email">Написать email</string>
     <string name="headline_contact">Связаться</string>
-    <string name="description_sponsor_contact">Если у вас есть какие-либо запросы по поводу спонсорства, свяжитесь со мной по электронной почте или через GitHub.</string>
-    <string name="sponsor_bank_or_card">Банковский счет или кредитная карта</string>
     <string name="action_treat_as_liquid">Считать за жидкость</string>
     <string name="description_treat_as_liquid">При измерении предпочитать миллилитры</string>
     <string name="headline_personalization">Персонализация</string>
@@ -357,19 +353,8 @@
     <string name="headline_pick_a_color">Выбрать цвет</string>
     <string name="headline_nutrients_colors">Цвета нутриентов</string>
     <string name="description_nutrients_colors_reset">Настройки цветов нутриентов будут сброшены до значений по умолчанию</string>
-    <string name="headline_sponsorship_goals">Цели</string>
-    <string name="description_sponsorship_goals">Спонсируя проект, вы помогаете ему оставаться независимым и стабильным, не прибегая к эксплуататорским бизнес-моделям. Многие коммерческие приложения зарабатывают, собирая и продавая данные пользователей, показывая целевую рекламу или подталкивая пользователей к формированию зависимости. Спонсорство гарантирует, что это приложение останется конфиденциальным, прозрачным и сосредоточенным на предоставлении реальной ценности, не подрывая ваше доверие и благополучие.</string>
-    <string name="description_x_away_from_next_goal">%1$s до следующей цели</string>
-    <string name="headline_sponsors">Спонсоры</string>
-    <string name="description_no_sponsors_this_month">В этом месяце спонсоров нет</string>
-    <string name="headline_latest" description="Latest, most recent">Последние</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Лидеры</string>
-    <string name="headline_this_month_we_raised">В этом месяце мы собрали %1$s</string>
-    <string name="description_sponsors_privacy">Food You серьёзно относится к вашей конфиденциальности. Поэтому приложение не будет подключаться к каким-либо внешним сервисам без вашего разрешения. Чтобы увидеть последних спонсоров, необходимо загрузить данные с серверов Food You.</string>
-    <string name="action_allow" description="Allow something">Разрешить</string>
     <string name="action_next_month">Следующий месяц</string>
     <string name="action_previous_month">Предыдущий месяц</string>
-    <string name="headline_sponsor_methods">Методы</string>
     <string name="headline_save_database">Сохранить базу данных</string>
     <string name="description_save_database">Сохраните копию вашей базы данных</string>
     <string name="headline_replace_database">Заменить базу данных</string>

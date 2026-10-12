@@ -244,13 +244,9 @@
     <string name="description_external_databases">Zobrazit podporované databáze</string>
     <string name="feature_manual_database_import">Ruční import databáze</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Rozbalit</string>
-    <string name="headline_sponsor">Sponzorovat</string>
-    <string name="description_sponsor_short_2">Podpořte růst aplikace</string>
     <string name="headline_source_code">Zdrojový kód</string>
     <string name="action_write_an_email">Napsat e-mail</string>
     <string name="headline_contact">Kontakt</string>
-    <string name="description_sponsor_contact">Pokud máte nějaké požadavky týkající se sponzorování, neváhejte mě kontaktovat prostřednictvím e-mailu nebo GitHubu.</string>
-    <string name="sponsor_bank_or_card">Bankovní účet nebo platební karta</string>
     <string name="action_treat_as_liquid">Zacházet jako s kapalinou</string>
     <string name="description_treat_as_liquid">Při měření preferovat mililitry</string>
     <string name="headline_personalization">Přizpůsobení</string>
@@ -348,19 +344,8 @@
     <string name="headline_pick_a_color">Vybrat barvu</string>
     <string name="headline_nutrients_colors">Barvy živin</string>
     <string name="description_nutrients_colors_reset">Barvy výživových hodnot budou nastaveny na výchozí</string>
-    <string name="headline_sponsorship_goals">Cíle</string>
-    <string name="description_sponsorship_goals">Podporou pomáháte udržet tento projekt nezávislý a udržitelný, aniž byste se spoléhali na vykořisťovatelské obchodní modely. Mnoho komerčních aplikací vydělává peníze tím, že sbírá a prodává uživatelská data, zaměřuje se na reklamy nebo pohlcuje uživatele do návykových modelů zapojení. Podpora zajistí že tato aplikace zůstane vstřícná k soukromí, transparentní a zaměřená na poskytování opravdové hodnoty, aniž by ohrozila vaši důvěru nebo život.</string>
-    <string name="description_x_away_from_next_goal">%1$s od příštího cíle</string>
-    <string name="headline_sponsors">Sponzoři</string>
-    <string name="description_no_sponsors_this_month">Tento měsíc nejsou žádní sponzoři</string>
-    <string name="headline_latest" description="Latest, most recent">Nejnovější</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Vrchní</string>
-    <string name="headline_this_month_we_raised">Tento měsíc jsme získali %1$s</string>
-    <string name="description_sponsors_privacy">Food You bere vaše soukromí vážně. Proto nepoužíváme služby třetích stran aniž byste je povolili. Pro zobrazení nejnovějších podporovatelů musí být data stažena ze serverů GitHubu.</string>
-    <string name="action_allow" description="Allow something">Povolit</string>
     <string name="action_next_month">Příští měsíc</string>
     <string name="action_previous_month">Předchozí měsíc</string>
-    <string name="headline_sponsor_methods">Metody</string>
     <string name="headline_save_database">Uložit databázi</string>
     <string name="description_save_database">Uložit kopii databáze</string>
     <string name="headline_replace_database">Nahradit databázi</string>

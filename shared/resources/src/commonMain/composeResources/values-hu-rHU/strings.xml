@@ -240,13 +240,9 @@
     <string name="description_external_databases">Támogatott adatbázisok megtekintése</string>
     <string name="feature_manual_database_import">Manuális adatbázis importálása</string>
     <string name="action_unpack" description="Unpack the recipe ingredients">Kicsomagolás</string>
-    <string name="headline_sponsor">Támogatás</string>
-    <string name="description_sponsor_short_2">Támogassa a fejlesztést</string>
     <string name="headline_source_code">Forráskód</string>
     <string name="action_write_an_email">Írjon nekünk</string>
     <string name="headline_contact">Elérhetőség</string>
-    <string name="description_sponsor_contact">Ha bármilyen kérdése van az adományozással kapcsolatban, értesítsen emailben vagy GitHubon.</string>
-    <string name="sponsor_bank_or_card">Utalás vagy bankkártya</string>
     <string name="action_treat_as_liquid">Folyadékként kezelendő</string>
     <string name="description_treat_as_liquid">Milliméter használata méréskor</string>
     <string name="headline_personalization">Testreszabás</string>
@@ -340,19 +336,8 @@
     <string name="headline_pick_a_color">Szín kiválasztása</string>
     <string name="headline_nutrients_colors">Tápértékek színei</string>
     <string name="description_nutrients_colors_reset">Tápanyagok színei alapértelmezettre visszaállítása</string>
-    <string name="headline_sponsorship_goals">Célok</string>
-    <string name="description_sponsorship_goals">Az adományozással segítheti a projekt a független és fenntartható fejlődését, egy kizsákmányoláson alapuló üzleti modell bevezetése helyett. Sok népszerű applikáció úgy szerez pénzt, hogy összegyűjti és eladja a felhasználói adatait, és célzott reklámokkal vagy előfizetésekkel bombázza azokat. Az adomány biztosítja, hogy ez az alkalmazás a felhasználók magánéletének tiszteletben tartása mellett fog állni, átlátható lesz, és a valódi értéknyújtásra összpontosít anélkül, hogy veszélyeztetné bárki adatait.</string>
-    <string name="description_x_away_from_next_goal">%1$s távra a következő céltól</string>
-    <string name="headline_sponsors">Támogatóink</string>
-    <string name="description_no_sponsors_this_month">Nincsenek támogatók a hónapban</string>
-    <string name="headline_latest" description="Latest, most recent">Legutóbbi</string>
-    <string name="headline_top_sponsorships" description="Most money contributed">Legnagyobb</string>
-    <string name="headline_this_month_we_raised">Ebben a hónapban %1$s összeget gyűjtöttünk</string>
-    <string name="description_sponsors_privacy">A Food You komolyan veszi a magánszférádat. Ezért nem csatlakozik külső szolgáltatásokhoz, amíg Ön azt nem engedélyezi. Ahhoz, hogy megtekinthesse legutóbbi támogatóinkat, az adatokat a Food You szervereiről kell letöltenünk.</string>
-    <string name="action_allow" description="Allow something">Engedélyezés</string>
     <string name="action_next_month">Következő hónap</string>
     <string name="action_previous_month">Előző hónap</string>
-    <string name="headline_sponsor_methods">Módszerek</string>
     <string name="headline_save_database">Adatbázis mentése</string>
     <string name="description_save_database">Ments le egy másolatot az adatbázisodról</string>
     <string name="headline_replace_database">Adatbázis kicserélése</string>
