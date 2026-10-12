@@ -437,6 +437,7 @@
     <string name="description_health_connect_last_synced">Last synced %1$s</string>
     <string name="description_health_connect_never_synced">Never synced</string>
     <string name="description_health_connect_syncing">Syncing…</string>
+    <string name="description_health_connect_rate_limited">Sync failed (rate limited?). Try again later.</string>
     <string name="notification_exporting_full_data">Exporting full backup</string>
     <string name="description_please_wait_while_exporting_full_data">Please wait while exporting your full backup</string>
     <string name="headline_export_complete">Export complete</string>
