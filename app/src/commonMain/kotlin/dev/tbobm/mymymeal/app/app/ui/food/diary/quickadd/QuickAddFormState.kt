@@ -1,0 +1,206 @@
+package dev.tbobm.mymymeal.app.app.ui.food.diary.quickadd
+
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import dev.tbobm.mymymeal.app.app.ui.common.form.FormField
+import dev.tbobm.mymymeal.app.app.ui.common.form.nonBlankStringValidator
+import dev.tbobm.mymymeal.app.app.ui.common.form.nullableDoubleParser
+import dev.tbobm.mymymeal.app.app.ui.common.form.rememberFormField
+import dev.tbobm.mymymeal.app.app.ui.common.form.stringParser
+import dev.tbobm.mymymeal.app.app.ui.common.utility.LocalEnergyFormatter
+import dev.tbobm.mymymeal.app.common.compose.utility.formatClipZeros
+import dev.tbobm.mymymeal.app.common.domain.food.NutrientsHelper
+import foodyou.app.generated.resources.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
+import org.jetbrains.compose.resources.stringResource
+
+internal enum class QuickAddFormFieldError {
+    Required,
+    InvalidNumber,
+    NegativeNumber;
+
+    @Composable
+    fun stringResource(): String =
+        when (this) {
+            Required -> stringResource(Res.string.neutral_required)
+            InvalidNumber -> stringResource(Res.string.error_invalid_number)
+            NegativeNumber -> stringResource(Res.string.error_invalid_number)
+        }
+}
+
+@Composable
+internal fun rememberQuickAddFormState(
+    name: String = "",
+    proteins: Double? = null,
+    carbohydrates: Double? = null,
+    fats: Double? = null,
+    energy: Double? = null,
+): QuickAddFormState {
+    val energyFormatter = LocalEnergyFormatter.current
+    val energyInUserUnit = energy?.let(energyFormatter::fromKcal)
+
+    val nameForm =
+        rememberFormField(
+            initialValue = name,
+            parser = stringParser(),
+            validator = nonBlankStringValidator(onEmpty = { QuickAddFormFieldError.Required }),
+            textFieldState = rememberTextFieldState(name),
+        )
+
+    val proteinsForm =
+        rememberFormField(
+            initialValue = proteins,
+            parser = nullableDoubleParser(onNotANumber = { QuickAddFormFieldError.InvalidNumber }),
+            validator = {
+                if (it != null && it < 0) QuickAddFormFieldError.NegativeNumber else null
+            },
+            textFieldState = rememberTextFieldState(proteins?.formatClipZeros() ?: ""),
+        )
+
+    val carbohydratesForm =
+        rememberFormField(
+            initialValue = carbohydrates,
+            parser = nullableDoubleParser(onNotANumber = { QuickAddFormFieldError.InvalidNumber }),
+            validator = {
+                if (it != null && it < 0) QuickAddFormFieldError.NegativeNumber else null
+            },
+            textFieldState = rememberTextFieldState(carbohydrates?.formatClipZeros() ?: ""),
+        )
+
+    val fatsForm =
+        rememberFormField(
+            initialValue = fats,
+            parser = nullableDoubleParser(onNotANumber = { QuickAddFormFieldError.InvalidNumber }),
+            validator = {
+                if (it != null && it < 0) QuickAddFormFieldError.NegativeNumber else null
+            },
+            textFieldState = rememberTextFieldState(fats?.formatClipZeros() ?: ""),
+        )
+
+    val energyForm =
+        rememberFormField(
+            initialValue = energyInUserUnit,
+            parser = nullableDoubleParser(onNotANumber = { QuickAddFormFieldError.InvalidNumber }),
+            validator = {
+                if (it != null && it < 0) QuickAddFormFieldError.NegativeNumber else null
+            },
+            textFieldState = rememberTextFieldState(energyInUserUnit?.formatClipZeros() ?: ""),
+        )
+
+    val autoCalculateEnergyState =
+        rememberSaveable(proteins, carbohydrates, fats, energy) {
+            val initialState =
+                if (energy == null || proteins == null || carbohydrates == null || fats == null) {
+                    true
+                } else {
+                    NutrientsHelper.calculateEnergy(
+                        proteins = proteins,
+                        carbohydrates = carbohydrates,
+                        fats = fats,
+                    ) == energy
+                }
+
+            mutableStateOf(initialState)
+        }
+
+    LaunchedEffect(
+        autoCalculateEnergyState,
+        proteinsForm,
+        carbohydratesForm,
+        fatsForm,
+        energyFormatter,
+    ) {
+        snapshotFlow {
+                if (!autoCalculateEnergyState.value) {
+                    return@snapshotFlow null
+                }
+
+                val proteinsValue = proteinsForm.value ?: 0.0
+                val carbohydratesValue = carbohydratesForm.value ?: 0.0
+                val fatsValue = fatsForm.value ?: 0.0
+
+                val kcal =
+                    NutrientsHelper.calculateEnergy(
+                        proteins = proteinsValue,
+                        carbohydrates = carbohydratesValue,
+                        fats = fatsValue,
+                    )
+
+                energyFormatter.fromKcal(kcal).formatClipZeros()
+            }
+            .filterNotNull()
+            .collectLatest { energyForm.textFieldState.setTextAndPlaceCursorAtEnd(it) }
+    }
+
+    val isModifiedState =
+        remember(
+            nameForm,
+            name,
+            proteinsForm,
+            proteins,
+            carbohydratesForm,
+            carbohydrates,
+            fatsForm,
+            fats,
+            energyForm,
+            energyInUserUnit,
+        ) {
+            derivedStateOf {
+                nameForm.value != name ||
+                    proteinsForm.value != proteins ||
+                    carbohydratesForm.value != carbohydrates ||
+                    fatsForm.value != fats ||
+                    if (energyInUserUnit == null) {
+                        energyForm.value != null && energyForm.value != 0.0
+                    } else {
+                        energyForm.value != energyInUserUnit
+                    }
+            }
+        }
+
+    return remember(
+        nameForm,
+        proteinsForm,
+        carbohydratesForm,
+        fatsForm,
+        energyForm,
+        autoCalculateEnergyState,
+        isModifiedState,
+    ) {
+        QuickAddFormState(
+            name = nameForm,
+            proteins = proteinsForm,
+            carbohydrates = carbohydratesForm,
+            fats = fatsForm,
+            energy = energyForm,
+            autoCalculateEnergyState = autoCalculateEnergyState,
+            isModified = isModifiedState,
+        )
+    }
+}
+
+@Stable
+internal class QuickAddFormState(
+    val name: FormField<String, QuickAddFormFieldError>,
+    val proteins: FormField<Double?, QuickAddFormFieldError>,
+    val carbohydrates: FormField<Double?, QuickAddFormFieldError>,
+    val fats: FormField<Double?, QuickAddFormFieldError>,
+    val energy: FormField<Double?, QuickAddFormFieldError>,
+    autoCalculateEnergyState: MutableState<Boolean>,
+    isModified: State<Boolean>,
+) {
+    var autoCalculateEnergy by autoCalculateEnergyState
+
+    val isModified by isModified
+
+    val isValid by derivedStateOf {
+        name.error == null &&
+            proteins.error == null &&
+            carbohydrates.error == null &&
+            fats.error == null &&
+            energy.error == null
+    }
+}

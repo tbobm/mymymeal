@@ -1,1 +1,1 @@
--keep class com.maksimowiczm.foodyou.barcodescanner.ui.CameraBarcodeScannerScreen_androidKt { *; }
+-keep class dev.tbobm.mymymeal.app.barcodescanner.ui.CameraBarcodeScannerScreen_androidKt { *; }

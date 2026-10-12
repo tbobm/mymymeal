@@ -3,8 +3,9 @@ Read PRD.md before any work. It is the source of truth for scope, data model rul
 # Module map — Food You fork (mymymeal)
 
 Fork of [maksimowiczm/FoodYou](https://github.com/maksimowiczm/FoodYou) (GPL-3.0, Kotlin/Compose
-Multiplatform, Android-only build currently). `origin` = `tbobm/FoodYou` (this project's fork),
-`upstream` = `maksimowiczm/FoodYou`. App ID unchanged: `com.maksimowiczm.foodyou`.
+Multiplatform, Android-only build currently). `origin` = `tbobm/mymymeal` (this project's fork,
+renamed from `tbobm/FoodYou`), `upstream` = `maksimowiczm/FoodYou`. App ID: `dev.tbobm.mymymeal.app`
+(rebranded from `com.maksimowiczm.foodyou`).
 
 Gradle modules (declared in `settings.gradle.kts`): `:app`, `:shared:barcodescanner`,
 `:shared:resources`. Per upstream decision log
@@ -15,7 +16,7 @@ minimized — almost everything lives in `:app`, organized by package instead of
 
 Kotlin Multiplatform source sets: `commonMain` (nearly all logic and UI), `androidMain` (Android
 glue), `commonTest`, `androidInstrumentedTest`. Packages under
-`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/`:
+`app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/`:
 
 | Package | Purpose | This project touches it? |
 |---|---|---|
@@ -63,13 +64,13 @@ not part of the zensical `nav` and will not appear on the built doc site.
 
 ## Navigation graph and where the diary is composed
 
-Entry point: `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt`
+Entry point: `app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/app/navigation/FoodYouAppNavHost.kt`
 — a single `NavHost` with `Home` (private, `@Serializable object`) as `startDestination`, plus
 routes for `Settings`, `About`, `Language`, `ThemeSettings`, `Sponsor`, and others. A second, small
 nested nav host (`DownloadProductAppNavHost.kt`) handles the "create product from URL" dialog flow.
 
 **The diary screen** is `HomeScreen`
-(`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/master/HomeScreen.kt`). It is a
+(`app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/app/ui/home/master/HomeScreen.kt`). It is a
 "modular home screen" (per README) assembled from cards, ordered by user preference
 (`settings.domain.entity.HomeCard`):
 

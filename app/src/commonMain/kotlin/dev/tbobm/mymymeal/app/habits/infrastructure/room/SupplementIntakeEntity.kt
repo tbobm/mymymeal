@@ -1,0 +1,30 @@
+package dev.tbobm.mymymeal.app.habits.infrastructure.room
+
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+
+/**
+ * Presence of a row means the supplement was taken on that [date]. No timestamp. [doseGrams] is
+ * only ever set when the parent [SupplementEntity.tracksDose] is true -- null otherwise.
+ */
+@Entity(
+    tableName = "SupplementIntake",
+    primaryKeys = ["supplementId", "date"],
+    foreignKeys =
+        [
+            ForeignKey(
+                entity = SupplementEntity::class,
+                parentColumns = ["id"],
+                childColumns = ["supplementId"],
+                onDelete = ForeignKey.CASCADE,
+            )
+        ],
+    indices = [Index("supplementId")],
+)
+data class SupplementIntakeEntity(
+    val supplementId: Long,
+    /** Epoch day (local date), matching the existing `epochDay` convention on `Measurement`. */
+    val date: Long,
+    val doseGrams: Double? = null,
+)

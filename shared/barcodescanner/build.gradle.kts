@@ -46,7 +46,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.maksimowiczm.foodyou.barcodescanner"
+    namespace = "dev.tbobm.mymymeal.app.barcodescanner"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig { minSdk = libs.versions.android.minSdk.get().toInt() }

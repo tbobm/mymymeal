@@ -14,7 +14,7 @@
     <string name="headline_system">Sistem</string>
     <string name="headline_system_language_settings">Nastavitve sistemskega jezika</string>
     <string name="headline_secure_screen">Zaščita zaslona</string>
-    <string name="headline_about">O aplikaciji Food You</string>
+    <string name="headline_about">O aplikaciji mymymeal</string>
     <string name="headline_version">Različica</string>
     <string name="headline_all_day" description="All-day (meal)">Celodnevno</string>
     <string name="headline_time_based_ordering">Naročanje na podlagi časa</string>

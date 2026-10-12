@@ -1,3 +1,0 @@
-Changes
-- Added Open Food Facts authentication to handle search API requiring authentication.
-- Updated privacy policy regarding Open Food Facts credential handling.

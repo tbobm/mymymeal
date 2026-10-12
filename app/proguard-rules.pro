@@ -1,1 +1,1 @@
--keep class com.maksimowiczm.foodyou.common.domain.measurement.MeasurementType
+-keep class dev.tbobm.mymymeal.app.common.domain.measurement.MeasurementType

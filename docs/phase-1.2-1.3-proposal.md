@@ -20,7 +20,7 @@ that quantity, stored as values on the entry" and "`unit_cost` and `currency`, n
 
 I checked how nutrition is actually snapshotted today, and it is **not** stored resolved on the
 entry. `FoodDiaryEntry.nutritionFacts` is a computed property
-(`app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/FoodDiaryEntry.kt:39`):
+(`app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/fooddiary/domain/entity/FoodDiaryEntry.kt:39`):
 `food.nutritionFacts * (weight / 100)` — it multiplies the immutable per-100g snapshot on
 `DiaryProductEntity`/`DiaryRecipeEntity` by the logged quantity, at read time, every time it's
 displayed. It is never written to a column on `MeasurementEntity`.
