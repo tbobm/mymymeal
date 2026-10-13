@@ -18,7 +18,7 @@
     </queries>
 
     <application
-        android:name=".app.infrastructure.android.FoodYouApplication"
+        android:name=".app.infrastructure.android.MymymealApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
