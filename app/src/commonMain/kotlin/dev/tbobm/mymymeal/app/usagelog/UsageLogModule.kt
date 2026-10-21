@@ -15,6 +15,7 @@ val usageLogModule = module {
         UsageLogger(
             dao = get(),
             settings = userPreferencesRepository(),
+            logger = get(),
             scope = applicationCoroutineScope() + Dispatchers.IO,
         )
     }

@@ -1,5 +1,6 @@
 package dev.tbobm.mymymeal.app.usagelog
 
+import dev.tbobm.mymymeal.app.common.log.Logger
 import dev.tbobm.mymymeal.app.common.domain.userpreferences.UserPreferencesRepository
 import dev.tbobm.mymymeal.app.settings.domain.entity.Settings
 import dev.tbobm.mymymeal.app.usagelog.infrastructure.room.UsageEventEntity
@@ -19,6 +20,7 @@ class UsageLogger(
     private val dao: UsageLogDao,
     private val settings: UserPreferencesRepository<Settings>,
     private val scope: CoroutineScope,
+    private val logger: Logger,
     private val nowEpochSeconds: () -> Long = { Clock.System.now().epochSeconds },
 ) {
     internal val startupCompaction: Job =
@@ -38,12 +40,14 @@ class UsageLogger(
             block()
         } catch (e: CancellationException) {
             throw e
-        } catch (_: Exception) {
+        } catch (e: Exception) {
             // Logging must never affect the app.
+            logger.w(TAG, e) { "Usage log operation failed" }
         }
     }
 
     companion object {
+        private const val TAG = "UsageLogger"
         const val RETENTION_DAYS = 90L
         const val SECONDS_PER_DAY = 86_400L
     }

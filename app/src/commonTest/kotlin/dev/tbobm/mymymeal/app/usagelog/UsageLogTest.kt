@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.test.core.app.ApplicationProvider
+import dev.tbobm.mymymeal.app.common.log.Logger
 import dev.tbobm.mymymeal.app.common.domain.userpreferences.UserPreferencesRepository
 import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportUsageLogUseCaseImpl
 import dev.tbobm.mymymeal.app.settings.domain.entity.AppLaunchInfo
@@ -57,6 +58,16 @@ private class FakeSettings(enabled: Boolean) : UserPreferencesRepository<Setting
     }
 }
 
+private object NoopLogger : Logger {
+    override fun d(tag: String, throwable: Throwable?, message: () -> String) = Unit
+
+    override fun w(tag: String, throwable: Throwable?, message: () -> String) = Unit
+
+    override fun e(tag: String, throwable: Throwable?, message: () -> String) = Unit
+
+    override fun i(tag: String, throwable: Throwable?, message: () -> String) = Unit
+}
+
 @RunWith(RobolectricTestRunner::class)
 class UsageLogTest {
     private val day = UsageLogger.SECONDS_PER_DAY
@@ -71,7 +82,7 @@ class UsageLogTest {
             .usageLogDao
 
     private fun logger(dao: UsageLogDao, enabled: Boolean = true) =
-        UsageLogger(dao, FakeSettings(enabled), CoroutineScope(Dispatchers.IO)) { now }
+        UsageLogger(dao, FakeSettings(enabled), CoroutineScope(Dispatchers.IO), NoopLogger) { now }
 
     @Test
     fun `log inserts an event with timestamp, code and arg`() = runTest {
@@ -81,7 +92,10 @@ class UsageLogTest {
 
         logger.log(UsageCode.ACT_ADD_CLICK, 3).join()
 
-        assertEquals(listOf(UsageEventEntity(1, now, UsageCode.ACT_ADD_CLICK.id, 3)), dao.events())
+        assertEquals(
+            listOf(Triple(now, UsageCode.ACT_ADD_CLICK.id, 3)),
+            dao.events().map { Triple(it.ts, it.code, it.arg) },
+        )
     }
 
     @Test
