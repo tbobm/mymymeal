@@ -64,9 +64,9 @@ internal class ExportFullDataViewModel(
                                 "recipe-ingredients.csv",
                                 exportRecipeIngredientsUseCase.export(),
                             )
-                        count += writeEntry(zip, "usage-log.csv", exportUsageLogUseCase.exportEvents())
-                        count +=
-                            writeEntry(zip, "usage-daily.csv", exportUsageLogUseCase.exportDaily())
+                        // Not counted: the Exported count is diary/food rows.
+                        writeEntry(zip, "usage-log.csv", exportUsageLogUseCase.exportEvents())
+                        writeEntry(zip, "usage-daily.csv", exportUsageLogUseCase.exportDaily())
                     }
 
                     _uiState.value = UiState.Exported(count)
