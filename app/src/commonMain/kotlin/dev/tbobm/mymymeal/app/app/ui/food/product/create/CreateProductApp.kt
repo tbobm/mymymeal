@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -17,6 +18,7 @@ import dev.tbobm.mymymeal.app.app.ui.food.product.download.DownloadProductViewMo
 import dev.tbobm.mymymeal.app.app.ui.food.product.rememberProductFormState
 import dev.tbobm.mymymeal.app.common.compose.extension.LaunchedCollectWithLifecycle
 import dev.tbobm.mymymeal.app.common.compose.utility.LocalClipboardManager
+import dev.tbobm.mymymeal.app.food.domain.usecase.parseAiProduct
 import foodyou.app.generated.resources.*
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -57,10 +59,15 @@ internal fun CreateProductApp(
                     onDownload = {
                         navController.navigate(Download(null)) { launchSingleTop = true }
                     },
+                    onAskAi = {
+                        navController.navigate(Download(null, fromAi = true)) {
+                            launchSingleTop = true
+                        }
+                    },
                 )
             }
             forwardBackwardComposable<Download> {
-                val (url) = it.toRoute<Download>()
+                val (url, fromAi) = it.toRoute<Download>()
 
                 val viewModel =
                     koinViewModel<DownloadProductViewModel> { parametersOf(url, holder) }
@@ -87,6 +94,21 @@ internal fun CreateProductApp(
                 val openFoodFactsUrl = stringResource(Res.string.link_open_food_facts)
                 val usdaUrl = stringResource(Res.string.link_usda)
 
+                if (fromAi) {
+                    val isFocused = LocalWindowInfo.current.isWindowFocused
+                    var wasAway by remember { mutableStateOf(false) }
+                    LaunchedEffect(isFocused) {
+                        if (!isFocused) {
+                            wasAway = true
+                        } else if (wasAway) {
+                            val text = clipboardManager.paste()
+                            if (text != null && parseAiProduct(text) != null) {
+                                viewModel.onDownload(text)
+                            }
+                        }
+                    }
+                }
+
                 DownloadProductScreen(
                     isDownloading = isDownloading,
                     error = error,
@@ -97,6 +119,7 @@ internal fun CreateProductApp(
                         val text = clipboardManager.paste()
                         if (text != null) {
                             textFieldState.setTextAndPlaceCursorAtEnd(text)
+                            viewModel.onDownload(text)
                         }
                     },
                     onOpenFoodFacts = { uriHandler.openUri(openFoodFactsUrl) },
@@ -110,4 +133,4 @@ internal fun CreateProductApp(
 
 @Serializable private data object Create
 
-@Serializable private data class Download(val url: String?)
+@Serializable private data class Download(val url: String?, val fromAi: Boolean = false)

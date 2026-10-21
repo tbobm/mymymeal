@@ -24,6 +24,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationEventHandler
@@ -35,6 +36,7 @@ import dev.tbobm.mymymeal.app.app.ui.food.product.ProductFormState
 import dev.tbobm.mymymeal.app.common.compose.utility.LocalClipboardManager
 import dev.tbobm.mymymeal.app.food.domain.usecase.aiProductPrompt
 import foodyou.app.generated.resources.*
+import io.ktor.http.encodeURLQueryComponent
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -43,6 +45,7 @@ internal fun CreateProductScreen(
     onBack: () -> Unit,
     onCreate: (ProductFormState) -> Unit,
     onDownload: () -> Unit,
+    onAskAi: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showDiscardDialog by rememberSaveable { mutableStateOf(false) }
@@ -96,6 +99,7 @@ internal fun CreateProductScreen(
         ) {
             item {
                 val clipboardManager = LocalClipboardManager.current
+                val uriHandler = LocalUriHandler.current
                 val aiLabel = stringResource(Res.string.action_ask_ai)
 
                 Row(
@@ -115,8 +119,14 @@ internal fun CreateProductScreen(
                     )
                     AssistChip(
                         onClick = {
-                            clipboardManager.copy(aiLabel, aiProductPrompt(state.name.value))
-                            onDownload()
+                            val prompt = aiProductPrompt(state.name.value)
+                            clipboardManager.copy(aiLabel, prompt)
+                            runCatching {
+                                uriHandler.openUri(
+                                    "https://claude.ai/new?q=${prompt.encodeURLQueryComponent()}"
+                                )
+                            }
+                            onAskAi()
                         },
                         label = { Text(aiLabel) },
                         leadingIcon = {
