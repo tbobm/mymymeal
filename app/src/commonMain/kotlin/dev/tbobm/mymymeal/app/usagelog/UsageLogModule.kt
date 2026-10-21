@@ -5,10 +5,12 @@ import dev.tbobm.mymymeal.app.common.infrastructure.koin.userPreferencesReposito
 import dev.tbobm.mymymeal.app.usagelog.infrastructure.room.UsageLogDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.plus
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val usageLogModule = module {
     factory { get<UsageLogDatabase>().usageLogDao }
+    factoryOf(::ClearUsageLogUseCase)
     single {
         UsageLogger(
             dao = get(),
