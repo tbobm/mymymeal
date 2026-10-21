@@ -14,7 +14,7 @@ import dev.tbobm.mymymeal.app.app.ui.theme.MymymealTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun MymymealApp(onDatabaseBackup: () -> Unit) {
+fun MymymealApp(onDatabaseBackup: () -> Unit, quickAddRequest: Int = 0) {
     val viewModel: AppViewModel = koinViewModel()
     val nutrientsOrder by viewModel.nutrientsOrder.collectAsStateWithLifecycle()
     val onboardingFinished by viewModel.onboardingFinished.collectAsStateWithLifecycle()
@@ -28,7 +28,7 @@ fun MymymealApp(onDatabaseBackup: () -> Unit) {
 
                 if (onboardingFinished) {
                     Surface {
-                        MymymealAppNavHost(onDatabaseBackup)
+                        MymymealAppNavHost(onDatabaseBackup, quickAddRequest = quickAddRequest)
                         AppUpdateChangelogModalBottomSheet()
                     }
                 } else {
