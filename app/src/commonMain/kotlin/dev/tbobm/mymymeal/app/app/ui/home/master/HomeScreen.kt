@@ -27,7 +27,10 @@ import dev.tbobm.mymymeal.app.app.ui.home.poll.PollsCard
 import dev.tbobm.mymymeal.app.app.ui.home.shared.HomeState
 import dev.tbobm.mymymeal.app.settings.domain.entity.HomeCard
 import foodyou.app.generated.resources.*
+import dev.tbobm.mymymeal.app.usagelog.UsageCode
+import dev.tbobm.mymymeal.app.usagelog.UsageLogger
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -45,6 +48,7 @@ internal fun HomeScreen(
     modifier: Modifier = Modifier,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
+    val usageLogger = koinInject<UsageLogger>()
     val order by viewModel.homeOrder.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -103,8 +107,14 @@ internal fun HomeScreen(
                     HomeCard.Meals ->
                         MealsCards(
                             homeState = homeState,
-                            onAdd = onMealCardAddClick,
-                            onQuickAdd = onMealCardQuickAddClick,
+                            onAdd = { epochDay, mealId ->
+                                usageLogger.log(UsageCode.ACT_ADD_CLICK, mealId.toInt())
+                                onMealCardAddClick(epochDay, mealId)
+                            },
+                            onQuickAdd = { epochDay, mealId ->
+                                usageLogger.log(UsageCode.ACT_QUICKADD_CLICK, mealId.toInt())
+                                onMealCardQuickAddClick(epochDay, mealId)
+                            },
                             onEditEntry = onEditDiaryEntryClick,
                             onLongClick = onMealCardLongClick,
                             contentPadding = PaddingValues(horizontal = 8.dp),

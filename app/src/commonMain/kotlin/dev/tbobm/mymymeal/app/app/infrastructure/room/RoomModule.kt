@@ -8,6 +8,7 @@ import dev.tbobm.mymymeal.app.food.search.infrastructure.room.FoodSearchDatabase
 import dev.tbobm.mymymeal.app.fooddiary.infrastructure.room.FoodDiaryDatabase
 import dev.tbobm.mymymeal.app.habits.infrastructure.room.HabitsDatabase
 import dev.tbobm.mymymeal.app.sponsorship.infrastructure.room.SponsorshipDatabase
+import dev.tbobm.mymymeal.app.usagelog.infrastructure.room.UsageLogDatabase
 import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.binds
@@ -31,6 +32,7 @@ fun Module.roomModule() {
                 SponsorshipDatabase::class,
                 TagDatabase::class,
                 HabitsDatabase::class,
+                UsageLogDatabase::class,
             )
         )
 }

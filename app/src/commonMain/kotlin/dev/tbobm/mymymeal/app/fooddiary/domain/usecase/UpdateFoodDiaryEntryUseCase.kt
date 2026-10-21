@@ -7,9 +7,12 @@ import dev.tbobm.mymymeal.app.common.log.Logger
 import dev.tbobm.mymymeal.app.common.log.logAndReturnFailure
 import dev.tbobm.mymymeal.app.common.result.Ok
 import dev.tbobm.mymymeal.app.common.result.Result
+import dev.tbobm.mymymeal.app.common.result.onSuccess
 import dev.tbobm.mymymeal.app.fooddiary.domain.entity.FoodDiaryEntryId
 import dev.tbobm.mymymeal.app.fooddiary.domain.repository.FoodDiaryEntryRepository
 import dev.tbobm.mymymeal.app.fooddiary.domain.repository.MealRepository
+import dev.tbobm.mymymeal.app.usagelog.UsageCode
+import dev.tbobm.mymymeal.app.usagelog.UsageLogger
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.LocalDate
 
@@ -27,6 +30,7 @@ class UpdateFoodDiaryEntryUseCase(
     private val dateProvider: DateProvider,
     private val transactionProvider: TransactionProvider,
     private val logger: Logger,
+    private val usageLogger: UsageLogger,
 ) {
     suspend fun update(
         id: FoodDiaryEntryId,
@@ -34,7 +38,7 @@ class UpdateFoodDiaryEntryUseCase(
         mealId: Long,
         date: LocalDate,
     ): Result<Unit, UpdateFoodDiaryEntryError> {
-        return transactionProvider.withTransaction {
+        val result = transactionProvider.withTransaction {
             val entry = entryRepository.observe(id).firstOrNull()
 
             if (entry == null) {
@@ -106,6 +110,9 @@ class UpdateFoodDiaryEntryUseCase(
             entryRepository.update(updated)
             Ok(Unit)
         }
+        // Outside the transaction: logging must not extend the writer lock.
+        result.onSuccess { usageLogger.log(UsageCode.ACT_EDIT_ENTRY, mealId.toInt()) }
+        return result
     }
 
     private companion object {

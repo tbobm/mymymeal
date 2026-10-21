@@ -8,6 +8,8 @@ import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportRecipeIngredient
 import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportRecipeIngredientsUseCaseImpl
 import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportRecipesUseCase
 import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportRecipesUseCaseImpl
+import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportUsageLogUseCase
+import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportUsageLogUseCaseImpl
 import dev.tbobm.mymymeal.app.importexport.domain.usecase.ImportCsvProductUseCase
 import dev.tbobm.mymymeal.app.importexport.domain.usecase.ImportCsvProductUseCaseImpl
 import org.koin.core.module.Module
@@ -20,4 +22,5 @@ internal fun Module.importExportDomainModule() {
     factoryOf(::ExportDiaryEntriesUseCaseImpl).bind<ExportDiaryEntriesUseCase>()
     factoryOf(::ExportRecipesUseCaseImpl).bind<ExportRecipesUseCase>()
     factoryOf(::ExportRecipeIngredientsUseCaseImpl).bind<ExportRecipeIngredientsUseCase>()
+    factoryOf(::ExportUsageLogUseCaseImpl).bind<ExportUsageLogUseCase>()
 }

@@ -53,7 +53,10 @@ import dev.tbobm.mymymeal.app.food.search.domain.FoodSearch
 import com.valentinilk.shimmer.ShimmerBounds
 import com.valentinilk.shimmer.rememberShimmer
 import foodyou.app.generated.resources.*
+import dev.tbobm.mymymeal.app.usagelog.UsageCode
+import dev.tbobm.mymymeal.app.usagelog.UsageLogger
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -107,9 +110,11 @@ private fun FoodSearchApp(
     val pages = uiState.currentSourceState?.collectAsLazyPagingItems()
     val shimmer = rememberShimmer(ShimmerBounds.View)
 
+    val usageLogger = koinInject<UsageLogger>()
     FullScreenCameraBarcodeScanner(
         visible = appState.showBarcodeScanner,
         onBarcodeScan = {
+            usageLogger.log(UsageCode.ACT_LOG_BARCODE)
             appState.showBarcodeScanner = false
             onSearch(it)
         },

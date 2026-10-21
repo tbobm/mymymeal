@@ -1,9 +1,9 @@
-# Database schema (as of this fork, schema version 37)
+# Database schema (as of this fork, schema version 38)
 
 Single Room database: `MymymealDatabase`
 (`app/src/commonMain/kotlin/dev/tbobm/mymymeal/app/app/infrastructure/room/MymymealDatabase.kt`).
 `exportSchema = true`; every version's JSON schema is checked in under
-`app/schemas/dev.tbobm.mymymeal.app.app.infrastructure.room.MymymealDatabase/{1..37}.json`.
+`app/schemas/dev.tbobm.mymymeal.app.app.infrastructure.room.MymymealDatabase/{1..38}.json`.
 
 ## The load-bearing finding: entries already snapshot at write time
 
@@ -94,6 +94,8 @@ can be briefly stale relative to the filtered list).
 | `SupplementEntity` | `Supplement` | `id` PK (autogenerate), `name`, `sortOrder`, `tracksDose` (v36) | User-managed list of supplements. `sortOrder` is append-only insertion order, no reorder UI. `tracksDose` selects whether intake carries a daily amount (e.g. Creatine, grams) or is presence-only (e.g. Ashwagandha, Multivitamin). |
 | `SupplementIntakeEntity` | `SupplementIntake` | `(supplementId, date)` composite PK, FK cascade-delete, `doseGrams` (v36) | Presence of a row means taken that day. `doseGrams` is only ever populated when the parent supplement's `tracksDose` is true. |
 | `CoffeeIntakeEntity` | `CoffeeIntake` (v37) | `id` PK (autogenerate), `dateEpochDay`, `createdEpochSeconds`, `type`, `caffeineMg` | One discrete coffee tap (`CoffeeType`: `Cup`/`Espresso`/`Latte`). `caffeineMg` is snapshotted at log time from a hardcoded per-type constant -- not derived from a food record, and never a diary `Measurement`. |
+| `UsageEventEntity` | `UsageEvent` (v38) | `id` PK (autogenerate), `ts` (epoch s, indexed), `code` (`UsageCode` id), `arg?` | Local usage log: action/navigation codes only, never food names, search text or quantities. Raw rows kept 90 days. `ts` is epoch seconds (timezone-free). Part of the DB, so included in database backups. |
+| `UsageDailyEntity` | `UsageDaily` (v38) | PK (`day` UTC epoch day, `code`), `count` | Rollup of `UsageEvent` rows older than 90 days, folded in at app start. Days are **UTC** (`ts / 86400`), not the user's local day. Included in backups and in the full-data export (`usage-log.csv`, `usage-daily.csv`). |
 
 As of v37, coffee is entirely independent of the food diary: no food/recipe is logged, no
 `Measurement` row is created. The v35 "default coffee" mechanism (a one-time-configured real food
@@ -168,10 +170,11 @@ Defined across `MymymealDatabase.kt` (autoMigrations list + `migrations` compani
 | **34→35** | Manual (`addHabitsTables`) | Adds `Supplement`, `SupplementIntake` for the habits-tracking supplement checklist. Purely additive, FK `ON DELETE CASCADE`, no existing table or column altered. |
 | **35→36** | Manual (`addSupplementDose`) | Adds `Supplement.tracksDose` (NOT NULL, default 0) and `SupplementIntake.doseGrams` (nullable). Purely additive. |
 | **36→37** | Manual (`addCoffeeIntakeTable`) | Adds `CoffeeIntake` for the coffee quick-log, replacing the v35 "default coffee" mechanism. Purely additive, no existing table or column altered. |
+| **37→38** | Manual (`addUsageLogTables`) | Adds `UsageEvent(id, ts, code, arg)` (index on `ts`) and `UsageDaily(day, code, count)` (PK `day, code`) for the local usage log. Codes are `UsageCode` ids; no user content stored. Purely additive. |
 
 **Migration fixture tests already exist** for the manual migrations, satisfying PRD §4's migration
 policy pattern (extend, don't parallel):
-`app/src/commonTest/.../migration/Abstract{FoodYou3,UnlinkDiary,DeleteUsedFoodEvent,FoodSearchFts,AddProvenanceAndCostColumns,AddTagTables,AddHabitsTables,AddSupplementDose,AddCoffeeIntakeTable}Test.kt`
+`app/src/commonTest/.../migration/Abstract{FoodYou3,UnlinkDiary,DeleteUsedFoodEvent,FoodSearchFts,AddProvenanceAndCostColumns,AddTagTables,AddHabitsTables,AddSupplementDose,AddCoffeeIntakeTable,AddUsageLogTables}Test.kt`
 with Android instrumented implementations under `app/src/androidInstrumentedTest/.../migration/`.
 Any new migration this project adds should follow the same `Abstract*Test` + platform-`actual`-test
 pattern rather than introducing a new harness.

@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import dev.tbobm.mymymeal.app.app.ui.common.component.ArrowBackIconButton
 import dev.tbobm.mymymeal.app.app.ui.common.component.SettingsListItem
+import dev.tbobm.mymymeal.app.app.ui.database.usagelog.UsageLogSettings
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -55,6 +56,7 @@ fun DatabaseSettingsScreen(
             item { ExportFullDataSettingsListItem(onExportFullData) }
             item { HealthConnectSettingsListItem(onHealthConnect) }
             item { DatabaseBackup(onDatabaseBackup) }
+            item { UsageLogSettings() }
         }
     }
 }

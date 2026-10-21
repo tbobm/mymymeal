@@ -6,6 +6,8 @@ import dev.tbobm.mymymeal.app.common.domain.date.DateProvider
 import dev.tbobm.mymymeal.app.common.domain.food.NutrientValue.Companion.toNutrientValue
 import dev.tbobm.mymymeal.app.fooddiary.domain.entity.ManualDiaryEntryId
 import dev.tbobm.mymymeal.app.fooddiary.domain.repository.ManualDiaryEntryRepository
+import dev.tbobm.mymymeal.app.usagelog.UsageCode
+import dev.tbobm.mymymeal.app.usagelog.UsageLogger
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -16,6 +18,7 @@ internal class UpdateQuickAddViewModel(
     id: ManualDiaryEntryId,
     private val manualDiaryEntryRepository: ManualDiaryEntryRepository,
     private val dateProvider: DateProvider,
+    private val usageLogger: UsageLogger,
 ) : ViewModel() {
 
     private val eventChannel = Channel<QuickAddUiEvent>()
@@ -58,6 +61,7 @@ internal class UpdateQuickAddViewModel(
                 )
 
             manualDiaryEntryRepository.update(updatedEntry)
+            usageLogger.log(UsageCode.ACT_EDIT_ENTRY, updatedEntry.mealId.toInt())
 
             eventChannel.send(QuickAddUiEvent.Saved)
         }

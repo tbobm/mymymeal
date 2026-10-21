@@ -30,6 +30,7 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
             onboardingFinished = this[SettingsPreferencesKeys.onboardingFinished] ?: false,
             energyFormat = this.getEnergyFormat(SettingsPreferencesKeys.energyFormat),
             appLaunchInfo = this.getAppLaunchInfo(),
+            usageLogEnabled = this[SettingsPreferencesKeys.usageLogEnabled] ?: true,
         )
 
     override fun MutablePreferences.applyUserPreferences(updated: Settings) {
@@ -43,6 +44,7 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
         this[SettingsPreferencesKeys.onboardingFinished] = updated.onboardingFinished
         setEnergyFormat(SettingsPreferencesKeys.energyFormat, updated.energyFormat)
         setAppLaunchInfo(updated.appLaunchInfo)
+        this[SettingsPreferencesKeys.usageLogEnabled] = updated.usageLogEnabled
     }
 }
 
@@ -142,6 +144,7 @@ private object SettingsPreferencesKeys {
     val expandGoalCard = booleanPreferencesKey("settings:expandGoalCard")
     val onboardingFinished = booleanPreferencesKey("settings:onboardingFinished")
     val energyFormat = intPreferencesKey("settings:energyFormat")
+    val usageLogEnabled = booleanPreferencesKey("settings:usageLogEnabled")
     val firstLaunchEpoch = longPreferencesKey("first_launch_epoch")
     val firstLaunchCurrentVersionName = stringPreferencesKey("first_launch_current_version_name")
     val firstLaunchCurrentVersionEpoch = longPreferencesKey("first_launch_current_version_epoch")

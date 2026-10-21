@@ -9,6 +9,7 @@ import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportCsvProductsUseCa
 import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportDiaryEntriesUseCase
 import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportRecipeIngredientsUseCase
 import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportRecipesUseCase
+import dev.tbobm.mymymeal.app.importexport.domain.usecase.ExportUsageLogUseCase
 import java.io.BufferedWriter
 import java.io.OutputStreamWriter
 import java.util.zip.ZipEntry
@@ -26,6 +27,7 @@ internal class ExportFullDataViewModel(
     private val exportDiaryEntriesUseCase: ExportDiaryEntriesUseCase,
     private val exportRecipesUseCase: ExportRecipesUseCase,
     private val exportRecipeIngredientsUseCase: ExportRecipeIngredientsUseCase,
+    private val exportUsageLogUseCase: ExportUsageLogUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.WaitingForFile)
     val uiState = _uiState.asStateFlow()
@@ -62,6 +64,9 @@ internal class ExportFullDataViewModel(
                                 "recipe-ingredients.csv",
                                 exportRecipeIngredientsUseCase.export(),
                             )
+                        // Not counted: the Exported count is diary/food rows.
+                        writeEntry(zip, "usage-log.csv", exportUsageLogUseCase.exportEvents())
+                        writeEntry(zip, "usage-daily.csv", exportUsageLogUseCase.exportDaily())
                     }
 
                     _uiState.value = UiState.Exported(count)
