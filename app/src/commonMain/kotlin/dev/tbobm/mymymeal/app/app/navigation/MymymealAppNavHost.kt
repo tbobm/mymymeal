@@ -1,6 +1,7 @@
 package dev.tbobm.mymymeal.app.app.navigation
 
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -59,10 +60,15 @@ fun MymymealAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifi
     val navController = rememberNavController()
     val homeState = rememberHomeState()
     val usageLogger = koinInject<UsageLogger>()
+    // Re-attaching the listener (recomposition, config change) replays the current destination.
+    var lastRoute by rememberSaveable { mutableStateOf<String?>(null) }
     DisposableEffect(navController) {
         val listener =
             NavController.OnDestinationChangedListener { _, destination, _ ->
-                usageLogger.log(UsageCode.fromRoute(destination.route))
+                if (destination.route != lastRoute) {
+                    lastRoute = destination.route
+                    usageLogger.log(UsageCode.fromRoute(destination.route))
+                }
             }
         navController.addOnDestinationChangedListener(listener)
         onDispose { navController.removeOnDestinationChangedListener(listener) }
