@@ -19,6 +19,7 @@ fun Module.home() {
             foodEntryRepository = get(),
             manualEntryRepository = get(),
             mealsPreferencesRepository = userPreferencesRepository(),
+            usageLogger = get(),
         )
     }
     viewModel {

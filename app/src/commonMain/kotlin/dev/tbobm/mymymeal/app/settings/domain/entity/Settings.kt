@@ -13,4 +13,5 @@ data class Settings(
     val onboardingFinished: Boolean,
     val energyFormat: EnergyFormat,
     val appLaunchInfo: AppLaunchInfo,
+    val usageLogEnabled: Boolean,
 ) : UserPreferences

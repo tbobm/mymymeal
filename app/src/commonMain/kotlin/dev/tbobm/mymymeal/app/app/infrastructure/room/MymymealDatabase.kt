@@ -15,6 +15,7 @@ import dev.tbobm.mymymeal.app.app.infrastructure.room.migration.addHabitsTables
 import dev.tbobm.mymymeal.app.app.infrastructure.room.migration.addProvenanceAndCostColumns
 import dev.tbobm.mymymeal.app.app.infrastructure.room.migration.addSupplementDose
 import dev.tbobm.mymymeal.app.app.infrastructure.room.migration.addTagTables
+import dev.tbobm.mymymeal.app.app.infrastructure.room.migration.addUsageLogTables
 import dev.tbobm.mymymeal.app.app.infrastructure.room.migration.deleteUsedFoodEvent
 import dev.tbobm.mymymeal.app.app.infrastructure.room.migration.fixMeasurementSuggestions
 import dev.tbobm.mymymeal.app.app.infrastructure.room.migration.mymymeal3Migration
@@ -58,6 +59,9 @@ import dev.tbobm.mymymeal.app.habits.infrastructure.room.SupplementEntity
 import dev.tbobm.mymymeal.app.habits.infrastructure.room.SupplementIntakeEntity
 import dev.tbobm.mymymeal.app.sponsorship.infrastructure.room.SponsorshipDatabase
 import dev.tbobm.mymymeal.app.sponsorship.infrastructure.room.SponsorshipEntity
+import dev.tbobm.mymymeal.app.usagelog.infrastructure.room.UsageDailyEntity
+import dev.tbobm.mymymeal.app.usagelog.infrastructure.room.UsageEventEntity
+import dev.tbobm.mymymeal.app.usagelog.infrastructure.room.UsageLogDatabase
 
 @Database(
     entities =
@@ -86,6 +90,8 @@ import dev.tbobm.mymymeal.app.sponsorship.infrastructure.room.SponsorshipEntity
             SupplementEntity::class,
             SupplementIntakeEntity::class,
             CoffeeIntakeEntity::class,
+            UsageEventEntity::class,
+            UsageDailyEntity::class,
         ],
     views = [RecipeAllIngredientsView::class, LatestMeasurementSuggestion::class],
     version = MymymealDatabase.VERSION,
@@ -151,7 +157,8 @@ abstract class MymymealDatabase :
     FoodDiaryDatabase,
     SponsorshipDatabase,
     TagDatabase,
-    HabitsDatabase {
+    HabitsDatabase,
+    UsageLogDatabase {
 
     override suspend fun <T> withTransaction(block: suspend DomainTransactionScope<T>.() -> T): T =
         useWriterConnection {
@@ -162,7 +169,7 @@ abstract class MymymealDatabase :
         }
 
     companion object {
-        const val VERSION = 37
+        const val VERSION = 38
 
         private val migrations: List<Migration> =
             listOf(
@@ -185,6 +192,7 @@ abstract class MymymealDatabase :
                 addHabitsTables,
                 addSupplementDose,
                 addCoffeeIntakeTable,
+                addUsageLogTables,
             )
 
         fun Builder<MymymealDatabase>.buildDatabase(

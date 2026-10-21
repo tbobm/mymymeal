@@ -1,0 +1,19 @@
+package dev.tbobm.mymymeal.app.usagelog
+
+import dev.tbobm.mymymeal.app.common.infrastructure.koin.applicationCoroutineScope
+import dev.tbobm.mymymeal.app.common.infrastructure.koin.userPreferencesRepository
+import dev.tbobm.mymymeal.app.usagelog.infrastructure.room.UsageLogDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.plus
+import org.koin.dsl.module
+
+val usageLogModule = module {
+    factory { get<UsageLogDatabase>().usageLogDao }
+    single {
+        UsageLogger(
+            dao = get(),
+            settings = userPreferencesRepository(),
+            scope = applicationCoroutineScope() + Dispatchers.IO,
+        )
+    }
+}

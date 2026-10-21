@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import dev.tbobm.mymymeal.app.usagelog.UsageCode
+import dev.tbobm.mymymeal.app.usagelog.UsageLogger
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -30,6 +32,7 @@ internal class MealsCardsViewModel(
     private val foodEntryRepository: FoodDiaryEntryRepository,
     private val manualEntryRepository: ManualDiaryEntryRepository,
     mealsPreferencesRepository: UserPreferencesRepository<MealsPreferences>,
+    private val usageLogger: UsageLogger,
 ) : ViewModel() {
     private val dateState = MutableStateFlow<LocalDate?>(null)
 
@@ -57,6 +60,7 @@ internal class MealsCardsViewModel(
     }
 
     fun onDeleteEntry(model: MealEntryModel) {
+        usageLogger.log(UsageCode.ACT_DELETE_ENTRY)
         viewModelScope.launch {
             when (model) {
                 is FoodMealEntryModel -> foodEntryRepository.delete(model.id)

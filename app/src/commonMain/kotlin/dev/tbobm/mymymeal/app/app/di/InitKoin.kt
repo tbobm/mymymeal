@@ -13,6 +13,7 @@ import dev.tbobm.mymymeal.app.poll.pollModule
 import dev.tbobm.mymymeal.app.settings.settingsModule
 import dev.tbobm.mymymeal.app.sponsorship.sponsorshipModule
 import dev.tbobm.mymymeal.app.theme.themeModule
+import dev.tbobm.mymymeal.app.usagelog.usageLogModule
 import kotlinx.coroutines.CoroutineScope
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -36,5 +37,6 @@ fun initKoin(applicationCoroutineScope: CoroutineScope, config: KoinAppDeclarati
             settingsModule,
             sponsorshipModule,
             themeModule,
+            usageLogModule,
         )
     }

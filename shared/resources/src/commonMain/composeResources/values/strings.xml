@@ -582,4 +582,7 @@
     <string name="headline_rolling_balance">Rolling weekly balance</string>
     <string name="stats_days">%1$d days</string>
     <string name="stats_based_on_food_you" translatable="false">Based on Food You by maksimowiczm (GPL-3.0)</string>
+    <string name="headline_usage_log">Usage log</string>
+    <string name="description_usage_log">Keep an on-device log of screens and actions (no food names or amounts). Included in full data export.</string>
+    <string name="action_clear_usage_log">Clear usage log</string>
 </resources>

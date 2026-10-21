@@ -11,6 +11,8 @@ import dev.tbobm.mymymeal.app.fooddiary.domain.entity.DiaryFood
 import dev.tbobm.mymymeal.app.fooddiary.domain.entity.FoodDiaryEntryId
 import dev.tbobm.mymymeal.app.fooddiary.domain.repository.FoodDiaryEntryRepository
 import dev.tbobm.mymymeal.app.fooddiary.domain.repository.MealRepository
+import dev.tbobm.mymymeal.app.usagelog.UsageCode
+import dev.tbobm.mymymeal.app.usagelog.UsageLogger
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.LocalDate
 
@@ -26,6 +28,7 @@ class CreateFoodDiaryEntryUseCase(
     private val transactionProvider: TransactionProvider,
     private val dateProvider: DateProvider,
     private val logger: Logger,
+    private val usageLogger: UsageLogger,
 ) {
     suspend fun createDiaryEntry(
         measurement: Measurement,
@@ -99,6 +102,7 @@ class CreateFoodDiaryEntryUseCase(
                     createdAt = now,
                 )
 
+            usageLogger.log(UsageCode.ACT_LOG_ENTRY, mealId.toInt())
             Ok(entryId)
         }
     }

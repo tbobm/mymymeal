@@ -2,6 +2,7 @@ package dev.tbobm.mymymeal.app.app.navigation
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
@@ -47,13 +48,25 @@ import dev.tbobm.mymymeal.app.common.domain.measurement.from
 import dev.tbobm.mymymeal.app.common.domain.measurement.rawValue
 import dev.tbobm.mymymeal.app.common.domain.measurement.type
 import dev.tbobm.mymymeal.app.food.domain.entity.FoodId
+import dev.tbobm.mymymeal.app.usagelog.UsageCode
+import dev.tbobm.mymymeal.app.usagelog.UsageLogger
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
+import org.koin.compose.koinInject
 
 @Composable
 fun MymymealAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val homeState = rememberHomeState()
+    val usageLogger = koinInject<UsageLogger>()
+    DisposableEffect(navController) {
+        val listener =
+            NavController.OnDestinationChangedListener { _, destination, _ ->
+                usageLogger.log(UsageCode.fromRoute(destination.route))
+            }
+        navController.addOnDestinationChangedListener(listener)
+        onDispose { navController.removeOnDestinationChangedListener(listener) }
+    }
 
     NavHost(modifier = modifier, navController = navController, startDestination = Home) {
         forwardBackwardComposable<Home> {
