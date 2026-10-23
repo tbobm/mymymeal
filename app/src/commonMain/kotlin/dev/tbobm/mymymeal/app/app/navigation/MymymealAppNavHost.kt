@@ -47,12 +47,30 @@ import dev.tbobm.mymymeal.app.common.domain.measurement.from
 import dev.tbobm.mymymeal.app.common.domain.measurement.rawValue
 import dev.tbobm.mymymeal.app.common.domain.measurement.type
 import dev.tbobm.mymymeal.app.food.domain.entity.FoodId
+import dev.tbobm.mymymeal.app.common.domain.date.DateProvider
+import dev.tbobm.mymymeal.app.fooddiary.domain.plausibleMeal
+import dev.tbobm.mymymeal.app.fooddiary.domain.repository.MealRepository
+import kotlinx.coroutines.flow.first
 import kotlinx.datetime.LocalDate
+import org.koin.compose.koinInject
 import kotlinx.serialization.Serializable
 
 @Composable
-fun MymymealAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) {
+fun MymymealAppNavHost(
+    onDatabaseBackup: () -> Unit,
+    modifier: Modifier = Modifier,
+    quickAddRequest: Int = 0,
+) {
     val navController = rememberNavController()
+    val mealRepository: MealRepository = koinInject()
+    val dateProvider: DateProvider = koinInject()
+    // Widget "+": resolve date/meal at tap time so it is never stale.
+    LaunchedEffect(quickAddRequest) {
+        if (quickAddRequest == 0) return@LaunchedEffect
+        val now = dateProvider.now()
+        val meal = plausibleMeal(now.time, mealRepository.observeMeals().first()) ?: return@LaunchedEffect
+        navController.navigateSingleTop(FoodDiarySearch(now.date.toEpochDays(), meal.id))
+    }
     val homeState = rememberHomeState()
 
     NavHost(modifier = modifier, navController = navController, startDestination = Home) {

@@ -26,6 +26,7 @@ import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
+import androidx.glance.layout.size
 import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
@@ -88,6 +89,7 @@ class DiaryWidget : GlanceAppWidget() {
                     Configuration.UI_MODE_NIGHT_YES
             val palette = if (isDark) DarkNutrientsPalette else LightNutrientsPalette
 
+            Box(modifier = GlanceModifier.fillMaxSize()) {
             Column(
                 modifier =
                     GlanceModifier.fillMaxSize()
@@ -160,6 +162,37 @@ class DiaryWidget : GlanceAppWidget() {
                         modifier = GlanceModifier.defaultWeight(),
                     )
                 }
+            }
+            Box(modifier = GlanceModifier.fillMaxSize(), contentAlignment = Alignment.TopEnd) {
+                Box(
+                    modifier =
+                        GlanceModifier.padding(8.dp)
+                            .size(36.dp)
+                            .cornerRadius(18.dp)
+                            .background(GlanceTheme.colors.primary)
+                            .clickable(
+                                actionStartActivity(
+                                    Intent(context, MainActivity::class.java)
+                                        .putExtra(MainActivity.EXTRA_QUICK_ADD, true)
+                                        .addFlags(
+                                            Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                                                Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                        )
+                                )
+                            ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = "+",
+                        style =
+                            TextStyle(
+                                color = GlanceTheme.colors.onPrimary,
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.Bold,
+                            ),
+                    )
+                }
+            }
             }
         }
     }
